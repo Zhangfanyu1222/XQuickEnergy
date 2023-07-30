@@ -4,8 +4,8 @@
 [![Latest Release](https://img.shields.io/github/release/constanline/XQuickEnergy.svg)](../../releases)
 [![All Releases Download](https://img.shields.io/github/downloads/constanline/XQuickEnergy/total.svg)](../../releases)
 
-## 此仓库fork于 [constanline/XQuickEnergy](https://github.com/constanline/XQuickEnergy) ，请到原作者仓库中点个小星星star
-感谢蚂蚁森林对绿化事业的贡献。快速收取蚂蚁森林能量，也为祖国的绿化事业出一份微薄之力~
+## 此仓库仅fork，不做任何修改。 [constanline/XQuickEnergy](https://github.com/constanline/XQuickEnergy) ，请到原作者仓库中点亮小星星star
+感谢蚂蚁森林对绿化事业的贡献。感谢 [XQuickEnergy](https://github.com/pansong291/XQuickEnergy) 开发的快速收取蚂蚁森林能量，也为祖国的绿化事业出一份微薄之力~
 
 ## 原作者目前没有大小号、号码切换的计划，请悉知！
 
