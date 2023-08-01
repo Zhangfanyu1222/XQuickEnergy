@@ -906,7 +906,6 @@ public class AntForest {
                 } else {
                     collectAnimalCard();
                 }
-                // }
             } else {
                 Log.i(TAG, jo.getString("resultDesc"));
             }
