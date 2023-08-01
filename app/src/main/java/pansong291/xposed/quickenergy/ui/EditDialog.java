@@ -142,6 +142,7 @@ public class EditDialog {
             case LIMIT_COUNT:
                 str = String.valueOf(Config.getLimitCount());
                 break;
+
             case DOUBLE_CARD_TIME:
                 str = Config.doubleCardTime();
                 break;

@@ -15,7 +15,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/base_configuration"
-			android:background="#FF9BCD9B"
+			android:background="#FF898989"
 			android:textColor="#FFFFFFFF"
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -107,7 +107,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/forest_configuration"
-			android:background="#FF9BCD9B"
+			android:background="#FF898989"
 			android:textColor="#FFFFFFFF"
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -411,13 +411,13 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			style="?android:attr/buttonBarButtonStyle"
-			android:text="@string/ancient_tree_citycode_list"
+			android:text="@string/ancient_tree_area_code_list"
 			android:textAllCaps="false"
 			android:onClick="onClick"
 			android:minHeight="50dp"
 			android:gravity="start|center_vertical"
 			android:background="@drawable/button"
-			android:id="@+id/btn_ancientTreeCityCodeList"
+			android:id="@+id/btn_ancientTreeAreaCodeList"
 			android:paddingStart="8dp"/>
 
 		<CheckBox
@@ -447,7 +447,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/farm_configuration"
-			android:background="#FF9BCD9B"
+			android:background="#FF898989"
 			android:textColor="#FFFFFFFF"
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -636,7 +636,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/other_configuration"
-			android:background="#FF9BCD9B"
+			android:background="#FF898989"
 			android:textColor="#FFFFFFFF"
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -738,7 +738,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/more"
-			android:background="#FF9BCD9B"
+			android:background="#FF898989"
 			android:textColor="#FFFFFFFF"
 			android:textAppearance="?android:attr/textAppearanceMedium"/>
 

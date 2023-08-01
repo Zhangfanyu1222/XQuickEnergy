@@ -15,7 +15,6 @@ import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.CooperationIdMap;
 import pansong291.xposed.quickenergy.util.FriendIdMap;
 import pansong291.xposed.quickenergy.util.ReserveIdMap;
-import pansong291.xposed.quickenergy.util.CityCodeMap;
 
 public class SettingsActivity extends Activity {
     CheckBox cb_immediateEffect, cb_recordLog, cb_showToast,
@@ -39,7 +38,6 @@ public class SettingsActivity extends Activity {
         FriendIdMap.shouldReload = true;
         CooperationIdMap.shouldReload = true;
         ReserveIdMap.shouldReload = true;
-        CityCodeMap.shouldReload = true;
 
         cb_immediateEffect = findViewById(R.id.cb_immediateEffect);
         cb_recordLog = findViewById(R.id.cb_recordLog);
@@ -270,8 +268,8 @@ public class SettingsActivity extends Activity {
                     break;
             }
         } else if (v instanceof Button) {
-            Button btn = (Button) v;
-            switch (v.getId()) {
+            Button btn = (Button)v;
+            switch(v.getId()) {
                 case R.id.btn_stayAwakeType:
                     ChoiceDialog.showStayAwakeType(this, btn.getText());
                     break;
@@ -325,8 +323,7 @@ public class SettingsActivity extends Activity {
                     break;
 
                 case R.id.btn_waterFriendList:
-                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getWaterFriendList(),
-                            Config.getWaterCountList());
+                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getWaterFriendList(), Config.getWaterCountList());
                     break;
 
                 case R.id.btn_cooperateWaterList:
@@ -334,9 +331,8 @@ public class SettingsActivity extends Activity {
                             Config.getcooperateWaterNumList());
                     break;
 
-                case R.id.btn_ancientTreeCityCodeList:
-                    ListDialog.show(this, btn.getText(), CityCode.getList(), Config.getAncientTreeCityCodeList(),
-                            null);
+                case R.id.btn_ancientTreeAreaCodeList:
+                    ListDialog.show(this, btn.getText(), AreaCode.getList(), Config.getAncientTreeAreaCodeList(), null);
                     break;
 
                 case R.id.btn_giveEnergyRainList:
@@ -361,8 +357,7 @@ public class SettingsActivity extends Activity {
                     break;
 
                 case R.id.btn_feedFriendAnimalList:
-                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getFeedFriendAnimalList(),
-                            Config.getFeedFriendCountList());
+                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getFeedFriendAnimalList(), Config.getFeedFriendCountList());
                     break;
 
                 case R.id.btn_dontNotifyFriendList:
@@ -381,8 +376,7 @@ public class SettingsActivity extends Activity {
                     break;
 
                 case R.id.btn_donation_xqe_developer:
-                    Intent it2 = new Intent(Intent.ACTION_VIEW, Uri.parse(
-                            "alipays://platformapi/startapp?saId=10000007&qrcode=https%3A%2F%2Fqr.alipay.com%2Ftsx00339eflkuhhtfctcn48"));
+                    Intent it2 = new Intent(Intent.ACTION_VIEW, Uri.parse("alipays://platformapi/startapp?saId=10000007&qrcode=https%3A%2F%2Fqr.alipay.com%2Ftsx00339eflkuhhtfctcn48"));
                     startActivity(it2);
                     break;
 
@@ -413,14 +407,14 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (Config.hasChanged) {
+        if(Config.hasChanged) {
             Config.hasChanged = !Config.saveConfigFile();
             Toast.makeText(this, "保存成功！", Toast.LENGTH_SHORT).show();
         }
         FriendIdMap.saveIdMap();
         CooperationIdMap.saveIdMap();
         ReserveIdMap.saveIdMap();
-        CityCodeMap.saveIdMap();
     }
 
 }
+

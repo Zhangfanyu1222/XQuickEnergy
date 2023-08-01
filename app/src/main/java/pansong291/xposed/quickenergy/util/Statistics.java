@@ -74,7 +74,7 @@ public class Statistics {
     private ArrayList<String> cooperateWaterList;
     private ArrayList<String> syncStepList;
     private ArrayList<ReserveLog> reserveLogList;
-    private ArrayList<String> ancientTreeCityCodeList;
+//    private ArrayList<String> ancientTreeCityCodeList;
     private ArrayList<String> exchangeList;
     private int exchangeDoubleCard = 0;
     private int exchangeTimes = 0;
@@ -265,18 +265,18 @@ public class Statistics {
         }
     }
 
-    public static boolean canAncientTreeToday(String cityCode) {
-        Statistics stat = getStatistics();
-        return !stat.ancientTreeCityCodeList.contains(cityCode);
-    }
-
-    public static void ancientTreeToday(String cityCode) {
-        Statistics stat = getStatistics();
-        if (!stat.ancientTreeCityCodeList.contains(cityCode)) {
-            stat.ancientTreeCityCodeList.add(cityCode);
-            save();
-        }
-    }
+//    public static boolean canAncientTreeToday(String cityCode) {
+//        Statistics stat = getStatistics();
+//        return !stat.ancientTreeCityCodeList.contains(cityCode);
+//    }
+//
+//    public static void ancientTreeToday(String cityCode) {
+//        Statistics stat = getStatistics();
+//        if (!stat.ancientTreeCityCodeList.contains(cityCode)) {
+//            stat.ancientTreeCityCodeList.add(cityCode);
+//            save();
+//        }
+//    }
 
     public static boolean canAnswerQuestionToday(String uid) {
         Statistics stat = getStatistics();
@@ -375,11 +375,7 @@ public class Statistics {
         Statistics stat = getStatistics();
         if (stat.exchangeDoubleCard < stat.day.time) {
             return true;
-        } else if (stat.exchangeTimes < Config.getExchangeEnergyDoubleClickCount()) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return stat.exchangeTimes < Config.getExchangeEnergyDoubleClickCount();
     }
 
     public static void exchangeDoubleCardToday(boolean iSsuccess) {
@@ -465,7 +461,7 @@ public class Statistics {
         stat.syncStepList.clear();
         stat.exchangeList.clear();
         stat.reserveLogList.clear();
-        stat.ancientTreeCityCodeList.clear();
+//        stat.ancientTreeCityCodeList.clear();
         stat.answerQuestionList.clear();
         stat.feedFriendLogList.clear();
         stat.questionHint = null;
@@ -496,8 +492,8 @@ public class Statistics {
             stat.answerQuestionList = new ArrayList<>();
         if (stat.feedFriendLogList == null)
             stat.feedFriendLogList = new ArrayList<>();
-        if (stat.ancientTreeCityCodeList == null)
-            stat.ancientTreeCityCodeList = new ArrayList<>();
+//        if (stat.ancientTreeCityCodeList == null)
+//            stat.ancientTreeCityCodeList = new ArrayList<>();
         if (stat.syncStepList == null)
             stat.syncStepList = new ArrayList<>();
         if (stat.exchangeList == null)
@@ -558,16 +554,6 @@ public class Statistics {
                 JSONArray ja = jo.getJSONArray(Config.jn_cooperateWaterList);
                 for (int i = 0; i < ja.length(); i++) {
                     stat.cooperateWaterList.add(ja.getString(i));
-
-                }
-            }
-
-            stat.ancientTreeCityCodeList = new ArrayList<>();
-
-            if (jo.has(Config.jn_ancientTreeCityCodeList)) {
-                JSONArray ja = jo.getJSONArray(Config.jn_ancientTreeCityCodeList);
-                for (int i = 0; i < ja.length(); i++) {
-                    stat.ancientTreeCityCodeList.add(ja.getString(i));
 
                 }
             }
@@ -716,11 +702,11 @@ public class Statistics {
             }
             jo.put(jn_exchangeList, ja);
 
-            ja = new JSONArray();
-            for (int i = 0; i < stat.ancientTreeCityCodeList.size(); i++) {
-                ja.put(stat.ancientTreeCityCodeList.get(i));
-            }
-            jo.put(Config.jn_ancientTreeCityCodeList, ja);
+//            ja = new JSONArray();
+//            for (int i = 0; i < stat.ancientTreeCityCodeList.size(); i++) {
+//                ja.put(stat.ancientTreeCityCodeList.get(i));
+//            }
+//            jo.put(Config.jn_ancientTreeCityCodeList, ja);
 
             ja = new JSONArray();
             for (int i = 0; i < stat.reserveLogList.size(); i++) {

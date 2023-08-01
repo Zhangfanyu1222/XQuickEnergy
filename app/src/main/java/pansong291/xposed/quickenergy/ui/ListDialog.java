@@ -112,9 +112,9 @@ public class ListDialog
         lv_list.setOnItemLongClickListener(
                 (p1, p2, p3, p4) -> {
                     curIdAndName = (IdAndName) p1.getAdapter().getItem(p3);
-                    if(curIdAndName instanceof CooperateUser) {
+                    if (curIdAndName instanceof CooperateUser) {
                         showDeleteDialog(p1.getContext());
-                    } else {
+                    } else if (!(curIdAndName instanceof AreaCode)) {
                         showOptionsDialog(p1.getContext());
                     }
                     return true;
@@ -324,7 +324,7 @@ public class ListDialog
             }
             if(index < 0)
             {
-                Toast.makeText(p1.getContext(), "未搜到", Toast.LENGTH_SHORT).show();
+                Toast.makeText(p1.getContext(), "未找到", Toast.LENGTH_SHORT).show();
             }else
             {
                 lv_list.setSelection(index);

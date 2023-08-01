@@ -23,7 +23,6 @@ import pansong291.xposed.quickenergy.util.PermissionUtil;
 import pansong291.xposed.quickenergy.util.RandomUtils;
 import pansong291.xposed.quickenergy.util.Statistics;
 
-
 public class MainActivity extends Activity {
     private static String[] strArray;
     TextView tvStatistics;
@@ -83,8 +82,13 @@ public class MainActivity extends Activity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        this.setTitle(this.getTitle());
+        this.setTitle(this.getTitle() + "[" + version + "]");
 
+        new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("本APP是为了学习研究开发，免费提供，不得进行任何形式的转发、发布、传播。请于24小时内卸载本APP。如果您是购买的可能已经被骗，请联系卖家退款。")
+                .setNegativeButton("我知道了", null)
+                .create().show();
     }
 
     @Override
@@ -118,6 +122,9 @@ public class MainActivity extends Activity {
                 data = "https://github.com/pansong291/XQuickEnergy/wiki";
                 break;
 
+            case R.id.btn_github:
+                data = "https://github.com/constanline/XQuickEnergy";
+                break;
         }
         Intent it = new Intent(this, HtmlViewerActivity.class);
         it.setData(Uri.parse(data));
@@ -141,11 +148,9 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 1:
-                int state = item.isChecked() ? PackageManager.COMPONENT_ENABLED_STATE_DEFAULT
-                        : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+                int state = item.isChecked() ? PackageManager.COMPONENT_ENABLED_STATE_DEFAULT : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
                 getPackageManager()
-                        .setComponentEnabledSetting(new ComponentName(this, getClass().getCanonicalName() + "Alias"),
-                                state, PackageManager.DONT_KILL_APP);
+                        .setComponentEnabledSetting(new ComponentName(this, getClass().getCanonicalName() + "Alias"), state, PackageManager.DONT_KILL_APP);
                 item.setChecked(!item.isChecked());
                 break;
 

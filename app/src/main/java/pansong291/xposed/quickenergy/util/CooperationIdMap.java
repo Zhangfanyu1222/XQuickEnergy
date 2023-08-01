@@ -59,7 +59,7 @@ public class CooperationIdMap
                 try {
                     String[] idSet = str.split("\n");
                     for(String s: idSet) {
-                       // Log.i(TAG, s);
+                        Log.i(TAG, s);
                         int ind = s.indexOf(":");
                         idMap.put(s.substring(0, ind), s.substring(ind + 1));
                     }
