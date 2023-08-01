@@ -9,21 +9,19 @@ jobs:
     permissions:
       contents: write
       packages: write
-      
+
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3.5.3
         with:
           fetch-depth: 0
-
       - name: Setup Java JDK
         uses: actions/setup-java@v3.12.0
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: gradle
-
       - name: Cache Gradle dependencies
         uses: actions/cache@v3.3.1
         with:
@@ -31,13 +29,10 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-            
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
       - name: Build with Gradle
         run: ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
-
       - name: Sign app APK
         uses: ilharp/sign-android-release@v1.0.4
         id: sign_app
@@ -48,11 +43,10 @@ jobs:
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           buildToolsVersion: 33.0.0
-
       - name: Upload Apk To Release Action
         uses: Shopify/upload-to-release@v1.0.1
         with:
-          name: longlong-xqe-cactus_signed-${{ github.event.release.tag_name }}.apk
+          name: longlong-xqe-sesame_signed-${{ github.event.release.tag_name }}.apk
           path: ${{ steps.sign_app.outputs.signedFile }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           content-type: application/zip
