@@ -5,7 +5,8 @@ on:
     types:
       - closed
   release:
-    types: [published]
+    types:
+      - created
 
 jobs:
   release:
@@ -18,7 +19,7 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Create Tag and Release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
