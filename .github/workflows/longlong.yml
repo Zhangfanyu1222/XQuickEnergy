@@ -1,0 +1,73 @@
+name: Auto Release Android CI
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.3
+      - name: Get the current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Create Tag and Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.date.outputs.date }}
+          release_name: ${{ steps.date.outputs.date }}
+          body: Update from upstream repository
+          draft: false
+          prerelease: false
+          
+  android:
+    if: github.event_name == 'release'
+    permissions:
+      contents: write
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.12.0
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3.3.1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
+      - name: Sign app APK
+        uses: ilharp/sign-android-release@v1.0.4
+        id: sign_app
+        with:
+          releaseDir: app/build/outputs/apk/release/
+          signingKey: ${{ secrets.ANDROID_SIGNING_KEY }}
+          keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          buildToolsVersion: 33.0.0
+      - name: Upload Apk To Release Action
+        uses: Shopify/upload-to-release@v1.0.1
+        with:
+          name: longlong-xqe-sesame_signed-${{ github.event.release.tag_name }}.apk
+          path: ${{ steps.sign_app.outputs.signedFile }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          content-type: application/zip
