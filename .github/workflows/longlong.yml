@@ -84,10 +84,17 @@ jobs:
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           buildToolsVersion: 33.0.0
+      - name: Set tag value based on event
+        run: |
+          if [ "${{ github.event_name }}" == "release" ] && [ -z "${{ needs.release.outputs.TAG_NAME }}" ]; then
+            echo "TAG_NAME=${{ github.ref }}" >> $GITHUB_ENV
+          else
+            echo "TAG_NAME=${{ env.TAG_NAME }}" >> $GITHUB_ENV
+          fi
       - name: Upload Apk to Release Action
         uses: svenstaro/upload-release-action@2.7.0
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.sign_app.outputs.signedFile }}
-          asset_name: xqe-sesame_longlong-signed-in-${{ github.event.release.tag_name }}.apk
-          tag: ${{ github.ref }}
+          asset_name: xqe-sesame_longlong-signed-in-${{ env.TAG_NAME }}.apk
+          tag: ${{ env.TAG_NAME }}
