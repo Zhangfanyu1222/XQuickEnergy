@@ -41,14 +41,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ env.TAG_NAME }}
+          name: ${{ env.TAG_NAME }}
           body: Update from upstream repository
           draft: false
           prerelease: false
 
   android:
     needs: release
-    if: github.event_name == 'release'
+    if: always() && ((github.event_name == 'release') || (needs.release.result == 'success'))
     permissions:
       contents: write
     runs-on: ubuntu-latest
