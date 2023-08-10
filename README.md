@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="app/src/main/res/drawable/main.png" alt="main" width="300">
+  <img src="app/src/main/res/drawable/main.png" alt="main" width="200">
 </div>
 
 <div align="center">
