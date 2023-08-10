@@ -1,58 +1,17 @@
-name: Auto Release Android CI
+name: Android CI
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types:
-      - closed
   release:
-    types:
-      - created
+    types: [published]
 
 jobs:
-  release:
-    if: (github.event_name == 'push') || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3.5.3
-      - name: Get versionName from build.gradle
-        id: version
-        run: |
-          VERSION_NAME=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
-          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-      - name: Check if tag exists
-        id: check_tag
-        run: |
-          TAG_EXISTS=$(git ls-remote --tags origin refs/tags/$VERSION_NAME)
-          if [ -z "$TAG_EXISTS" ]; then
-            echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          else
-            TIMESTAMP=$(date +'%Y-%m-%d-%H-%M-%S')
-            echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
-          fi
-      - name: Create Tag and Release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ env.TAG_NAME }}
-          body: Update from upstream repository
-          draft: false
-          prerelease: false
-
-  android:
-    if: github.event_name == 'release'
+  build:
     permissions:
       contents: write
       packages: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.5.3
         with:
           fetch-depth: 0
       - name: Setup Java JDK
@@ -87,5 +46,5 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.sign_app.outputs.signedFile }}
-          asset_name: xqe-sesame_longlong-signed-in-${{ github.event.release.tag_name }}.apk
+          asset_name: longlong-xqe-sesame_signed-${{ github.event.release.tag_name }}.apk
           tag: ${{ github.ref }}
