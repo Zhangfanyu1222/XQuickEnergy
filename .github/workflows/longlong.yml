@@ -91,10 +91,13 @@ jobs:
           buildToolsVersion: 33.0.0
       - name: Set tag value based on event
         run: |
-          if [ "${{ github.event_name }}" == "release" ] && [ -z "${{ needs.release.outputs.TAG_NAME }}" ]; then
+          if [ "${{ github.event_name }}" == "release" ]; then
             echo "TAG_NAME=${{ github.ref }}" >> $GITHUB_ENV
-          else
+          elif [ -n "${{ needs.release.outputs.TAG_NAME }}" ]; then
             echo "TAG_NAME=${{ needs.release.outputs.TAG_NAME }}" >> $GITHUB_ENV
+          else
+            echo "Error: TAG_NAME is not set" >&2
+            exit 1
           fi
       - name: Upload Apk to Release Action
         uses: svenstaro/upload-release-action@2.7.0
