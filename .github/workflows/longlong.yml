@@ -35,6 +35,9 @@ jobs:
             TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d-%H-%M-%S')
             echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
           fi
+      - name: Set output
+        id: set_output
+        run: echo "::set-output name=TAG_NAME::$TAG_NAME"
       - name: Create Tag and Release
         uses: softprops/action-gh-release@v0.1.15
         env:
@@ -89,7 +92,7 @@ jobs:
           if [ "${{ github.event_name }}" == "release" ] && [ -z "${{ needs.release.outputs.TAG_NAME }}" ]; then
             echo "TAG_NAME=${{ github.ref }}" >> $GITHUB_ENV
           else
-            echo "TAG_NAME=${{ env.TAG_NAME }}" >> $GITHUB_ENV
+            echo "TAG_NAME=${{ needs.release.outputs.TAG_NAME }}" >> $GITHUB_ENV
           fi
       - name: Upload Apk to Release Action
         uses: svenstaro/upload-release-action@2.7.0
