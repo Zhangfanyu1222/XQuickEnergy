@@ -49,19 +49,24 @@ jobs:
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           buildToolsVersion: 33.0.0
       - name: Get versionName from build.gradle
-        id: version
+        id: get_version
         run: |
           VERSION_NAME=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-      - name: Check if tag exists
+      - name: Check if tag exists and Set tag name
         id: check_tag
         run: |
-          TAG_EXISTS=$(git ls-remote --tags origin refs/tags/$VERSION_NAME)
-          if [ -z "$TAG_EXISTS" ]; then
-            echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          if [[ $GITHUB_EVENT_NAME == "release" ]]; then
+            TAG_NAME=${{ github.event.release.tag_name }}
+            echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           else
-            TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d-%H-%M-%S')
-            echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
+            TAG_EXISTS=$(git ls-remote --tags origin refs/tags/$VERSION_NAME)
+            if [ -z "$TAG_EXISTS" ]; then
+              echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
+            else
+              TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d-%H-%M-%S')
+              echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
+            fi
           fi
       - name: Upload Apk to Release Action
         uses: svenstaro/upload-release-action@2.7.0
