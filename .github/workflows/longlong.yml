@@ -37,6 +37,9 @@ jobs:
             TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d-%H-%M-%S')
             echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
           fi
+      - name: Write TAG_NAME to environment file
+        run: |
+          echo "TAG_NAME=${{ env.TAG_NAME }}" >> $GITHUB_ENV
       - name: Create Tag and Release
         uses: softprops/action-gh-release@v0.1.15
         env:
@@ -47,9 +50,6 @@ jobs:
           body: Update from upstream repository
           draft: false
           prerelease: false
-      - name: Write TAG_NAME to environment file
-        run: |
-          echo "TAG_NAME=${{ env.TAG_NAME }}" >> $GITHUB_ENV
 
   android:
     needs: release
