@@ -12,48 +12,7 @@ on:
       - created
 
 jobs:
-  release:
-    if: (github.event_name == 'push') || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    outputs:
-      TAG_NAME: ${{ steps.write_tag.outputs.TAG_NAME }}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3.5.3
-      - name: Get versionName from build.gradle
-        id: version
-        run: |
-          VERSION_NAME=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
-          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-      - name: Check if tag exists
-        id: check_tag
-        run: |
-          TAG_EXISTS=$(git ls-remote --tags origin refs/tags/$VERSION_NAME)
-          if [ -z "$TAG_EXISTS" ]; then
-            echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          else
-            TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d-%H-%M-%S')
-            echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
-          fi
-      - name: Write TAG_NAME to environment file
-        run: |
-          echo "TAG_NAME=${{ env.TAG_NAME }}" >> $GITHUB_ENV
-      - name: Create Tag and Release
-        uses: softprops/action-gh-release@v0.1.15
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          name: ${{ env.TAG_NAME }}
-          body: Update from upstream repository
-          draft: false
-          prerelease: false
-
   android:
-    needs: release
-    if: always() && ((github.event_name == 'release') || (needs.release.result == 'success'))
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -89,15 +48,20 @@ jobs:
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           buildToolsVersion: 33.0.0
-      - name: Set tag value based on event
+      - name: Get versionName from build.gradle
+        id: version
         run: |
-          if [ "${{ github.event_name }}" == "release" ]; then
-            echo "TAG_NAME=${{ github.ref }}" >> $GITHUB_ENV
-          elif [ -n "${{ needs.release.outputs.TAG_NAME }}" ]; then
-            echo "TAG_NAME=${{ needs.release.outputs.TAG_NAME }}" >> $GITHUB_ENV
+          VERSION_NAME=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          TAG_EXISTS=$(git ls-remote --tags origin refs/tags/$VERSION_NAME)
+          if [ -z "$TAG_EXISTS" ]; then
+            echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
           else
-            echo "Error: TAG_NAME is not set" >&2
-            exit 1
+            TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d-%H-%M-%S')
+            echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
           fi
       - name: Upload Apk to Release Action
         uses: svenstaro/upload-release-action@2.7.0
