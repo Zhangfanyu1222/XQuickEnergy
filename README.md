@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="app/src/main/res/drawable/main.png" alt="main" width="200">
+  <img src="app/src/main/res/drawable/main.png" alt="main" width="230">
 </div>
 
 <div align="center">
@@ -7,29 +7,31 @@
 </div>
 
 <div align="center">
-  <a href="../../blob/master/LICENSE">
+  <a href="https://github.com/constanline/XQuickEnergy/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/constanline/XQuickEnergy.svg?color=ff69b4" alt="GitHub License">
   </a>
-  <a href="../../stargazers">
-    <img src="https://img.shields.io/github/stars/constanline/XQuickEnergy.svg?color=blue" alt="GitHub Stars">
+  <a href="https://github.com/constanline/XQuickEnergy/stargazers">
+    <img src="https://img.shields.io/github/stars/constanline/XQuickEnergy.svg?color=0DBDFF" alt="GitHub Stars">
   </a>
-  <a href="../../network">
-    <img src="https://img.shields.io/github/forks/constanline/XQuickEnergy.svg?color=orange" alt="GitHub Forks">
+  <a href="https://github.com/constanline/XQuickEnergy/network">
+    <img src="https://img.shields.io/github/forks/constanline/XQuickEnergy.svg?color=0ABF53" alt="GitHub Forks">
   </a>
-  <a href="../../issues">
-    <img src="https://img.shields.io/github/issues/constanline/XQuickEnergy.svg?color=green" alt="GitHub Issues">
+  <a href="https://github.com/constanline/XQuickEnergy/issues">
+    <img src="https://img.shields.io/github/issues/constanline/XQuickEnergy.svg?color=8C4FFF" alt="GitHub Issues">
   </a>
-  <a href="../../releases">
-    <img src="https://img.shields.io/github/release/constanline/XQuickEnergy.svg?color=yellow" alt="GitHub Latest Release">
+  <a href="https://github.com/Zhangfanyu1222/XQuickEnergy/releases">
+    <img src="https://img.shields.io/github/release/Zhangfanyu1222/XQuickEnergy.svg?color=FF9900" alt="GitHub Latest Release">
   </a>
-  <a href="../../releases">
-    <img src="https://img.shields.io/github/downloads/constanline/XQuickEnergy/total.svg?color=ff4500" alt="GitHub All Releases Download">
+  <a href="https://github.com/constanline/XQuickEnergy/releases">
+    <img src="https://img.shields.io/github/downloads/constanline/XQuickEnergy/total.svg?color=ED1D24" alt="GitHub All Releases Download">
+  </a>
+  <a href="https://actions-badge.atrox.dev/Zhangfanyu1222/XQuickEnergy/goto?ref=master"><img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FZhangfanyu1222%2FXQuickEnergy%2Fbadge%3Fref%3Dmaster&style=flat" />
   </a>
 </div>
 
 ## 仓库说明
 
-此仓库仅用于fork，不做任何修改。用于作者仓库更新时，合并远程跟踪分支 [上游主分支](https://github.com/constanline/XQuickEnergy) 后自动发布签名版本。请到作者仓库中点亮小星星star~
+此仓库仅用于fork，不做任何修改。在作者提交更新后，合并远程跟踪分支 [上游主分支](https://github.com/constanline/XQuickEnergy) 。请到作者仓库中点亮小星星star~
 
 ## 主要功能
 
