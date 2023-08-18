@@ -1,0 +1,43 @@
+name: Auto UF and PR
+
+on:
+  schedule:
+    - cron:  '0 */6 * * *'
+
+jobs:
+  updatefork:
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.5.3
+        with:
+          repository: Zhangfanyu1222/XQuickEnergy    
+      - name: Reset the default branch with upstream changes
+        run: |
+          git remote add upstream https://github.com/constanline/XQuickEnergy.git
+          git fetch upstream master:upstream-master
+          git reset --hard upstream-master
+      - name: Get latest commit message and author
+        run: |
+          LATEST_COMMIT_MESSAGE=$(git log -1 --pretty=format:"Author: %an%nTitle: %s%nContent: %b")
+          echo "MESSAGE=$LATEST_COMMIT_MESSAGE" >> $GITHUB_ENV
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5.0.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          committer: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: upstream-changes
+          delete-branch: true
+          title: "master from constanline:master"
+          body: " ${{ env.MESSAGE }}"
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: rebase
