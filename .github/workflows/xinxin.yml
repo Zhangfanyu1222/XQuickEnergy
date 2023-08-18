@@ -15,11 +15,23 @@ jobs:
       - uses: actions/checkout@v3.5.3
         with:
           repository: Zhangfanyu1222/XQuickEnergy    
+      - name: Backup .gitignore
+        run: cp .gitignore .gitignore_backup
       - name: Reset the default branch with upstream changes
         run: |
           git remote add upstream https://github.com/constanline/XQuickEnergy.git
           git fetch upstream master:upstream-master
           git reset --hard upstream-master
+      - name: Check for .gitignore changes
+        run: |
+          git diff --name-only upstream-master HEAD | grep .gitignore
+          if [ $? -eq 0 ]; then
+            echo ".gitignore has changes."
+            echo "GITIGNORE_CHANGED=true" >> $GITHUB_ENV
+          else
+            echo ".gitignore has no changes."
+            echo "GITIGNORE_CHANGED=false" >> $GITHUB_ENV
+          fi
       - name: Get latest commit message and author
         run: |
           LATEST_COMMIT_AUTHOR=$(git log -1 --pretty=format:"%an")
@@ -45,3 +57,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: rebase
+      - name: Restore .gitignore
+        if: env.GITIGNORE_CHANGED == 'true'
+        run: mv .gitignore_backup .gitignore
