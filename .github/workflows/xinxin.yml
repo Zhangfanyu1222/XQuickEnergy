@@ -14,17 +14,29 @@ jobs:
     steps:
       - uses: actions/checkout@v3.5.3
         with:
-          repository: Zhangfanyu1222/XQuickEnergy    
+          repository: Zhangfanyu1222/XQuickEnergy
       - name: Backup .gitignore
         run: cp .gitignore .gitignore_backup
       - name: Reset the default branch with upstream changes
         run: |
           git remote add upstream https://github.com/constanline/XQuickEnergy.git
           git fetch upstream master:upstream-master
-          git reset --hard upstream-master
+      - name: Check for updates
+        run: |
+          git diff --quiet upstream-master HEAD
+          if [ $? -eq 0 ]; then
+            echo "No updates found."
+            echo "UPDATES_FOUND=false" >> $GITHUB_ENV
+          else
+            echo "Updates found."
+            echo "UPDATES_FOUND=true" >> $GITHUB_ENV
+          fi
+      - name: Reset the default branch with upstream changes
+        if: env.UPDATES_FOUND == 'true'
+        run: git reset --hard upstream-master
       - name: Check for .gitignore changes
         run: |
-          git diff --name-only upstream-master HEAD | grep .gitignore
+          git diff --name-only upstream-master HEAD | grep .gitignore || true
           if [ $? -eq 0 ]; then
             echo ".gitignore has changes."
             echo "GITIGNORE_CHANGED=true" >> $GITHUB_ENV
@@ -41,6 +53,7 @@ jobs:
           echo "TITLE=$LATEST_COMMIT_TITLE" >> $GITHUB_ENV
           echo "CONTENT=$LATEST_COMMIT_CONTENT" >> $GITHUB_ENV
       - name: Create Pull Request
+        if: env.UPDATES_FOUND == 'true'
         id: cpr
         uses: peter-evans/create-pull-request@v5.0.2
         with:
