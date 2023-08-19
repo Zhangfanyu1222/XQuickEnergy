@@ -23,7 +23,7 @@ jobs:
           git fetch upstream master:upstream-master
       - name: Check for updates
         run: |
-          git diff --quiet upstream-master HEAD
+          git diff --quiet upstream-master HEAD || true
           if [ $? -eq 0 ]; then
             echo "No updates found."
             echo "UPDATES_FOUND=false" >> $GITHUB_ENV
