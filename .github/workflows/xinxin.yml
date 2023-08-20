@@ -2,7 +2,7 @@ name: Auto UF and PR
 
 on:
   schedule:
-    - cron:  '0 */8 * * *'
+    - cron: '0 4,10,16 * * *'
 
 jobs:
   updatefork:
@@ -60,11 +60,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: rebase
-      - name: Restore .gitignore
-        if: env.UPDATES_FOUND == 'true'
-        run: mv .gitignore_backup .gitignore
       - name: Auto approve
         if: steps.cpr.outputs.pull-request-operation == 'created'
         run: gh pr review --approve "${{ steps.cpr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Restore .gitignore
+        if: env.UPDATES_FOUND == 'true'
+        run: mv .gitignore_backup .gitignore
