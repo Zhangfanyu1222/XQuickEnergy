@@ -1,16 +1,11 @@
 name: Automatically keep up to date with upstream
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: '0 4,10,16 * * *'
 
 jobs:
   update:
-    permissions:
-      contents: write
-      pull-requests: write
-      workflows: write
     runs-on: ubuntu-latest
 
     steps:
@@ -45,7 +40,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5.0.2
         id: cpr
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.LONGLONG }}
           committer: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           branch: upstream-changes
           delete-branch: true
@@ -55,14 +50,14 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.LONGLONG }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: rebase
       - name: Auto approve
         if: steps.cpr.outputs.pull-request-operation == 'created'
         run: gh pr review --approve "${{ steps.cpr.outputs.pull-request-number }}"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.LONGLONG }}
       - name: Restore documents
         run: |
           rm -rf .github/workflows
@@ -95,7 +90,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         id: release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.LONGLONG }}
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: ${{ env.TAG_NAME }}
@@ -135,7 +130,7 @@ jobs:
         if: steps.sign.outcome == 'success'
         uses: svenstaro/upload-release-action@2.7.0
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.LONGLONG }}
           file: ${{ steps.sign_app.outputs.signedFile }}
           asset_name: xqe-sesame_longlong-signed-${{ env.TAG_NAME }}.apk
           tag: ${{ env.TAG_NAME }}
