@@ -25,18 +25,16 @@ jobs:
           rm -rf .github/workflows
           rm .gitignore
           rm README.md
-      - name: Fetch changes from upstream branch
-        run: |
-          git remote add upstream https://github.com/constanline/XQuickEnergy.git
-          git fetch upstream master -- upstream-master
       - name: Check for updates
         run: |
           git diff --exit-code upstream-master HEAD && echo "UPDATES_FOUND=false" >> $GITHUB_ENV || echo "UPDATES_FOUND=true" >> $GITHUB_ENV
-      - name: Switch to upstream-master branch
+      - name: Fetch changes from upstream branch
         if: env.UPDATES_FOUND == 'true'
-        run: git checkout upstream-master
+        run: |
+          git remote add upstream https://github.com/constanline/XQuickEnergy.git
+          git fetch upstream master:upstream-master
+          git reset --hard upstream-master
       - name: Get latest commit message and author of upstream repository
-        if: env.UPDATES_FOUND == 'true'
         run: |
           LATEST_COMMIT_AUTHOR_UPSTREAM=$(git log -1 --pretty=format:"%an")
           LATEST_COMMIT_TITLE_UPSTREAM=$(git log -1 --pretty=format:"%s")
@@ -44,9 +42,6 @@ jobs:
           echo "AUTHOR_UPSTREAM=$LATEST_COMMIT_AUTHOR_UPSTREAM" >> $GITHUB_ENV
           echo "TITLE_UPSTREAM=$LATEST_COMMIT_TITLE_UPSTREAM" >> $GITHUB_ENV
           echo "CONTENT_UPSTREAM=$LATEST_COMMIT_CONTENT_UPSTREAM" >> $GITHUB_ENV
-      - name: Reset the default branch with upstream changes
-        if: env.UPDATES_FOUND == 'true'
-        run: git reset --hard upstream-master
       - name: Create Pull Request
         if: env.UPDATES_FOUND == 'true'
         uses: peter-evans/create-pull-request@v5.0.2
