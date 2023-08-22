@@ -24,6 +24,7 @@ jobs:
           git diff --exit-code upstream-master HEAD && echo "UPDATES_FOUND=false" >> $GITHUB_ENV || echo "UPDATES_FOUND=true" >> $GITHUB_ENV
       - name: Fetch changes from upstream branch
         if: env.UPDATES_FOUND == 'true'
+        run: |
           git fetch upstream master:upstream-master
           git reset --hard upstream-master
       - name: Get all information on the latest commit day of upstream repository
