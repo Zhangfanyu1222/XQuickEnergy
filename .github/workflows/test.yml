@@ -1,8 +1,9 @@
 name: Automatically keep up to date with upstream
 
 on:
-  schedule:
-    - cron: '0 4,10,16 * * *'
+  push:
+    branches:
+      - master
 
 jobs:
   update:
@@ -27,7 +28,7 @@ jobs:
       - name: Fetch changes from upstream branch
         run: |
           git remote add upstream https://github.com/constanline/XQuickEnergy.git
-          git fetch upstream master:upstream-master
+          git fetch upstream master -- upstream-master
       - name: Check for updates
         run: |
           git diff --exit-code upstream-master HEAD && echo "UPDATES_FOUND=false" >> $GITHUB_ENV || echo "UPDATES_FOUND=true" >> $GITHUB_ENV
