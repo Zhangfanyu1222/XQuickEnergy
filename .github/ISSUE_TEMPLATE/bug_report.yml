@@ -3,6 +3,9 @@ description: Questions and bugs report must be submitted using this template / é
 labels: [ bug ]
 title: "[Questions and Bugs Report] (Briefly describe the cause of the problem)"
 body:
+labels: [ bug ]
+title: "[Questions and Bugs Report] (Briefly describe the cause of the problem)"
+body:
   - type: markdown
     attributes:
       value: |
