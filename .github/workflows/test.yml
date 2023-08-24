@@ -48,6 +48,7 @@ jobs:
           labels: automerge
       - name: Automerge
         id: merge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: "pascalgn/automerge-action@v0.15.6"
         env:
           GITHUB_TOKEN: "${{ secrets.LONGLONG }}"
@@ -67,32 +68,6 @@ jobs:
         uses: actions/checkout@v3.5.3
         with:
           fetch-depth: 0
-      - name: Get versionName from build.gradle
-        id: version
-        run: |
-          VERSION_NAME=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
-          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-      - name: Check if tag exists and Set tag name
-        id: tag
-        run: |
-          TAG_EXISTS=$(git ls-remote --tags origin refs/tags/$VERSION_NAME)
-          if [ -z "$TAG_EXISTS" ]; then
-            echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          else
-            TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d_%H-%M-%S')
-            echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
-          fi
-      - name: Create Tag and Release
-        id: release
-        if: env.UPDATES_FOUND == 'true'
-        uses: softprops/action-gh-release@v0.1.15
-        env:
-          GITHUB_TOKEN: ${{ secrets.LONGLONG }}
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          name: ${{ env.TAG_NAME }}
-          draft: false
-          prerelease: false
       - name: Setup Java JDK
         uses: actions/setup-java@v3.12.0
         with:
@@ -110,7 +85,7 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         id: build
-        if: steps.release.outcome == 'success'
+        if: steps.cpr.outputs.pull-request-operation == 'created'
         run: ./gradlew assembleRelease --build-cache --parallel --no-daemon --warning-mode all
       - name: Sign app APK
         id: sign
@@ -123,6 +98,21 @@ jobs:
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           buildToolsVersion: 33.0.0
+      - name: Get versionName from build.gradle
+        id: version
+        run: |
+          VERSION_NAME=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+      - name: Check if tag exists and Set tag name
+        id: tag
+        run: |
+          TAG_EXISTS=$(git ls-remote --tags origin refs/tags/$VERSION_NAME)
+          if [ -z "$TAG_EXISTS" ]; then
+            echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          else
+            TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d_%H-%M-%S')
+            echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
+          fi
       - name: Upload Apk to Release Action
         if: steps.sign.outcome == 'success'
         uses: svenstaro/upload-release-action@2.7.0
@@ -131,3 +121,5 @@ jobs:
           file: ${{ steps.sign_app.outputs.signedFile }}
           asset_name: xqe-sesame_longlong-signed-${{ env.TAG_NAME }}.apk
           tag: ${{ env.TAG_NAME }}
+          release_name: ${{ env.TAG_NAME }}
+          body: ${{ env.LATEST_COMMIT_MESSAGE }}
