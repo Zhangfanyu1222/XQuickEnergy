@@ -1,0 +1,133 @@
+name: Automatically keep up to date with upstream
+
+on:
+  schedule:
+    - cron: '0 4,10,16 * * *'
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3.5.3
+        with:
+          repository: Zhangfanyu1222/XQuickEnergy
+      - name: Enable sparse-checkout
+        run: |
+          git config core.sparseCheckout true
+          echo "/*" > .git/info/sparse-checkout
+          echo "!/.github" >> .git/info/sparse-checkout
+          echo "!/README.md" >> .git/info/sparse-checkout
+      - name: Check for updates
+        run: |
+          git remote add upstream https://github.com/constanline/XQuickEnergy.git
+          git fetch upstream master:upstream-master
+          git diff --exit-code upstream-master HEAD && echo "UPDATES_FOUND=false" >> $GITHUB_ENV || echo "UPDATES_FOUND=true" >> $GITHUB_ENV
+      - name: Reset the default branch with upstream changes
+        if: env.UPDATES_FOUND == 'true'
+        run: |
+          git reset --hard upstream-master
+      - name: Get Latest Commit Message
+        run: |
+          LATEST_COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s" upstream-master)
+          echo "LATEST_COMMIT_MESSAGE=\"$LATEST_COMMIT_MESSAGE\"" >> $GITHUB_ENV
+      - name: Create Pull Request
+        id: cpr
+        if: env.UPDATES_FOUND == 'true'
+        uses: peter-evans/create-pull-request@v5.0.2
+        with:
+          token: ${{ secrets.LONGLONG }}
+          committer: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: upstream-changes
+          delete-branch: true
+          title: "Merge branch 'constanline:master' into master"
+          body: |
+            Automated changes by [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub action
+            ---
+            ${{ env.LATEST_COMMIT_MESSAGE }}
+      - name: Automerge
+        id: merge
+        uses: "pascalgn/automerge-action@v0.15.6"
+        env:
+          GITHUB_TOKEN: "${{ secrets.LONGLONG }}"
+          MERGE_METHOD: "rebase"
+          MERGE_COMMIT_MESSAGE: "pull-request-title-and-description"
+          MERGE_DELETE_BRANCH: "true"
+          MERGE_RETRIES: "6"
+          MERGE_RETRY_SLEEP: "6000"
+          UPDATE_METHOD: "rebase"
+          PULL_REQUEST: "${{ steps.cpr.outputs.pull-request-number }}"
+      - name: Auto approve
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: gh pr review --approve "${{ steps.cpr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.LONGLONG }}
+      - name: Checkout Code
+        uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+      - name: Get versionName from build.gradle
+        id: version
+        run: |
+          VERSION_NAME=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+      - name: Check if tag exists and Set tag name
+        id: tag
+        run: |
+          TAG_EXISTS=$(git ls-remote --tags origin refs/tags/$VERSION_NAME)
+          if [ -z "$TAG_EXISTS" ]; then
+            echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          else
+            TIMESTAMP=$(TZ="Asia/Shanghai" date +'%Y-%m-%d_%H-%M-%S')
+            echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
+          fi
+      - name: Create Tag and Release
+        id: release
+        if: env.UPDATES_FOUND == 'true'
+        uses: softprops/action-gh-release@v0.1.15
+        env:
+          GITHUB_TOKEN: ${{ secrets.LONGLONG }}
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          name: ${{ env.TAG_NAME }}
+          draft: false
+          prerelease: false
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.12.0
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Cache Gradle Dependencies
+        uses: actions/cache@v3.3.1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        id: build
+        if: steps.release.outcome == 'success'
+        run: ./gradlew assembleRelease --build-cache --parallel --no-daemon --warning-mode all
+      - name: Sign app APK
+        id: sign
+        if: steps.build.outcome == 'success'
+        uses: ilharp/sign-android-release@v1.0.4
+        with:
+          releaseDir: app/build/outputs/apk/release/
+          signingKey: ${{ secrets.ANDROID_SIGNING_KEY }}
+          keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          buildToolsVersion: 33.0.0
+      - name: Upload Apk to Release Action
+        if: steps.sign.outcome == 'success'
+        uses: svenstaro/upload-release-action@2.7.0
+        with:
+          repo_token: ${{ secrets.LONGLONG }}
+          file: ${{ steps.sign_app.outputs.signedFile }}
+          asset_name: xqe-sesame_longlong-signed-${{ env.TAG_NAME }}.apk
+          tag: ${{ env.TAG_NAME }}
