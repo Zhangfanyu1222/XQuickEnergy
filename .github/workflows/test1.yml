@@ -33,11 +33,9 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         id: build
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         run: ./gradlew assembleRelease --build-cache --parallel --no-daemon --warning-mode all
       - name: Sign app APK
         id: sign
-        if: steps.build.outcome == 'success'
         uses: ilharp/sign-android-release@v1.0.4
         with:
           releaseDir: app/build/outputs/apk/release/
@@ -62,7 +60,6 @@ jobs:
             echo "TAG_NAME=$TIMESTAMP" >> $GITHUB_ENV
           fi
       - name: Upload Apk to Release Action
-        if: steps.sign.outcome == 'success'
         uses: svenstaro/upload-release-action@2.7.0
         with:
           repo_token: ${{ secrets.LONGLONG }}
