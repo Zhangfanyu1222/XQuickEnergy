@@ -60,3 +60,8 @@ fastlane/test_output
 fastlane/readme.md
 
 Xposed-Modules-Repo/
+
+# Documents for personal use
+.github/
+.gitignore
+*.md
