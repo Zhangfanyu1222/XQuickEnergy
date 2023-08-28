@@ -1,0 +1,61 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '*/10 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  fork:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3.6.0
+        with:
+          fetch-depth: 0
+      - name: Enable sparse-checkout
+        run: |
+          git config core.sparseCheckout true
+          echo "/*" > .git/info/sparse-checkout
+          echo "!/.github/" >> .git/info/sparse-checkout
+          echo "!/.gitignore" >> .git/info/sparse-checkout
+          echo "!/README.md" >> .git/info/sparse-checkout
+      - name: Check for updates
+        run: |
+          git remote add upstream https://github.com/constanline/XQuickEnergy.git
+          git fetch upstream master:upstream-master
+          git reset --hard upstream-master
+      - name: Get Latest Commit Message
+        run: |
+          LATEST_COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s" upstream-master)
+          echo "LATEST_COMMIT_MESSAGE=\"$LATEST_COMMIT_MESSAGE\"" >> $GITHUB_ENV
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5.0.2
+        with:
+          token: ${{ secrets.LONGLONG }}
+          committer: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: upstream-changes
+          delete-branch: true
+          title: "Merge branch 'constanline:master' into master"
+          body: ${{ env.LATEST_COMMIT_MESSAGE }}
+          labels: automerge
+      - name: Automerge
+        id: merge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: "pascalgn/automerge-action@v0.15.6"
+        env:
+          GITHUB_TOKEN: "${{ secrets.LONGLONG }}"
+          MERGE_METHOD: "rebase"
+          MERGE_COMMIT_MESSAGE: "pull-request-title-and-description"
+          MERGE_DELETE_BRANCH: "true"
+          MERGE_RETRIES: "6"
+          MERGE_RETRY_SLEEP: "6000"
+          UPDATE_METHOD: "rebase"
+          PULL_REQUEST: "${{ steps.cpr.outputs.pull-request-number }}"
+      - name: Auto approve
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: gh pr review --approve "${{ steps.cpr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.LONGLONG }}
