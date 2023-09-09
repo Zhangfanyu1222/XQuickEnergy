@@ -217,6 +217,20 @@
 						android:minHeight="50dp"
 						android:id="@+id/sw_collectWateringBubble" />
 
+					<Button
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						style="?android:attr/buttonBarButtonStyle"
+						android:text="@string/don_t_collect_list"
+						android:textAllCaps="false"
+						android:onClick="onClick"
+						android:minHeight="50dp"
+						android:gravity="start|center_vertical"
+						android:background="@drawable/button"
+						android:id="@+id/btn_dontCollectList"
+						android:paddingStart="@dimen/setting_item_padding"
+						android:paddingEnd="@dimen/setting_item_padding"/>
+
 					<Switch
 						android:paddingStart="@dimen/setting_item_padding"
 						android:paddingEnd="@dimen/setting_item_padding"
@@ -340,20 +354,6 @@
 						android:onClick="onClick"
 						android:minHeight="50dp"
 						android:id="@+id/sw_helpFriendCollect"/>
-
-					<Button
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						style="?android:attr/buttonBarButtonStyle"
-						android:text="@string/don_t_collect_list"
-						android:textAllCaps="false"
-						android:onClick="onClick"
-						android:minHeight="50dp"
-						android:gravity="start|center_vertical"
-						android:background="@drawable/button"
-						android:id="@+id/btn_dontCollectList"
-						android:paddingStart="@dimen/setting_item_padding"
-						android:paddingEnd="@dimen/setting_item_padding"/>
 
 					<Button
 						android:layout_width="match_parent"

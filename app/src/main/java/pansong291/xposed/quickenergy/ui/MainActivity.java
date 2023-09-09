@@ -80,24 +80,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         tvStatistics = findViewById(R.id.tv_statistics);
-//        Button btnGithub = findViewById(R.id.btn_github);
-//        DisplayMetrics metrics = this.getResources().getDisplayMetrics();
-//        int height = metrics.heightPixels;
-
-        try {
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            version = " v" + packageInfo.versionName;
-        } catch (PackageManager.NameNotFoundException ignored) {
-        }
-        this.setTitle(this.getTitle() + version);
-
-        setModuleActive(isExpModuleActive(this));
         PermissionUtil.requestPermissions(this);
-        new AlertDialog.Builder(this)
-                .setTitle("提示")
-                .setMessage("本APP是为了学习研究开发，免费提供，不得进行任何形式的转发、发布、传播。请于24小时内卸载本APP。如果您是购买的可能已经被骗，请联系卖家退款。")
-                .setNegativeButton("我知道了", null)
-                .create().show();
     }
 
     @Override
@@ -146,55 +129,6 @@ public class MainActivity extends Activity {
         Intent it = new Intent(this, HtmlViewerActivity.class);
         it.setData(Uri.parse(data));
         startActivity(it);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        int state = getPackageManager()
-                .getComponentEnabledSetting(new ComponentName(this, getClass().getCanonicalName() + "Alias"));
-        menu.add(0, 1, 0, R.string.hide_the_application_icon)
-                .setCheckable(true)
-                .setChecked(state > PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
-        menu.add(0, 2, 0, R.string.export_the_statistic_file);
-        menu.add(0, 3, 0, R.string.import_the_statistic_file);
-        menu.add(0, 4, 0, R.string.settings);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 1:
-                int state = item.isChecked() ? PackageManager.COMPONENT_ENABLED_STATE_DEFAULT : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-                getPackageManager()
-                        .setComponentEnabledSetting(new ComponentName(this, getClass().getCanonicalName() + "Alias"), state, PackageManager.DONT_KILL_APP);
-                item.setChecked(!item.isChecked());
-                break;
-
-            case 2:
-                if (FileUtils.copyTo(FileUtils.getStatisticsFile(), FileUtils.getExportedStatisticsFile()))
-                    Toast.makeText(this, "导出成功！", Toast.LENGTH_SHORT).show();
-                break;
-
-            case 3:
-                if (FileUtils.copyTo(FileUtils.getExportedStatisticsFile(), FileUtils.getStatisticsFile())) {
-                    tvStatistics.setText(Statistics.getText());
-                    Toast.makeText(this, "导入成功！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-
-            case 4:
-                startActivity(new Intent(this, SettingsActivity.class));
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setModuleActive(boolean b) {
-//        ImageView ivUnactivated = findViewById(R.id.iv_unactivated);
-//        ivUnactivated.setVisibility(b ? View.GONE : View.VISIBLE);
-
-        this.setTitle(this.getTitle() + (b ? "【已激活】" : "【未激活】"));
     }
 
 }

@@ -18,7 +18,7 @@
     <string name="return_water_18">返水18g</string>
     <string name="return_water_10">返水10g</string>
     <string name="help_friend_collect">复活好友能量</string>
-    <string name="don_t_help_collect_list">不复活好友能量名单</string>
+    <string name="don_t_help_collect_list">复活好友能量名单</string>
     <string name="don_t_collect_list">不收取能量名单</string>
     <string name="receive_forest_task_award">收取森林任务奖励</string>
     <string name="water_friend_list">好友浇水列表</string>
