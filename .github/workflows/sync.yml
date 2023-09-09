@@ -1,0 +1,52 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '*/10 10,15 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3.6.0
+        with:
+          fetch-depth: 0
+      - name: Backup files
+        run: |
+          tar -czvf backup.tar.gz delete.jpg README.md .github/
+      - name: Prepare git configuration
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+      - name: Check for updates
+        run: |
+          git remote add upstream https://github.com/constanline/XQuickEnergy.git
+          git fetch upstream
+          UPSTREAM_COMMIT=$(git rev-parse upstream/master)
+          UPSTREAM_COMMIT_MESSAGES=$(git log --since="1 day ago" --pretty=format:"%s" upstream/master | tr '\n' ':seedling:')
+          LOCAL_COMMIT=$(git log --author="Magical Yang <constanline@hotmail.com>" --pretty=format:"%H" | head -n 1)
+          if [[ "$UPSTREAM_COMMIT" != "$LOCAL_COMMIT" ]]; then
+            echo "UPDATES_FOUND=true" >> $GITHUB_ENV
+            echo "UPSTREAM_COMMIT_MESSAGES=\"$UPSTREAM_COMMIT_MESSAGES\"" >> $GITHUB_ENV
+          else
+            echo "UPDATES_FOUND=false" >> $GITHUB_ENV
+          fi
+      - name: Hard reset to upstream changes
+        if: env.UPDATES_FOUND == 'true'
+        run: |
+          git checkout master
+          git reset --hard upstream/master
+      - name: Restore files from backup
+        if: env.UPDATES_FOUND == 'true'
+        run: |
+          tar -xzvf backup.tar.gz
+          git add delete.jpg README.md .github/
+          git commit -m "Restored backed up files"
+      - name: Force push to origin
+        if: env.UPDATES_FOUND == 'true'
+        run: |
+          git push origin master --force
+          sleep 30
