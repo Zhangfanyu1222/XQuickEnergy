@@ -42,7 +42,6 @@ public class Config {
     public static final String jn_timeoutType = "timeoutType";
     public static final String jn_startAt7 = "startAt7";
     public static final String jn_enableOnGoing = "enableOnGoing";
-    public static final String jn_backupRuntime = "backupRuntime";
 
     /* forest */
     public static final String jn_collectEnergy = "collectEnergy";
@@ -160,7 +159,6 @@ public class Config {
     private XposedHook.StayAwakeType timeoutType;
     private boolean startAt7;
     private boolean enableOnGoing;
-    private boolean backupRuntime;
 
     /* forest */
     private boolean collectEnergy;
@@ -384,15 +382,6 @@ public class Config {
 
     public static boolean enableOnGoing() {
         return getConfig().enableOnGoing;
-    }
-
-    public static void setBackupRuntime(boolean b) {
-        getConfig().backupRuntime = b;
-        hasChanged = true;
-    }
-
-    public static boolean backupRuntime() {
-        return getConfig().backupRuntime;
     }
 
     /* forest */
@@ -1306,7 +1295,6 @@ public class Config {
         c.timeoutType = XposedHook.StayAwakeType.ALARM;
         c.startAt7 = false;
         c.enableOnGoing = false;
-        c.backupRuntime = false;
 
         c.collectEnergy = false;
         c.collectWateringBubble = true;
@@ -1484,9 +1472,6 @@ public class Config {
 
             config.enableOnGoing = jo.optBoolean(jn_enableOnGoing, false);
             Log.i(TAG, jn_enableOnGoing + ":" + config.enableOnGoing);
-
-            config.backupRuntime = jo.optBoolean(jn_backupRuntime, false);
-            Log.i(TAG, jn_backupRuntime + ":" + config.backupRuntime);
 
             /* forest */
             config.collectEnergy = jo.optBoolean(jn_collectEnergy, false);
@@ -1967,8 +1952,6 @@ public class Config {
             jo.put(jn_startAt7, config.startAt7);
 
             jo.put(jn_enableOnGoing, config.enableOnGoing);
-
-            jo.put(jn_backupRuntime, config.backupRuntime);
 
             /* forest */
             jo.put(jn_collectEnergy, config.collectEnergy);

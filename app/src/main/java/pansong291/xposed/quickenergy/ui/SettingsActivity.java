@@ -42,7 +42,7 @@ public class SettingsActivity extends Activity {
             sw_ExchangeEnergyDoubleClick, sw_reserve, sw_ecoLifeTick, sw_tiyubiz, sw_insBlueBeanExchange,
             sw_ancientTree, sw_ancientTreeOnlyWeek, sw_receiveCoinAsset, sw_antdodoCollect, sw_recordFarmGame, sw_beach,
             sw_kitchen, sw_antOcean, sw_userPatrol, sw_animalConsumeProp, sw_antOrchard, sw_receiveOrchardTaskAward,
-            sw_enableOnGoing, sw_backupRuntime, sw_collectSesame, sw_zcjSignIn, sw_merchantKmdk, sw_acceptGift,
+            sw_enableOnGoing, sw_collectSesame, sw_zcjSignIn, sw_merchantKmdk, sw_acceptGift,
             sw_enableStall, sw_stallAutoClose, sw_stallAutoOpen, sw_stallAutoTask, sw_stallReceiveAward,
             sw_stallOpenType, sw_stallDonate, sw_chickenDiary, sw_collectGiftBox, sw_stallInviteRegister,
             sw_stallThrowManure, sw_greenFinance;
@@ -161,7 +161,6 @@ public class SettingsActivity extends Activity {
         sw_timeoutRestart = findViewById(R.id.sw_timeoutRestart);
         sw_startAt7 = findViewById(R.id.sw_startAt7);
         sw_enableOnGoing = findViewById(R.id.sw_enableOnGoing);
-        sw_backupRuntime = findViewById(R.id.sw_backupRuntime);
 
         sw_collectEnergy = findViewById(R.id.sw_collectEnergy);
         sw_collectWateringBubble = findViewById(R.id.sw_collectWateringBubble);
@@ -234,7 +233,6 @@ public class SettingsActivity extends Activity {
         sw_timeoutRestart.setChecked(Config.timeoutRestart());
         sw_startAt7.setChecked(Config.startAt7());
         sw_enableOnGoing.setChecked(Config.enableOnGoing());
-        sw_backupRuntime.setChecked(Config.backupRuntime());
 
         sw_collectEnergy.setChecked(Config.collectEnergy());
         sw_collectWateringBubble.setChecked(Config.collectWateringBubble());
@@ -328,10 +326,6 @@ public class SettingsActivity extends Activity {
 
                 case R.id.sw_enableOnGoing:
                     Config.setEnableOnGoing(sw.isChecked());
-                    break;
-
-                case R.id.sw_backupRuntime:
-                    Config.setBackupRuntime(sw.isChecked());
                     break;
 
                 case R.id.sw_collectEnergy:
