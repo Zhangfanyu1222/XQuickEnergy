@@ -94,7 +94,7 @@ public class EditDialog {
 
                                         case COLLECT_TIMEOUT:
                                             if (i > 0)
-                                                Config.setCollectTimeout(i * 1_000);
+                                                Config.setCollectTimeout(i);
                                             break;
 
                                         case RETURN_WATER_30:
@@ -210,7 +210,7 @@ public class EditDialog {
                 break;
 
             case COLLECT_TIMEOUT:
-                str = String.valueOf(Config.collectTimeout() / 1_000);
+                str = String.valueOf(Config.collectTimeout());
                 break;
 
             case RETURN_WATER_30:

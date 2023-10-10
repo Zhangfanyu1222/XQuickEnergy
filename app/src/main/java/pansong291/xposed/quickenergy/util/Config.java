@@ -42,7 +42,6 @@ public class Config {
     public static final String jn_timeoutType = "timeoutType";
     public static final String jn_startAt7 = "startAt7";
     public static final String jn_enableOnGoing = "enableOnGoing";
-    public static final String jn_backupRuntime = "backupRuntime";
     public static final String jn_languageSimplifiedChinese = "languageSimplifiedChinese";
 
     /* forest */
@@ -164,7 +163,6 @@ public class Config {
     private XposedHook.StayAwakeType timeoutType;
     private boolean startAt7;
     private boolean enableOnGoing;
-    private boolean backupRuntime;
     private boolean languageSimplifiedChinese;
 
 
@@ -396,18 +394,9 @@ public class Config {
         return getConfig().enableOnGoing;
     }
 
-    public static void setBackupRuntime(boolean b) {
-        getConfig().backupRuntime = b;
-        hasChanged = true;
-    }
-
     public static void setLanguageSimplifiedChinese(boolean b) {
         getConfig().languageSimplifiedChinese = b;
         hasChanged = true;
-    }
-
-    public static boolean backupRuntime() {
-        return getConfig().backupRuntime;
     }
 
     public static boolean languageSimplifiedChinese() {
@@ -1347,7 +1336,6 @@ public class Config {
         c.timeoutType = XposedHook.StayAwakeType.ALARM;
         c.startAt7 = false;
         c.enableOnGoing = false;
-        c.backupRuntime = false;
         c.languageSimplifiedChinese = false;
 
         c.collectEnergy = false;
@@ -1529,9 +1517,6 @@ public class Config {
 
             config.enableOnGoing = jo.optBoolean(jn_enableOnGoing, false);
             //Log.i(TAG, jn_enableOnGoing + ":" + config.enableOnGoing);
-
-            config.backupRuntime = jo.optBoolean(jn_backupRuntime, false);
-            //Log.i(TAG, jn_backupRuntime + ":" + config.backupRuntime);
 
             config.languageSimplifiedChinese = jo.optBoolean(jn_languageSimplifiedChinese, false);
             //Log.i(TAG, jn_languageSimplifiedChinese + ":" + config.languageSimplifiedChinese);
@@ -2026,8 +2011,6 @@ public class Config {
             jo.put(jn_startAt7, config.startAt7);
 
             jo.put(jn_enableOnGoing, config.enableOnGoing);
-
-            jo.put(jn_backupRuntime, config.backupRuntime);
 
             jo.put(jn_languageSimplifiedChinese, config.languageSimplifiedChinese);
 

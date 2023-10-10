@@ -128,7 +128,7 @@ public class XposedHook implements IXposedHookLoadPackage {
                     Config.setAlarm7(AntForestToast.context);
                 }
             }
-            AntForestToast.show("芝麻粒加载成功");
+            AntForestToast.show("芝麻粒加载成功\n切换账号记得去关闭保护古树哦~🎐");
             handler.removeCallbacks(runnable);
             AntForest.stop();
             AntForestNotification.stop(service, false);

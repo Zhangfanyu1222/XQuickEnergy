@@ -613,8 +613,6 @@ public class AntForest {
                             restTimes = wateringBubble.getJSONObject("extInfo").optInt("restTimes", 0);
                             if (wateringBubble.getBoolean("canProtect")) {
                                 if (Config.getDontHelpCollectList().contains(userId)) {
-                                    Log.recordLog("不复活[" + FriendIdMap.getNameById(userId) + "]", "");
-                                } else {
                                     JSONObject joProtect = new JSONObject(AntForestRpcCall.protectBubble(userId));
                                     if ("SUCCESS".equals(joProtect.getString("resultCode"))) {
                                         int vitalityAmount = joProtect.optInt("vitalityAmount", 0);
@@ -625,8 +623,10 @@ public class AntForest {
                                         totalHelpCollected += fullEnergy;
                                         Statistics.addData(Statistics.DataType.HELPED, fullEnergy);
                                     } else {
-                                        Log.recordLog(joProtect.getString("resultDesc"), joProtect.toString());
+                                        Log.recordLog(jo.getString("resultDesc"), s);
                                     }
+                                } else {
+                                    Log.recordLog("不复活[" + FriendIdMap.getNameById(userId) + "]", "");
                                 }
                             }
                             break;
