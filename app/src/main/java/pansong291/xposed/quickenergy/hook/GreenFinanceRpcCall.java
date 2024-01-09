@@ -1,6 +1,7 @@
 package pansong291.xposed.quickenergy.hook;
 
 import org.json.JSONArray;
+
 import pansong291.xposed.quickenergy.util.FriendIdMap;
 
 public class GreenFinanceRpcCall {

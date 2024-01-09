@@ -9,24 +9,6 @@ import java.util.Map;
  */
 public class PluginUtils {
     private static final Map<String, AbsPlugin> pluginMap = new HashMap<>();
-    public static abstract class AbsPlugin {
-
-        protected void onInit() {
-
-        }
-
-        protected void onStart() {
-
-        }
-
-        protected void onStop() {
-
-        }
-    }
-
-    public enum PluginAction {
-        INIT, START, STOP
-    }
 
     public static void invoke(Class<?> cls, PluginAction action) {
         String pluginName = "pansong291.xposed.quickenergy.plugin." + cls.getSimpleName() + "Plugin";
@@ -59,6 +41,25 @@ public class PluginUtils {
             }
         } catch (Throwable e) {
             Log.printStackTrace(pluginName, e);
+        }
+    }
+
+    public enum PluginAction {
+        INIT, START, STOP
+    }
+
+    public static abstract class AbsPlugin {
+
+        protected void onInit() {
+
+        }
+
+        protected void onStart() {
+
+        }
+
+        protected void onStop() {
+
         }
     }
 }

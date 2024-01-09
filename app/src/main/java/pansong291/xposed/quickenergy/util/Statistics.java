@@ -1,103 +1,14 @@
 package pansong291.xposed.quickenergy.util;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 public class Statistics {
-    public enum TimeType {
-        YEAR, MONTH, DAY
-    }
-
-    public enum DataType {
-        TIME, COLLECTED, HELPED, WATERED
-    }
-
-    private static class TimeStatistics {
-        int time;
-        int collected, helped, watered;
-
-        TimeStatistics(int i) {
-            reset(i);
-        }
-
-        public void reset(int i) {
-            time = i;
-            collected = 0;
-            helped = 0;
-            watered = 0;
-        }
-    }
-
-    private static class WaterFriendLog {
-        String userId;
-        int waterCount = 0;
-
-        public WaterFriendLog(String id) {
-            userId = id;
-        }
-    }
-
-    private static class ReserveLog {
-        String projectId;
-        int applyCount = 0;
-
-        public ReserveLog(String id) {
-            projectId = id;
-        }
-    }
-
-    private static class BeachLog {
-        String cultivationCode;
-        int applyCount = 0;
-
-        public BeachLog(String id) {
-            cultivationCode = id;
-        }
-    }
-
-    private static class FeedFriendLog {
-        String userId;
-        int feedCount = 0;
-
-        public FeedFriendLog(String id) {
-            userId = id;
-        }
-    }
-
-    private static class VisitFriendLog {
-        String userId;
-        int visitCount = 0;
-
-        public VisitFriendLog(String id) {
-            userId = id;
-        }
-    }
-
-    private static class StallShareIdLog {
-        String userId;
-        String shareId;
-
-        public StallShareIdLog(String uid, String sid) {
-            userId = uid;
-            shareId = sid;
-        }
-    }
-
-    private static class StallHelpedCountLog {
-        String userId;
-        int helpedCount = 0;
-        int beHelpedCount = 0;
-
-        public StallHelpedCountLog(String id) {
-            userId = id;
-        }
-    }
-
     private static final String TAG = Statistics.class.getCanonicalName();
     private static final String jn_year = "year", jn_month = "month", jn_day = "day",
             jn_collected = "collected", jn_helped = "helped", jn_watered = "watered",
@@ -110,11 +21,10 @@ public class Statistics {
             jn_spreadManureList = "spreadManureList", jn_protectBubbleList = "protectBubbleList",
             jn_stallShareIdList = "stallShareIdList", jn_stallP2PHelpedList = "stallP2PHelpedList",
             jn_stallHelpedCountList = "stallHelpedCountList";
-
+    private static Statistics statistics;
     private TimeStatistics year;
     private TimeStatistics month;
     private TimeStatistics day;
-
     // forest
     private ArrayList<WaterFriendLog> waterFriendLogList;
     private ArrayList<String> cooperateWaterList;
@@ -128,7 +38,6 @@ public class Statistics {
     private int exchangeDoubleCard = 0;
     private int exchangeTimes = 0;
     private int doubleTimes = 0;
-
     // farm
     private ArrayList<String> answerQuestionList;
     private String questionHint;
@@ -140,12 +49,9 @@ public class Statistics {
     private ArrayList<String> donationEggList;
     private ArrayList<String> spreadManureList;
     private ArrayList<String> stallP2PHelpedList;
-
     // other
     private ArrayList<String> memberSignInList;
     private int kbSignIn = 0;
-
-    private static Statistics statistics;
 
     public static void addData(DataType dt, int i) {
         Statistics stat = getStatistics();
@@ -778,7 +684,7 @@ public class Statistics {
     }
 
     private static void dayClear() {
-        Log.infoChanged(TAG,"重置 statistics.json");
+        Log.infoChanged(TAG, "重置 statistics.json");
         Statistics stat = getStatistics();
         stat.waterFriendLogList.clear();
         stat.cooperateWaterList.clear();
@@ -1307,8 +1213,97 @@ public class Statistics {
 
     private static void save() {
         String json = statistics2Json(getStatistics());
-        Log.infoChanged(TAG,"保存 statistics.json");
+        Log.infoChanged(TAG, "保存 statistics.json");
         FileUtils.write2File(json, FileUtils.getStatisticsFile());
+    }
+
+    public enum TimeType {
+        YEAR, MONTH, DAY
+    }
+
+    public enum DataType {
+        TIME, COLLECTED, HELPED, WATERED
+    }
+
+    private static class TimeStatistics {
+        int time;
+        int collected, helped, watered;
+
+        TimeStatistics(int i) {
+            reset(i);
+        }
+
+        public void reset(int i) {
+            time = i;
+            collected = 0;
+            helped = 0;
+            watered = 0;
+        }
+    }
+
+    private static class WaterFriendLog {
+        String userId;
+        int waterCount = 0;
+
+        public WaterFriendLog(String id) {
+            userId = id;
+        }
+    }
+
+    private static class ReserveLog {
+        String projectId;
+        int applyCount = 0;
+
+        public ReserveLog(String id) {
+            projectId = id;
+        }
+    }
+
+    private static class BeachLog {
+        String cultivationCode;
+        int applyCount = 0;
+
+        public BeachLog(String id) {
+            cultivationCode = id;
+        }
+    }
+
+    private static class FeedFriendLog {
+        String userId;
+        int feedCount = 0;
+
+        public FeedFriendLog(String id) {
+            userId = id;
+        }
+    }
+
+    private static class VisitFriendLog {
+        String userId;
+        int visitCount = 0;
+
+        public VisitFriendLog(String id) {
+            userId = id;
+        }
+    }
+
+    private static class StallShareIdLog {
+        String userId;
+        String shareId;
+
+        public StallShareIdLog(String uid, String sid) {
+            userId = uid;
+            shareId = sid;
+        }
+    }
+
+    private static class StallHelpedCountLog {
+        String userId;
+        int helpedCount = 0;
+        int beHelpedCount = 0;
+
+        public StallHelpedCountLog(String id) {
+            userId = id;
+        }
     }
 
 }

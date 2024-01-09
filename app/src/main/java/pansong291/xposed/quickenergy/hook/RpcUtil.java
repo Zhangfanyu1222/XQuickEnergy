@@ -1,7 +1,12 @@
 package pansong291.xposed.quickenergy.hook;
 
-import de.robv.android.xposed.XposedHelpers;
 import org.json.JSONObject;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.DateFormat;
+
+import de.robv.android.xposed.XposedHelpers;
 import pansong291.xposed.quickenergy.AntForestNotification;
 import pansong291.xposed.quickenergy.AntForestToast;
 import pansong291.xposed.quickenergy.data.RuntimeInfo;
@@ -9,17 +14,12 @@ import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.Log;
 import pansong291.xposed.quickenergy.util.StringUtil;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.text.DateFormat;
-
 public class RpcUtil {
     private static final String TAG = RpcUtil.class.getCanonicalName();
+    public static volatile boolean isInterrupted = false;
     private static Method rpcCallMethod;
     private static Method getResponseMethod;
     private static Object curH5PageImpl;
-
-    public static volatile boolean isInterrupted = false;
 
     public static void init(ClassLoader loader) {
         if (rpcCallMethod == null) {
@@ -85,7 +85,8 @@ public class RpcUtil {
                     Log.recordLog("系统繁忙，可能需要滑动验证");
                     return str;
                 }
-            } catch (Throwable ignored) { }
+            } catch (Throwable ignored) {
+            }
             return str;
         } catch (Throwable t) {
             Log.i(TAG, "invoke err:");

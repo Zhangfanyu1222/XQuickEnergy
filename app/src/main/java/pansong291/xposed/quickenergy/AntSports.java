@@ -1,9 +1,10 @@
 package pansong291.xposed.quickenergy;
 
-import java.util.HashSet;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashSet;
+
 import pansong291.xposed.quickenergy.hook.AntSportsRpcCall;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.FriendIdMap;
@@ -140,7 +141,7 @@ public class AntSports {
     }
 
     private static void join(ClassLoader loader, JSONArray allPathBaseInfoList, JSONArray otherAllPathBaseInfoList,
-            String firstJoinPathTitle) {
+                             String firstJoinPathTitle) {
         try {
             int index = -1;
             String title = null;
@@ -602,7 +603,7 @@ public class AntSports {
     }
 
     private static void tiyubizGo(String countDate, String title, int goStepCount, String pathId,
-            String userPathRecordId) {
+                                  String userPathRecordId) {
         try {
             String s = AntSportsRpcCall.tiyubizGo(countDate, goStepCount, pathId, userPathRecordId);
             JSONObject jo = new JSONObject(s);

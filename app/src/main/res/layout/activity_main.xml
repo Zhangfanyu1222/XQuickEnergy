@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="6dp"
+    android:background="@color/background"
     android:gravity="center_horizontal"
-    android:background="@color/background">
+    android:orientation="vertical"
+    android:padding="6dp">
 
     <TextView
         android:id="@+id/tv_statistics"
@@ -108,7 +108,6 @@
 
         <Button
             android:id="@+id/btn_friend_watch"
-            android:textAllCaps="false"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -124,12 +123,12 @@
             android:paddingBottom="10dp"
             android:text="@string/friend_watch"
             android:textAlignment="gravity"
+            android:textAllCaps="false"
             android:textColor="@color/main_button_text"
             android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_github"
-            android:textAllCaps="false"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -145,12 +144,12 @@
             android:paddingBottom="10dp"
             android:text="@string/visit_github"
             android:textAlignment="gravity"
+            android:textAllCaps="false"
             android:textColor="@color/main_button_text"
             android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_settings"
-            android:textAllCaps="false"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,6 +165,7 @@
             android:paddingBottom="10dp"
             android:text="@string/settings"
             android:textAlignment="gravity"
+            android:textAllCaps="false"
             android:textColor="@color/main_button_text"
             android:textSize="14sp" />
     </LinearLayout>

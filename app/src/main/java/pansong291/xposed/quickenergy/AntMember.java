@@ -2,11 +2,12 @@ package pansong291.xposed.quickenergy;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import pansong291.xposed.quickenergy.hook.AntMemberRpcCall;
-import pansong291.xposed.quickenergy.util.Log;
-import pansong291.xposed.quickenergy.util.Statistics;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.FriendIdMap;
+import pansong291.xposed.quickenergy.util.Log;
+import pansong291.xposed.quickenergy.util.Statistics;
 import pansong291.xposed.quickenergy.util.TimeUtil;
 
 public class AntMember {
@@ -254,7 +255,7 @@ public class AntMember {
                 JSONObject jo = new JSONObject(AntMemberRpcCall.queryActivity());
                 if (jo.getBoolean("success")) {
                     String activityNo = jo.getString("activityNo");
-                    if (!Log.getFormatDate().replace("-","").equals(activityNo.split("_")[2]))
+                    if (!Log.getFormatDate().replace("-", "").equals(activityNo.split("_")[2]))
                         break;
                     if ("SIGN_UP".equals(jo.getString("signUpStatus"))) {
                         Log.recordLog("开门打卡今日已报名！");

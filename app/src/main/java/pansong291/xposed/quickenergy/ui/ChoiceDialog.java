@@ -2,6 +2,7 @@ package pansong291.xposed.quickenergy.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
+
 import pansong291.xposed.quickenergy.AntFarm.SendType;
 import pansong291.xposed.quickenergy.R;
 import pansong291.xposed.quickenergy.hook.XposedHook;
@@ -12,20 +13,20 @@ public class ChoiceDialog {
 
     public static void showSendType(Context c, CharSequence title) {
         new AlertDialog.Builder(c)
-            .setTitle(title)
-            .setSingleChoiceItems(SendType.names, Config.sendType().ordinal(),
-                    (p1, p2) -> Config.setSendType(p2))
-            .setPositiveButton(c.getString(R.string.ok), null)
-            .create().show();
+                .setTitle(title)
+                .setSingleChoiceItems(SendType.names, Config.sendType().ordinal(),
+                        (p1, p2) -> Config.setSendType(p2))
+                .setPositiveButton(c.getString(R.string.ok), null)
+                .create().show();
     }
 
     public static void showRecallAnimalType(Context c, CharSequence title) {
         new AlertDialog.Builder(c)
-            .setTitle(title)
-            .setSingleChoiceItems(RecallAnimalType.names, Config.recallAnimalType().ordinal(),
-                    (p1, p2) -> Config.setRecallAnimalType(p2))
-            .setPositiveButton(c.getString(R.string.ok), null)
-            .create().show();
+                .setTitle(title)
+                .setSingleChoiceItems(RecallAnimalType.names, Config.recallAnimalType().ordinal(),
+                        (p1, p2) -> Config.setRecallAnimalType(p2))
+                .setPositiveButton(c.getString(R.string.ok), null)
+                .create().show();
     }
 
     public static void showStayAwakeType(Context c, CharSequence title) {

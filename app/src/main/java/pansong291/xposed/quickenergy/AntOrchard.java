@@ -2,14 +2,22 @@ package pansong291.xposed.quickenergy;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import pansong291.xposed.quickenergy.hook.AntOrchardRpcCall;
-import pansong291.xposed.quickenergy.util.*;
+import pansong291.xposed.quickenergy.util.Config;
+import pansong291.xposed.quickenergy.util.FileUtils;
+import pansong291.xposed.quickenergy.util.Log;
+import pansong291.xposed.quickenergy.util.PluginUtils;
+import pansong291.xposed.quickenergy.util.RandomUtils;
+import pansong291.xposed.quickenergy.util.Statistics;
+import pansong291.xposed.quickenergy.util.StringUtil;
 
 public class AntOrchard {
     private static final String TAG = AntOrchard.class.getCanonicalName();
 
     private static String userId;
     private static String treeLevel;
+    private static String[] wuaList;
 
     public static void start() {
         if (!Config.antOrchard())
@@ -65,8 +73,6 @@ public class AntOrchard {
             }
         }.start();
     }
-
-    private static String[] wuaList;
 
     private static String getWua() {
         if (wuaList == null) {

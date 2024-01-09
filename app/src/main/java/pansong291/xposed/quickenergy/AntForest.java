@@ -1,27 +1,49 @@
 package pansong291.xposed.quickenergy;
 
-import de.robv.android.xposed.XposedHelpers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import de.robv.android.xposed.XposedHelpers;
 import pansong291.xposed.quickenergy.AntFarm.TaskStatus;
 import pansong291.xposed.quickenergy.data.RuntimeInfo;
 import pansong291.xposed.quickenergy.hook.AntForestRpcCall;
 import pansong291.xposed.quickenergy.hook.EcoLifeRpcCall;
 import pansong291.xposed.quickenergy.hook.FriendManager;
 import pansong291.xposed.quickenergy.hook.XposedHook;
-import pansong291.xposed.quickenergy.util.*;
-
-import java.util.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import pansong291.xposed.quickenergy.util.Config;
+import pansong291.xposed.quickenergy.util.FileUtils;
+import pansong291.xposed.quickenergy.util.FriendIdMap;
+import pansong291.xposed.quickenergy.util.Log;
+import pansong291.xposed.quickenergy.util.PluginUtils;
+import pansong291.xposed.quickenergy.util.RandomUtils;
+import pansong291.xposed.quickenergy.util.Statistics;
+import pansong291.xposed.quickenergy.util.StringUtil;
+import pansong291.xposed.quickenergy.util.TimeUtil;
 
 /**
  * 蚂蚁森林
+ *
  * @author Constanline
  */
 public class AntForest {
     private static final String TAG = AntForest.class.getCanonicalName();
+    /**
+     * 记录收集能量时间戳的队列
+     */
+    private static final Queue<Long> collectedQueue = new ArrayDeque<>();
+    private static final Lock limitLock = new ReentrantLock();
+    private static final Lock collectLock = new ReentrantLock();
+    private static final HashSet<Long> waitCollectBubbleIds = new HashSet<>();
+    private static final List<Thread> taskThreads = new ArrayList<>();
     private static String selfId;
     private static int collectedEnergy = 0;
     private static int helpCollectedEnergy = 0;
@@ -31,23 +53,10 @@ public class AntForest {
     private static long serverTime = -1;
     private static long offsetTime = -1;
     private static long laterTime = -1;
-
     private static boolean isScanning = false;
-
-    /**
-     * 记录收集能量时间戳的队列
-     */
-    private static final Queue<Long> collectedQueue = new ArrayDeque<>();
-
-    private static final Lock limitLock = new ReentrantLock();
-
-    private static final Lock collectLock = new ReentrantLock();
-
     private static volatile long lastCollectTime = 0;
-
     private static volatile long doubleEndTime = 0;
-
-    private static final HashSet<Long> waitCollectBubbleIds = new HashSet<>();
+    private static Thread mainThread;
 
     /**
      * 检查是否到达一分钟内收取限制
@@ -56,7 +65,7 @@ public class AntForest {
      * 则清理 {@link #collectedQueue} 中超过1分钟的项，之后检查剩余条目是否多余一分钟收取限制数量
      * {@link Config#getLimitCount}。
      *
-     * @return  如果到达上限，则返回True，否则返回False
+     * @return 如果到达上限，则返回True，否则返回False
      */
     private static boolean checkCollectLimited() {
         if (Config.isLimitCollect()) {
@@ -82,10 +91,6 @@ public class AntForest {
             limitLock.unlock();
         }
     }
-
-    private static Thread mainThread;
-
-    private static final List<Thread> taskThreads = new ArrayList<>();
 
     public static void stop() {
         if (mainThread != null) {
@@ -438,6 +443,28 @@ public class AntForest {
                                     AntForestToast.show(msg);
                                 } else {
                                     Log.recordLog("收取[我]的复活金球失败:" + joEnergy.getString("resultDesc"), str);
+                                }
+                            } else if ("baohuhuizeng".equals(bizType)) {
+                                String friendId = wateringBubble.getString("userId");
+                                String str = AntForestRpcCall.collectEnergy(bizType, selfId,
+                                        wateringBubble.getLong("id"));
+                                JSONObject joEnergy = new JSONObject(str);
+                                if ("SUCCESS".equals(joEnergy.getString("resultCode"))) {
+                                    JSONArray bubbles = joEnergy.getJSONArray("bubbles");
+                                    for (int j = 0; j < bubbles.length(); j++) {
+                                        collected = bubbles.getJSONObject(j).getInt("collectedEnergy");
+                                    }
+                                    if (collected > 0) {
+                                        totalCollected += collected;
+                                        Statistics.addData(Statistics.DataType.COLLECTED, collected);
+                                        String msg = "收取金球🍯[" + FriendIdMap.getNameById(friendId) + "]复活回赠[" + collected + "g]";
+                                        Log.forest(msg);
+                                        AntForestToast.show(msg);
+                                    } else {
+                                        Log.recordLog("收取[" + FriendIdMap.getNameById(friendId) + "]的复活回赠金球失败", "");
+                                    }
+                                } else {
+                                    Log.recordLog("收取[" + FriendIdMap.getNameById(friendId) + "]的复活回赠金球失败:" + joEnergy.getString("resultDesc"), str);
                                 }
                             }
                             Thread.sleep(1000L);
@@ -1313,7 +1340,7 @@ public class AntForest {
                             continue;
                         jo = new JSONObject(EcoLifeRpcCall.tick(actionId, "ALIPAY", dayPoint, isGuangpan));
                         if ("SUCCESS".equals(jo.getString("resultCode"))) {
-                            Log.forest("绿色打卡🍀[" + actionName + "]");
+                            Log.other("绿色打卡🍀[" + actionName + "]");
                         } else {
                             Log.recordLog(jo.getString("resultDesc"), jo.toString());
                         }
@@ -1749,7 +1776,7 @@ public class AntForest {
      * @param produceTime the produce time
      */
     private static void execute(String userId, String bizNo, long bubbleId,
-            long produceTime) {
+                                long produceTime) {
         if (waitCollectBubbleIds.contains(bubbleId)) {
             return;
         }
@@ -1813,7 +1840,7 @@ public class AntForest {
                         XposedHelpers.callStaticMethod(
                                 loader.loadClass("com.alibaba.health.pedometer.intergation.rpc.RpcManager"),
                                 "a"),
-                        "a", new Object[] { step, Boolean.FALSE, "system" });
+                        "a", new Object[]{step, Boolean.FALSE, "system"});
                 if (booleanValue) {
                     Log.other("同步步数🏃🏻‍♂️[" + step + "步]");
                 } else {

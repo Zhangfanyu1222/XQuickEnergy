@@ -2,11 +2,12 @@ package pansong291.xposed.quickenergy.data;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Objects;
+
 import pansong291.xposed.quickenergy.util.FileUtils;
 import pansong291.xposed.quickenergy.util.FriendIdMap;
 import pansong291.xposed.quickenergy.util.Log;
-
-import java.util.Objects;
 
 /**
  * @author Constanline
@@ -14,27 +15,14 @@ import java.util.Objects;
  */
 public class RuntimeInfo {
     private static final String TAG = RuntimeInfo.class.getCanonicalName();
-
-    private static RuntimeInfo instance;
-
     public static String process;
-
+    private static RuntimeInfo instance;
     private final String userId;
 
     private JSONObject joAll;
 
     private JSONObject joCurrent;
 
-    public enum RuntimeInfoKey {
-        ForestPauseTime
-    }
-
-    public static RuntimeInfo getInstance() {
-        if (instance == null || !Objects.equals(instance.userId, FriendIdMap.currentUid)) {
-            instance = new RuntimeInfo();
-        }
-        return instance;
-    }
     private RuntimeInfo() {
         userId = FriendIdMap.currentUid;
         String content = FileUtils.readFromFile(FileUtils.runtimeInfoFile());
@@ -54,6 +42,13 @@ public class RuntimeInfo {
         } catch (Exception ignored) {
             joCurrent = new JSONObject();
         }
+    }
+
+    public static RuntimeInfo getInstance() {
+        if (instance == null || !Objects.equals(instance.userId, FriendIdMap.currentUid)) {
+            instance = new RuntimeInfo();
+        }
+        return instance;
     }
 
     public void save() {
@@ -81,5 +76,9 @@ public class RuntimeInfo {
             Log.printStackTrace(TAG, e);
         }
         save();
+    }
+
+    public enum RuntimeInfoKey {
+        ForestPauseTime
     }
 }

@@ -2,88 +2,27 @@ package pansong291.xposed.quickenergy;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import pansong291.xposed.quickenergy.hook.AntFarmRpcCall;
-import pansong291.xposed.quickenergy.util.*;
-import pansong291.xposed.quickenergy.hook.DadaDailyRpcCall;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+import pansong291.xposed.quickenergy.hook.AntFarmRpcCall;
+import pansong291.xposed.quickenergy.hook.DadaDailyRpcCall;
+import pansong291.xposed.quickenergy.util.Config;
+import pansong291.xposed.quickenergy.util.FriendIdMap;
+import pansong291.xposed.quickenergy.util.Log;
+import pansong291.xposed.quickenergy.util.PluginUtils;
+import pansong291.xposed.quickenergy.util.RandomUtils;
+import pansong291.xposed.quickenergy.util.Statistics;
+import pansong291.xposed.quickenergy.util.StringUtil;
+import pansong291.xposed.quickenergy.util.TimeUtil;
 
 public class AntFarm {
     private static final String TAG = AntFarm.class.getCanonicalName();
-
-    public enum SendType {
-        HIT, NORMAL;
-
-        public static final CharSequence[] nickNames = { "攻击", "常规" };
-        public static final CharSequence[] names = { HIT.nickName(), NORMAL.nickName() };
-
-        public CharSequence nickName() {
-            return nickNames[ordinal()];
-        }
-    }
-
-    public enum AnimalBuff {
-        ACCELERATING, INJURED, NONE
-    }
-
-    public enum AnimalFeedStatus {
-        HUNGRY, EATING, SLEEPY
-    }
-
-    public enum AnimalInteractStatus {
-        HOME, GOTOSTEAL, STEALING
-    }
-
-    public enum SubAnimalType {
-        NORMAL, GUEST, PIRATE, WORK
-    }
-
-    public enum ToolType {
-        STEALTOOL, ACCELERATETOOL, SHARETOOL, FENCETOOL, NEWEGGTOOL;
-
-        public static final CharSequence[] nickNames = { "蹭饭卡", "加速卡", "救济卡", "篱笆卡", "新蛋卡" };
-
-        public CharSequence nickName() {
-            return nickNames[ordinal()];
-        }
-    }
-
-    public enum GameType {
-        starGame, jumpGame, flyGame;
-
-        public static final CharSequence[] gameNames = { "星星球", "登山赛", "飞行赛" };
-
-        public CharSequence gameName() {
-            return gameNames[ordinal()];
-        }
-    }
-
-    private static class Animal {
-        public String animalId, currentFarmId, masterFarmId,
-                animalBuff, subAnimalType, animalFeedStatus, animalInteractStatus;
-        public String locationType;
-
-        public String currentFarmMasterUserId;
-    }
-
-    public enum TaskStatus {
-        TODO, FINISHED, RECEIVED
-    }
-
-    private static class RewardFriend {
-        public String consistencyKey, friendId, time;
-    }
-
-    private static class FarmTool {
-        public ToolType toolType;
-        public String toolId;
-        public int toolCount, toolHoldLimit;
-    }
-
+    private static final List<String> bizKeyList;
     private static String ownerFarmId;
     private static String userId;
     private static Animal[] animals;
@@ -95,10 +34,7 @@ public class AntFarm {
     private static double benevolenceScore;
     private static double harvestBenevolenceScore;
     private static int unreceiveTaskAward = 0;
-
     private static FarmTool[] farmTools;
-
-    private static final List<String> bizKeyList;
 
     static {
         bizKeyList = new ArrayList<>();
@@ -1059,7 +995,7 @@ public class AntFarm {
     }
 
     private static boolean notifyFriend(JSONObject joAnimalStatusVO, String friendFarmId, String animalId,
-            String user) {
+                                        String user) {
         try {
             if (AnimalInteractStatus.STEALING.name().equals(joAnimalStatusVO.getString("animalInteractStatus"))
                     && AnimalFeedStatus.EATING.name().equals(joAnimalStatusVO.getString("animalFeedStatus"))) {
@@ -1450,6 +1386,75 @@ public class AntFarm {
             Log.i(TAG, "queryChickenDiaryList err:");
             Log.printStackTrace(TAG, t);
         }
+    }
+
+    public enum SendType {
+        HIT, NORMAL;
+
+        public static final CharSequence[] nickNames = {"攻击", "常规"};
+        public static final CharSequence[] names = {HIT.nickName(), NORMAL.nickName()};
+
+        public CharSequence nickName() {
+            return nickNames[ordinal()];
+        }
+    }
+
+    public enum AnimalBuff {
+        ACCELERATING, INJURED, NONE
+    }
+
+    public enum AnimalFeedStatus {
+        HUNGRY, EATING, SLEEPY
+    }
+
+    public enum AnimalInteractStatus {
+        HOME, GOTOSTEAL, STEALING
+    }
+
+    public enum SubAnimalType {
+        NORMAL, GUEST, PIRATE, WORK
+    }
+
+    public enum ToolType {
+        STEALTOOL, ACCELERATETOOL, SHARETOOL, FENCETOOL, NEWEGGTOOL;
+
+        public static final CharSequence[] nickNames = {"蹭饭卡", "加速卡", "救济卡", "篱笆卡", "新蛋卡"};
+
+        public CharSequence nickName() {
+            return nickNames[ordinal()];
+        }
+    }
+
+    public enum GameType {
+        starGame, jumpGame, flyGame;
+
+        public static final CharSequence[] gameNames = {"星星球", "登山赛", "飞行赛"};
+
+        public CharSequence gameName() {
+            return gameNames[ordinal()];
+        }
+    }
+
+    public enum TaskStatus {
+        TODO, FINISHED, RECEIVED
+    }
+
+    private static class Animal {
+        public String animalId, currentFarmId, masterFarmId,
+                animalBuff, subAnimalType, animalFeedStatus, animalInteractStatus;
+        public String locationType;
+
+        public String currentFarmMasterUserId;
+    }
+
+    private static class RewardFriend {
+        public String consistencyKey, friendId, time;
+    }
+
+    private static class FarmTool {
+        public ToolType toolType;
+        public String toolId;
+        public int toolCount, toolHoldLimit;
     }
 
 }

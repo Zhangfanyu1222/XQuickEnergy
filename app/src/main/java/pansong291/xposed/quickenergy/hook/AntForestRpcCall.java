@@ -1,24 +1,22 @@
 package pansong291.xposed.quickenergy.hook;
 
-import pansong291.xposed.quickenergy.util.StringUtil;
-
-import pansong291.xposed.quickenergy.util.RandomUtils;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import pansong291.xposed.quickenergy.util.RandomUtils;
+import pansong291.xposed.quickenergy.util.StringUtil;
 
 public class AntForestRpcCall {
 
     private static final String VERSION = "20230925";
 
     private static String getUniqueId() {
-            return String.valueOf(System.currentTimeMillis()) + RandomUtils.nextLong();
+        return String.valueOf(System.currentTimeMillis()) + RandomUtils.nextLong();
     }
 
     public static String fillUserRobFlag(String userIdList) {
-            return RpcUtil.request("alipay.antforest.forest.h5.fillUserRobFlag",
-                            "[{\"userIdList\":" + userIdList + "}]");
+        return RpcUtil.request("alipay.antforest.forest.h5.fillUserRobFlag",
+                "[{\"userIdList\":" + userIdList + "}]");
     }
 
     public static String queryEnergyRanking() {
@@ -54,9 +52,9 @@ public class AntForestRpcCall {
 
     public static String batchRobEnergy(String userId, List<String> bubbleId) {
         String args1;
-            args1 = "[{\"bizType\":\"\",\"bubbleIds\":[" + String.join(",", bubbleId)
-                    + "],\"fromAct\":\"BATCH_ROB_ENERGY\",\"source\":\"chInfo_ch_appcenter__chsub_9patch\",\"userId\":\"" + userId + "\",\"version\":\""
-                    + VERSION + "\"}]";
+        args1 = "[{\"bizType\":\"\",\"bubbleIds\":[" + String.join(",", bubbleId)
+                + "],\"fromAct\":\"BATCH_ROB_ENERGY\",\"source\":\"chInfo_ch_appcenter__chsub_9patch\",\"userId\":\"" + userId + "\",\"version\":\""
+                + VERSION + "\"}]";
         return RpcUtil.request("alipay.antmember.forest.h5.collectEnergy", args1);
     }
 
@@ -237,32 +235,34 @@ public class AntForestRpcCall {
     }
 
     public static String antdodoConsumeProp(String propId, String propType) {
-            return RpcUtil.request("alipay.antdodo.rpc.h5.consumeProp",
-                            "[{\"propId\":\"" + propId + "\",\"propType\":\"" + propType + "\"}]");
+        return RpcUtil.request("alipay.antdodo.rpc.h5.consumeProp",
+                "[{\"propId\":\"" + propId + "\",\"propType\":\"" + propType + "\"}]");
     }
 
     public static String queryBookInfo(String bookId) {
-            return RpcUtil.request("alipay.antdodo.rpc.h5.queryBookInfo",
-                            "[{\"bookId\":\"" + bookId + "\"}]");
+        return RpcUtil.request("alipay.antdodo.rpc.h5.queryBookInfo",
+                "[{\"bookId\":\"" + bookId + "\"}]");
     }
 
     // 送卡片给好友
     public static String antdodoSocial(String targetAnimalId, String targetUserId) {
-            return RpcUtil.request("alipay.antdodo.rpc.h5.social",
-                            "[{\"actionCode\":\"GIFT_TO_FRIEND\",\"source\":\"GIFT_TO_FRIEND_FROM_CC\",\"targetAnimalId\":\""
-                                            + targetAnimalId + "\",\"targetUserId\":\"" + targetUserId
-                                            + "\",\"triggerTime\":\"" + System.currentTimeMillis() + "\"}]");
+        return RpcUtil.request("alipay.antdodo.rpc.h5.social",
+                "[{\"actionCode\":\"GIFT_TO_FRIEND\",\"source\":\"GIFT_TO_FRIEND_FROM_CC\",\"targetAnimalId\":\""
+                        + targetAnimalId + "\",\"targetUserId\":\"" + targetUserId
+                        + "\",\"triggerTime\":\"" + System.currentTimeMillis() + "\"}]");
     }
 
     /* 巡护保护地 */
     public static String queryUserPatrol() {
-            return RpcUtil.request("alipay.antforest.forest.h5.queryUserPatrol",
-                            "[{\"source\":\"ant_forest\",\"timezoneId\":\"Asia/Shanghai\"}]");
+        return RpcUtil.request("alipay.antforest.forest.h5.queryUserPatrol",
+                "[{\"source\":\"ant_forest\",\"timezoneId\":\"Asia/Shanghai\"}]");
     }
+
     public static String queryMyPatrolRecord() {
-            return RpcUtil.request("alipay.antforest.forest.h5.queryMyPatrolRecord",
-                            "[{\"source\":\"ant_forest\",\"timezoneId\":\"Asia/Shanghai\"}]");
+        return RpcUtil.request("alipay.antforest.forest.h5.queryMyPatrolRecord",
+                "[{\"source\":\"ant_forest\",\"timezoneId\":\"Asia/Shanghai\"}]");
     }
+
     public static String switchUserPatrol(String targetPatrolId) {
         return RpcUtil.request("alipay.antforest.forest.h5.switchUserPatrol",
                 "[{\"source\":\"ant_forest\",\"targetPatrolId\":" + targetPatrolId + ",\"timezoneId\":\"Asia/Shanghai\"}]");

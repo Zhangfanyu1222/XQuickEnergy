@@ -1,7 +1,7 @@
 package pansong291.xposed.quickenergy.util;
 
-import java.util.Calendar;
 import java.text.DateFormat;
+import java.util.Calendar;
 
 /**
  * @author Constanline

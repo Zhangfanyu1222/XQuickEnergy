@@ -7,22 +7,34 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import pansong291.xposed.quickenergy.R;
-import pansong291.xposed.quickenergy.entity.IdAndName;
-import pansong291.xposed.quickenergy.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ListAdapter extends BaseAdapter {
-    private static ListAdapter adapter;
+import pansong291.xposed.quickenergy.R;
+import pansong291.xposed.quickenergy.entity.IdAndName;
+import pansong291.xposed.quickenergy.util.Log;
 
+public class ListAdapter extends BaseAdapter {
+    public static List<ViewHolder> viewHolderList;
+    private static ListAdapter adapter;
     private static ListDialog.ListType listType;
+    Context context;
+    List<? extends IdAndName> list;
+    List<String> selects;
+    int findIndex = -1;
+    CharSequence findWord = null;
+
+    private ListAdapter(Context c) {
+        context = c;
+    }
 
     public static ListAdapter get(Context c) {
         if (adapter == null)
             adapter = new ListAdapter(c);
+        adapter.findIndex = -1;
+        adapter.findWord = null;
         return adapter;
     }
 
@@ -32,17 +44,9 @@ public class ListAdapter extends BaseAdapter {
             viewHolderList = new ArrayList<>();
         }
         ListAdapter.listType = listType;
+        adapter.findIndex = -1;
+        adapter.findWord = null;
         return adapter;
-    }
-
-    Context context;
-    List<? extends IdAndName> list;
-    List<String> selects;
-    int findIndex = -1;
-    CharSequence findWord = null;
-
-    private ListAdapter(Context c) {
-        context = c;
     }
 
     public void setBaseList(List<? extends IdAndName> l) {
@@ -66,8 +70,7 @@ public class ListAdapter extends BaseAdapter {
         }
     }
 
-    public int
-    findLast(CharSequence cs) {
+    public int findLast(CharSequence cs) {
         if (list == null || list.isEmpty())
             return -1;
         if (!cs.equals(findWord)) {
@@ -77,7 +80,7 @@ public class ListAdapter extends BaseAdapter {
         int i = findIndex;
         if (i < 0)
             i = list.size();
-        for (;;) {
+        for (; ; ) {
             i = (i + list.size() - 1) % list.size();
             IdAndName ai = list.get(i);
             if (ai.name.contains(cs)) {
@@ -98,7 +101,7 @@ public class ListAdapter extends BaseAdapter {
             findIndex = -1;
             findWord = cs;
         }
-        for (int i = findIndex;;) {
+        for (int i = findIndex; ; ) {
             i = (i + 1) % list.size();
             IdAndName ai = list.get(i);
             if (ai.name.contains(cs)) {
@@ -114,6 +117,26 @@ public class ListAdapter extends BaseAdapter {
 
     public void exitFind() {
         findIndex = -1;
+    }
+
+    public void selectAll() {
+        selects.clear();
+        for (IdAndName ai : list) {
+            selects.add(ai.id);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void SelectInvert() {
+        List<String> newSelects = new ArrayList<>();
+        for (IdAndName ai : list) {
+            if (!selects.contains(ai.id)) {
+                newSelects.add(ai.id);
+            }
+        }
+        selects.clear();
+        selects.addAll(newSelects);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -154,8 +177,6 @@ public class ListAdapter extends BaseAdapter {
         vh.cb.setChecked(selects != null && selects.contains(ai.id));
         return p2;
     }
-
-    public static List<ViewHolder> viewHolderList;
 
     public static class ViewHolder {
         TextView tv;

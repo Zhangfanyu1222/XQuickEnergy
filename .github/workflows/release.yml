@@ -34,7 +34,8 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew assembleRelease --build-cache --parallel --shrinkResources --no-daemon --warning-mode all
+        run: ./gradlew assembleRelease --build-cache --parallel --no-daemon --warning-mode all
+
       - name: Sign app APK
         uses: ilharp/sign-android-release@v1.0.4
         id: sign_app

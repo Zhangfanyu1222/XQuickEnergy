@@ -2,13 +2,14 @@ package pansong291.xposed.quickenergy;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.List;
+
 import pansong291.xposed.quickenergy.hook.AncientTreeRpcCall;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.FriendIdMap;
 import pansong291.xposed.quickenergy.util.Log;
 import pansong291.xposed.quickenergy.util.Statistics;
-
-import java.util.List;
 
 public class AncientTree {
     private static final String TAG = AncientTree.class.getCanonicalName();

@@ -64,10 +64,12 @@ public class AntStallRpcCall {
                 "[{\"friendSeatId\":\"" + friendSeatId + "\",\"friendUserId\":\"" + friendUserId + "\",\"shopId\":\"" +
                         shopId + "\",\"source\":\"ch_appcenter__chsub_9patch\",\"systemType\":\"android\",\"version\":\"" + VERSION + "\"}]");
     }
+
     public static String rankCoinDonate() {
         return RpcUtil.request("com.alipay.antstall.rank.coin.donate",
                 "[{\"source\":\"ANTFARM\",\"systemType\":\"android\",\"version\":\"" + VERSION + "\"}]");
     }
+
     public static String friendHome(String userId) {
         return RpcUtil.request("com.alipay.antstall.friend.home",
                 "[{\"arouseAppParams\":{},\"friendUserId\":\"" + userId +
@@ -228,7 +230,7 @@ public class AntStallRpcCall {
 
     public static String settleReceivable() {
         return RpcUtil.request("com.alipay.antstall.self.settle.receivable",
-                "[{\"source\":\"ch_appcenter__chsub_9patch\",\"systemType\":\"android\",\"version\":\"" 
+                "[{\"source\":\"ch_appcenter__chsub_9patch\",\"systemType\":\"android\",\"version\":\""
                         + VERSION + "\"}]");
     }
 }

@@ -2,22 +2,17 @@ package pansong291.xposed.quickenergy.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import pansong291.xposed.quickenergy.R;
 import pansong291.xposed.quickenergy.data.RuntimeInfo;
@@ -28,13 +23,9 @@ import pansong291.xposed.quickenergy.util.LanguageUtil;
 import pansong291.xposed.quickenergy.util.PermissionUtil;
 import pansong291.xposed.quickenergy.util.Statistics;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
 public class MainActivity extends Activity {
-    TextView tvStatistics;
-
     public static String version = "";
+    TextView tvStatistics;
 
     private static boolean isExpModuleActive(Context context) {
         boolean isExp = false;

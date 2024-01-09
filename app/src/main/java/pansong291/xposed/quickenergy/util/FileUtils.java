@@ -1,9 +1,8 @@
 package pansong291.xposed.quickenergy.util;
 
 import android.os.Environment;
-import pansong291.xposed.quickenergy.AntForestToast;
-import pansong291.xposed.quickenergy.data.RuntimeInfo;
-import pansong291.xposed.quickenergy.hook.ClassMember;
+
+import org.json.JSONObject;
 
 import java.io.Closeable;
 import java.io.File;
@@ -11,13 +10,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.JSONObject;
+
+import pansong291.xposed.quickenergy.AntForestToast;
+import pansong291.xposed.quickenergy.data.RuntimeInfo;
+import pansong291.xposed.quickenergy.hook.ClassMember;
 
 public class FileUtils {
     private static final String TAG = FileUtils.class.getCanonicalName();
+    private static final Map<String, File> configFileMap = new HashMap<>();
     private static File mainDirectory;
     private static File configDirectory;
-    private static final Map<String, File> configFileMap = new HashMap<>();
     private static File runtimeInfoFile;
     private static File friendIdMapFile;
     private static File cooperationIdMapFile;
@@ -103,7 +105,7 @@ public class FileUtils {
     public static File getCityCodeFile() {
         if (cityCodeFile == null) {
             cityCodeFile = new File(getMainDirectoryFile(), "cityCode.json");
-            if(cityCodeFile.exists() && cityCodeFile.isDirectory())
+            if (cityCodeFile.exists() && cityCodeFile.isDirectory())
                 cityCodeFile.delete();
         }
         return cityCodeFile;

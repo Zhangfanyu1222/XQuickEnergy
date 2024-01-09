@@ -2,13 +2,18 @@ package pansong291.xposed.quickenergy;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 import pansong291.xposed.quickenergy.hook.AntStallRpcCall;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.FriendIdMap;
 import pansong291.xposed.quickenergy.util.Log;
 import pansong291.xposed.quickenergy.util.Statistics;
-
-import java.util.*;
 
 /**
  * @author Constanline
@@ -16,16 +21,6 @@ import java.util.*;
  */
 public class AntStall {
     private static final String TAG = AntStall.class.getCanonicalName();
-
-    private static class Seat {
-        public String userId;
-        public int hot;
-
-        public Seat(String userId, int hot) {
-            this.userId = userId;
-            this.hot = hot;
-        }
-    }
 
     public static void start() {
         if (!Config.enableStall()) {
@@ -696,6 +691,16 @@ public class AntStall {
         } catch (Throwable th) {
             Log.i(TAG, "settleReceivable err:");
             Log.printStackTrace(TAG, th);
+        }
+    }
+
+    private static class Seat {
+        public String userId;
+        public int hot;
+
+        public Seat(String userId, int hot) {
+            this.userId = userId;
+            this.hot = hot;
         }
     }
 }

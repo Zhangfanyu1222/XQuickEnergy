@@ -1,6 +1,7 @@
 package pansong291.xposed.quickenergy;
 
 import org.json.JSONObject;
+
 import pansong291.xposed.quickenergy.hook.ReadingDadaRpcCall;
 import pansong291.xposed.quickenergy.util.Log;
 import pansong291.xposed.quickenergy.util.StringUtil;

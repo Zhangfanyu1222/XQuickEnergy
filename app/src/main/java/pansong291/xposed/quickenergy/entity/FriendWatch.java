@@ -1,13 +1,14 @@
 package pansong291.xposed.quickenergy.entity;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import pansong291.xposed.quickenergy.util.FileUtils;
 import pansong291.xposed.quickenergy.util.FriendIdMap;
 import pansong291.xposed.quickenergy.util.Log;
 import pansong291.xposed.quickenergy.util.StringUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Constanline
@@ -26,17 +27,6 @@ public class FriendWatch extends IdAndName {
     public FriendWatch(String id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    @Override
-    public int compareTo(IdAndName o) {
-        FriendWatch another = (FriendWatch) o;
-        if (this.weekGet > another.weekGet) {
-            return -1;
-        } else if (this.weekGet < another.weekGet) {
-            return 1;
-        }
-        return super.compareTo(o);
     }
 
     public static List<FriendWatch> getList() {
@@ -70,5 +60,16 @@ public class FriendWatch extends IdAndName {
         }
 
         return list;
+    }
+
+    @Override
+    public int compareTo(IdAndName o) {
+        FriendWatch another = (FriendWatch) o;
+        if (this.weekGet > another.weekGet) {
+            return -1;
+        } else if (this.weekGet < another.weekGet) {
+            return 1;
+        }
+        return super.compareTo(o);
     }
 }

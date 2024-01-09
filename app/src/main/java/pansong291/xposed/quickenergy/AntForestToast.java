@@ -3,9 +3,10 @@ package pansong291.xposed.quickenergy;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
+
+import pansong291.xposed.quickenergy.hook.XposedHook;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.Log;
-import pansong291.xposed.quickenergy.hook.XposedHook;
 
 public class AntForestToast {
     private static final String TAG = AntForestToast.class.getCanonicalName();
