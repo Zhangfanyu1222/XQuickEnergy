@@ -23,7 +23,7 @@ public class AncientTree {
             @Override
             public void run() {
                 try {
-                    while (FriendIdMap.currentUid == null || FriendIdMap.currentUid.isEmpty())
+                    while (FriendIdMap.getCurrentUid() == null || FriendIdMap.getCurrentUid().isEmpty())
                         Thread.sleep(101);
                     ancientTree(Config.getAncientTreeCityCodeList()); // 二次检查 有时会返回繁忙漏保护
                 } catch (Throwable t) {
@@ -65,7 +65,7 @@ public class AncientTree {
                     JSONObject districtInfo = districtBriefInfo.getJSONObject("districtInfo");
                     String districtCode = districtInfo.getString("districtCode");
                     districtDetail(districtCode);
-                    Thread.sleep(500L);
+                    Thread.sleep(1000L);
                 }
                 Statistics.ancientTreeToday(cityCode);
             }

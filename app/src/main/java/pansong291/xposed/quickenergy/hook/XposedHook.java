@@ -42,7 +42,6 @@ import pansong291.xposed.quickenergy.util.Log;
 import pansong291.xposed.quickenergy.util.PermissionUtil;
 import pansong291.xposed.quickenergy.util.PluginUtils;
 import pansong291.xposed.quickenergy.util.Statistics;
-import pansong291.xposed.quickenergy.util.StringUtil;
 import pansong291.xposed.quickenergy.util.TimeUtil;
 
 public class XposedHook implements IXposedHookLoadPackage {
@@ -59,18 +58,13 @@ public class XposedHook implements IXposedHookLoadPackage {
     private static void initHandler() {
         Log.recordLog("尝试初始化");
         if (runnable == null) {
-            if (!StringUtil.isEmpty(FriendIdMap.currentUid)) {
-                FriendManager.fillUser(XposedHook.classLoader);
-            }
-
             runnable = new Runnable() {
                 @Override
                 public void run() {
                     PluginUtils.invoke(XposedHook.class, PluginUtils.PluginAction.START);
                     String targetUid = RpcUtil.getUserId(XposedHook.classLoader);
                     if (targetUid != null) {
-                        FriendIdMap.currentUid = targetUid;
-                        Config.shouldReload = true;
+                        FriendIdMap.setCurrentUid(targetUid);
 
                         Statistics.resetToday();
                         AntForest.checkEnergyRanking(XposedHook.classLoader);
@@ -109,7 +103,7 @@ public class XposedHook implements IXposedHookLoadPackage {
                     Config.setAlarm7(AntForestToast.context);
                 }
             }
-            AntForestToast.show("芝麻粒加载成功\n切换账号记得去关闭保护古树哦~🎐");
+            AntForestToast.show("芝麻粒加载成功\n切换账号要记得关闭保护古树哦~🎐");
             handler.removeCallbacks(runnable);
             AntForest.stop();
             AntForestNotification.stop(service, false);
@@ -216,10 +210,10 @@ public class XposedHook implements IXposedHookLoadPackage {
                             PermissionUtil.requestPermissions((Activity) param.thisObject);
                             AntForestNotification.setContentText("运行中...");
                             String targetUid = RpcUtil.getUserId(loader);
-                            if (targetUid == null || targetUid.equals(FriendIdMap.currentUid)) {
+                            if (targetUid == null || targetUid.equals(FriendIdMap.getCurrentUid())) {
                                 return;
                             }
-                            FriendIdMap.currentUid = targetUid;
+                            FriendIdMap.setCurrentUid(targetUid);
                             if (handler != null) {
                                 initHandler();
                             }

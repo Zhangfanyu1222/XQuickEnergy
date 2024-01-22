@@ -369,7 +369,9 @@ public class AntStall {
                         String taskType = task.getString("taskType");
                         String title = bizInfo.optString("title", taskType);
                         if ("VISIT_AUTO_FINISH".equals(bizInfo.getString("actionType"))
-                                || "ANTSTALL_NORMAL_OPEN_NOTICE".equals(taskType) || "tianjiashouye".equals(taskType)) {
+                                || "ANTSTALL_NORMAL_OPEN_NOTICE".equals(taskType)
+                                || "tianjiashouye".equals(taskType)
+                                || "SHANGYEHUA_ceshi".equals(taskType)) {
                             if (finishTask(taskType)) {
                                 Log.farm("蚂蚁新村⛪[完成任务]#" + title);
                                 taskList();
@@ -433,7 +435,7 @@ public class AntStall {
     }
 
     private static boolean finishTask(String taskType) {
-        String s = AntStallRpcCall.finishTask(FriendIdMap.currentUid + "_" + taskType, taskType);
+        String s = AntStallRpcCall.finishTask(FriendIdMap.getCurrentUid() + "_" + taskType, taskType);
         try {
             JSONObject jo = new JSONObject(s);
             if (jo.getBoolean("success")) {
@@ -490,7 +492,7 @@ public class AntStall {
             if (jo.getBoolean("success")) {
                 String shareId = jo.getString("shareId");
                 /* 保存shareId到Statistics */
-                Statistics.stallShareIdToday(FriendIdMap.currentUid, shareId);
+                Statistics.stallShareIdToday(FriendIdMap.getCurrentUid(), shareId);
                 Log.recordLog("蚂蚁新村⛪[分享助力]");
             } else {
                 Log.recordLog("shareP2P err:", s);
@@ -503,9 +505,9 @@ public class AntStall {
 
     private static void achieveBeShareP2P() {
         try {
-            if (!Statistics.canStallHelpToday(FriendIdMap.currentUid))
+            if (!Statistics.canStallHelpToday(FriendIdMap.getCurrentUid()))
                 return;
-            List<String> UserIdList = Statistics.stallP2PUserIdList(FriendIdMap.currentUid);
+            List<String> UserIdList = Statistics.stallP2PUserIdList(FriendIdMap.getCurrentUid());
             for (String uid : UserIdList) {
                 if (Statistics.canStallBeHelpToday(uid)) {
                     String shareId = Statistics.getStallShareId(uid);
@@ -514,15 +516,15 @@ public class AntStall {
                         JSONObject jo = new JSONObject(s);
                         if (jo.getBoolean("success")) {
                             Log.farm("新村助力🎈[" + FriendIdMap.getNameById(uid) + "]");
-                            Statistics.stallHelpToday(FriendIdMap.currentUid, false);
+                            Statistics.stallHelpToday(FriendIdMap.getCurrentUid(), false);
                             Statistics.stallBeHelpToday(uid, false);
                             Statistics.stallP2PHelpeToday(uid);
                         } else if ("600000028".equals(jo.getString("code"))) {
                             Statistics.stallBeHelpToday(uid, true);
                             Log.recordLog("被助力次数上限:", uid);
                         } else if ("600000027".equals(jo.getString("code"))) {
-                            Statistics.stallHelpToday(FriendIdMap.currentUid, true);
-                            Log.recordLog("助力他人次数上限:", FriendIdMap.currentUid);
+                            Statistics.stallHelpToday(FriendIdMap.getCurrentUid(), true);
+                            Log.recordLog("助力他人次数上限:", FriendIdMap.getCurrentUid());
                         } else {
                             Log.recordLog("achieveBeShareP2P err:", s);
                         }
@@ -575,7 +577,7 @@ public class AntStall {
                 JSONObject userInfo = jo.getJSONObject("userInfo");
                 JSONObject currentCoin = userInfo.getJSONObject("currentCoin");
                 int amount = (int) currentCoin.getDouble("amount");
-                if (amount < 10000) {
+                if (amount < 15000) {
                     return;
                 }
                 JSONArray roadList = jo.getJSONArray("roadList");

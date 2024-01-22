@@ -68,7 +68,7 @@ public class FriendManager {
     }
 
     public static void friendWatch(String id, int collectedEnergy) {
-        if (id.equals(FriendIdMap.currentUid)) {
+        if (id.equals(FriendIdMap.getCurrentUid())) {
             return;
         }
         try {

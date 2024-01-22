@@ -18,7 +18,9 @@ jobs:
       - name: Get versionName and versionCode from build.gradle
         run: |
           VERSION_NAME=$(grep -oP 'versionName "\K([0-9]+\.[0-9]+\.[0-9]+)' app/build.gradle)
+          VERSION_NAME_FULL=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
           VERSION_CODE=$(grep -oP 'versionCode \K(\d+)' app/build.gradle)
+          echo "VERSION_NAME_FULL=$VERSION_NAME_FULL" >> $GITHUB_ENV
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
@@ -52,7 +54,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.sign_app.outputs.signedFile }}
-          asset_name: xqe-sesame-${{ env.VERSION_NAME }}_${{ env.VERSION_CODE }}_modify.apk
+          asset_name: xqe-sesame-${{ env.VERSION_NAME_FULL }}_${{ env.VERSION_CODE }}_modify.apk
           tag: ${{ env.TAG_NAME }}_modify
           release_name: ${{ env.TAG_NAME }}_modify
           overwrite: true

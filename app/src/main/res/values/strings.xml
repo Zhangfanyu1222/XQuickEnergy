@@ -15,12 +15,12 @@
     <string name="check_interval_minutes">Check interval (minutes)</string>
     <string name="advance_time_milliseconds">Advance time (milliseconds)</string>
     <string name="collect_interval_milliseconds">Collect interval (milliseconds)</string>
-    <string name="collect_timeout_seconds">Collect timeout (seconds)</string>
+    <string name="collect_timeout_milliseconds">Collect timeout (milliseconds)</string>
     <string name="return_water_33">Return water 33</string>
     <string name="return_water_18">Return water 18</string>
     <string name="return_water_10">Return water 10</string>
     <string name="help_friend_collect">Help friend collect</string>
-    <string name="don_t_help_collect_list">Don\'t help collect list</string>
+    <string name="don_t_help_collect_list">Help collect list</string>
     <string name="don_t_collect_list">Don\'t collect list</string>
     <string name="receive_forest_task_award">Receive forest task award</string>
     <string name="water_friend_list">Water friend list</string>
