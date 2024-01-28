@@ -32,7 +32,7 @@ public class SettingsActivity extends Activity {
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private static final int MAX_TAB_INDEX = 3;
-    Switch sw_immediateEffect, sw_recordLog, sw_showToast, sw_stayAwake, sw_timeoutRestart, sw_startAt7, sw_language_simplified_chinese,
+    Switch sw_immediateEffect, sw_recordLog, sw_showToast, sw_stayAwake, sw_timeoutRestart, sw_startAt7,
             sw_collectWateringBubble, sw_collectProp, sw_collectEnergy, sw_helpFriendCollect, sw_receiveForestTaskAward,
             sw_cooperateWater, sw_energyRain, sw_enableFarm, sw_rewardFriend, sw_sendBackAnimal,
             sw_receiveFarmToolReward, sw_useNewEggTool, sw_harvestProduce, sw_donation, sw_answerQuestion,
@@ -44,7 +44,8 @@ public class SettingsActivity extends Activity {
             sw_enableOnGoing, sw_collectSesame, sw_zcjSignIn, sw_merchantKmdk, sw_acceptGift,
             sw_enableStall, sw_stallAutoClose, sw_stallAutoOpen, sw_stallAutoTask, sw_stallReceiveAward,
             sw_stallOpenType, sw_stallDonate, sw_chickenDiary, sw_collectGiftBox, sw_stallInviteRegister,
-            sw_stallThrowManure, sw_greenFinance, sw_totalCertCount, sw_batchRobEnergy;
+            sw_stallThrowManure, sw_greenFinance, sw_totalCertCount, sw_batchRobEnergy, sw_antBookRead, sw_consumeGold,
+            sw_omegakoiTown, sw_language_simplified_chinese, sw_batchHireAnimal;
     private TabHost tabHost;
     private GestureDetector gestureDetector;
     private Animation slideLeftIn;
@@ -200,6 +201,7 @@ public class SettingsActivity extends Activity {
         sw_chickenDiary = findViewById(R.id.sw_chickenDiary);
         sw_antOrchard = findViewById(R.id.sw_antOrchard);
         sw_receiveOrchardTaskAward = findViewById(R.id.sw_receiveOrchardTaskAward);
+        sw_batchHireAnimal = findViewById(R.id.sw_batchHireAnimal);
         sw_receivePoint = findViewById(R.id.sw_receivePoint);
         sw_openTreasureBox = findViewById(R.id.sw_openTreasureBox);
         sw_receiveCoinAsset = findViewById(R.id.sw_receiveCoinAsset);
@@ -232,6 +234,9 @@ public class SettingsActivity extends Activity {
         sw_stallInviteRegister = findViewById(R.id.sw_stallInviteRegister);
         sw_stallThrowManure = findViewById(R.id.sw_stallThrowManure);
         sw_greenFinance = findViewById(R.id.sw_greenFinance);
+        sw_antBookRead = findViewById(R.id.sw_antBookRead);
+        sw_consumeGold = findViewById(R.id.sw_consumeGold);
+        sw_omegakoiTown = findViewById(R.id.sw_omegakoiTown);
     }
 
     @Override
@@ -275,6 +280,7 @@ public class SettingsActivity extends Activity {
         sw_chickenDiary.setChecked(Config.chickenDiary());
         sw_antOrchard.setChecked(Config.antOrchard());
         sw_receiveOrchardTaskAward.setChecked(Config.receiveOrchardTaskAward());
+        sw_batchHireAnimal.setChecked(Config.batchHireAnimal());
         sw_receivePoint.setChecked(Config.receivePoint());
         sw_openTreasureBox.setChecked(Config.openTreasureBox());
         sw_receiveCoinAsset.setChecked(Config.receiveCoinAsset());
@@ -307,6 +313,9 @@ public class SettingsActivity extends Activity {
         sw_stallInviteRegister.setChecked(Config.stallInviteRegister());
         sw_stallThrowManure.setChecked(Config.stallThrowManure());
         sw_greenFinance.setChecked(Config.greenFinance());
+        sw_antBookRead.setChecked(Config.antBookRead());
+        sw_consumeGold.setChecked(Config.consumeGold());
+        sw_omegakoiTown.setChecked(Config.omegakoiTown());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -476,6 +485,10 @@ public class SettingsActivity extends Activity {
                     Config.setReceiveOrchardTaskAward(sw.isChecked());
                     break;
 
+                case R.id.sw_batchHireAnimal:
+                    Config.setBatchHireAnimal(sw.isChecked());
+                    break;
+
                 case R.id.sw_receivePoint:
                     Config.setReceivePoint(sw.isChecked());
                     break;
@@ -586,6 +599,18 @@ public class SettingsActivity extends Activity {
 
                 case R.id.sw_greenFinance:
                     Config.setGreenFinance(sw.isChecked());
+                    break;
+
+                case R.id.sw_antBookRead:
+                    Config.setAntBookRead(sw.isChecked());
+                    break;
+
+                case R.id.sw_consumeGold:
+                    Config.setConsumeGold(sw.isChecked());
+                    break;
+
+                case R.id.sw_omegakoiTown:
+                    Config.setOmegakoiTown(sw.isChecked());
                     break;
             }
         } else if (v instanceof Button) {

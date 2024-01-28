@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
@@ -38,7 +38,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease --build-cache --parallel --no-daemon --warning-mode all
 
-      - name: Sign app APK
+      - name: Sign Android release
         uses: ilharp/sign-android-release@v1.0.4
         id: sign_app
         with:
@@ -49,7 +49,7 @@ jobs:
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           buildToolsVersion: 33.0.0
 
-      - name: Upload Apk to Release Action
+      - name: Upload files to a GitHub release
         uses: svenstaro/upload-release-action@2.7.0
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}

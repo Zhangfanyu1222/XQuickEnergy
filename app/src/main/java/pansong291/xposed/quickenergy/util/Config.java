@@ -99,6 +99,7 @@ public class Config {
     public static final String jn_antOrchard = "antOrchard";
     public static final String jn_receiveOrchardTaskAward = "receiveOrchardTaskAward";
     public static final String jn_orchardSpreadManureCount = "orchardSpreadManureCount";
+    public static final String jn_batchHireAnimal = "batchHireAnimal";
     public static final String jn_antdodoCollect = "antdodoCollect";
     public static final String jn_antOcean = "antOcean";
     public static final String jn_userPatrol = "userPatrol";
@@ -136,6 +137,9 @@ public class Config {
     public static final String jn_zcjSignIn = "zcjSignIn";
     public static final String jn_merchantKmdk = "merchantKmdk";
     public static final String jn_greenFinance = "greenFinance";
+    public static final String jn_antBookRead = "antBookRead";
+    public static final String jn_consumeGold = "consumeGold";
+    public static final String jn_omegakoiTown = "omegakoiTown";
     private static final String TAG = Config.class.getCanonicalName();
     public static volatile boolean shouldReload;
     public static volatile boolean hasChanged;
@@ -235,6 +239,7 @@ public class Config {
     private boolean antOrchard;
     private boolean receiveOrchardTaskAward;
     private int orchardSpreadManureCount;
+    private boolean batchHireAnimal;
     private boolean enableStall;
     private boolean stallAutoClose;
     private boolean stallAutoOpen;
@@ -266,6 +271,9 @@ public class Config {
     private boolean zcjSignIn;
     private boolean merchantKmdk;
     private boolean greenFinance;
+    private boolean antBookRead;
+    private boolean consumeGold;
+    private boolean omegakoiTown;
 
     /* application */
     public static void setImmediateEffect(boolean b) {
@@ -1021,6 +1029,15 @@ public class Config {
         hasChanged = true;
     }
 
+    public static void setBatchHireAnimal(boolean b) {
+        getConfig().batchHireAnimal = b;
+        hasChanged = true;
+    }
+
+    public static boolean batchHireAnimal() {
+        return getConfig().batchHireAnimal;
+    }
+
     public static void setEnableStall(boolean b) {
         getConfig().enableStall = b;
         hasChanged = true;
@@ -1286,6 +1303,33 @@ public class Config {
         return getConfig().greenFinance;
     }
 
+    public static void setAntBookRead(boolean b) {
+        getConfig().antBookRead = b;
+        hasChanged = true;
+    }
+
+    public static boolean antBookRead() {
+        return getConfig().antBookRead;
+    }
+
+    public static void setConsumeGold(boolean b) {
+        getConfig().consumeGold = b;
+        hasChanged = true;
+    }
+
+    public static boolean consumeGold() {
+        return getConfig().consumeGold;
+    }
+
+    public static void setOmegakoiTown(boolean b) {
+        getConfig().omegakoiTown = b;
+        hasChanged = true;
+    }
+
+    public static boolean omegakoiTown() {
+        return getConfig().omegakoiTown;
+    }
+
     /* base */
     private static synchronized Config getConfig() {
         if (config == null || shouldReload && config.immediateEffect) {
@@ -1413,6 +1457,7 @@ public class Config {
         c.antOrchard = true;
         c.receiveOrchardTaskAward = true;
         c.orchardSpreadManureCount = 0;
+        c.batchHireAnimal = true;
 
         c.enableStall = false;
         c.stallAutoClose = false;
@@ -1443,6 +1488,9 @@ public class Config {
         c.zcjSignIn = false;
         c.merchantKmdk = false;
         c.greenFinance = false;
+        c.antBookRead = false;
+        c.consumeGold = false;
+        c.omegakoiTown = false;
         return c;
     }
 
@@ -1837,6 +1885,9 @@ public class Config {
             config.orchardSpreadManureCount = jo.optInt(jn_orchardSpreadManureCount, 0);
             //Log.i(TAG, jn_orchardSpreadManureCount + ":" + config.orchardSpreadManureCount);
 
+            config.batchHireAnimal = jo.optBoolean(jn_batchHireAnimal, false);
+            //Log.i(TAG, jn_batchHireAnimal + ":" + config.batchHireAnimal);
+
             config.enableStall = jo.optBoolean(jn_enableStall, false);
             //Log.i(TAG, jn_enableStall + ":" + config.enableStall);
 
@@ -1931,17 +1982,20 @@ public class Config {
             config.insBlueBeanExchange = jo.optBoolean(jn_insBlueBeanExchange, true);
             //Log.i(TAG, jn_insBlueBeanExchange + ":" + config.insBlueBeanExchange);
 
-            config.collectSesame = jo.optBoolean(jn_collectSesame, true);
-            //Log.i(TAG, jn_collectSesame + ":" + config.collectSesame);
+            config.collectSesame = jo.optBoolean(jn_collectSesame, false);
 
-            config.zcjSignIn = jo.optBoolean(jn_zcjSignIn, true);
-            //Log.i(TAG, jn_zcjSignIn + ":" + config.zcjSignIn);
+            config.zcjSignIn = jo.optBoolean(jn_zcjSignIn, false);
 
-            config.merchantKmdk = jo.optBoolean(jn_merchantKmdk, true);
-            //Log.i(TAG, jn_merchantKmdk + ":" + config.merchantKmdk);
+            config.merchantKmdk = jo.optBoolean(jn_merchantKmdk, false);
 
             config.greenFinance = jo.optBoolean(jn_greenFinance, false);
-            //Log.i(TAG, jn_greenFinance + ":" + config.greenFinance);
+
+            config.antBookRead = jo.optBoolean(jn_antBookRead, false);
+
+            config.consumeGold = jo.optBoolean(jn_consumeGold, false);
+
+            config.omegakoiTown = jo.optBoolean(jn_omegakoiTown, false);
+
         } catch (Throwable t) {
             Log.printStackTrace(TAG, t);
             if (json != null) {
@@ -2210,32 +2264,48 @@ public class Config {
 
             jo.put(jn_orchardSpreadManureCount, config.orchardSpreadManureCount);
 
+            jo.put(jn_batchHireAnimal, config.batchHireAnimal);
+
             jo.put(jn_enableStall, config.enableStall);
+
             jo.put(jn_stallAutoClose, config.stallAutoClose);
+
             jo.put(jn_stallAutoOpen, config.stallAutoOpen);
+
             jo.put(jn_stallAutoTask, config.stallAutoTask);
+
             jo.put(jn_stallReceiveAward, config.stallReceiveAward);
+
             jo.put(jn_stallOpenType, config.stallOpenType);
+
             ja = new JSONArray();
             for (int i = 0; i < config.stallOpenList.size(); i++) {
                 ja.put(config.stallOpenList.get(i));
             }
             jo.put(jn_stallOpenList, ja);
+
             ja = new JSONArray();
             for (int i = 0; i < config.stallWhiteList.size(); i++) {
                 ja.put(config.stallWhiteList.get(i));
             }
             jo.put(jn_stallWhiteList, ja);
+
             ja = new JSONArray();
             for (int i = 0; i < config.stallBlackList.size(); i++) {
                 ja.put(config.stallBlackList.get(i));
             }
             jo.put(jn_stallBlackList, ja);
+
             jo.put(jn_stallAllowOpenTime, config.stallAllowOpenTime);
+
             jo.put(jn_stallSelfOpenTime, config.stallSelfOpenTime);
+
             jo.put(jn_stallDonate, config.stallDonate);
+
             jo.put(jn_stallInviteRegister, config.stallInviteRegister);
+
             jo.put(jn_stallThrowManure, config.stallThrowManure);
+
             ja = new JSONArray();
             for (int i = 0; i < config.stallInviteShopList.size(); i++) {
                 ja.put(config.stallInviteShopList.get(i));
@@ -2273,6 +2343,12 @@ public class Config {
 
             jo.put(jn_greenFinance, config.greenFinance);
 
+            jo.put(jn_antBookRead, config.antBookRead);
+
+            jo.put(jn_consumeGold, config.consumeGold);
+
+            jo.put(jn_omegakoiTown, config.omegakoiTown);
+
         } catch (Throwable t) {
             Log.printStackTrace(TAG, t);
         }
@@ -2280,15 +2356,15 @@ public class Config {
     }
 
     public static String formatJson(JSONObject jo, boolean removeQuote) {
-        String formated;
+        String formatted;
         try {
-            formated = jo.toString(4);
+            formatted = jo.toString(4);
         } catch (Throwable t) {
             return jo.toString();
         }
         if (!removeQuote)
-            return formated;
-        StringBuilder sb = new StringBuilder(formated);
+            return formatted;
+        StringBuilder sb = new StringBuilder(formatted);
         char currentChar, lastNonSpaceChar = 0;
         for (int i = 0; i < sb.length(); i++) {
             currentChar = sb.charAt(i);
@@ -2314,8 +2390,8 @@ public class Config {
                     lastNonSpaceChar = currentChar;
             }
         }
-        formated = sb.toString();
-        return formated;
+        formatted = sb.toString();
+        return formatted;
     }
 
     private static PendingIntent getAlarm7Pi(Context context) {

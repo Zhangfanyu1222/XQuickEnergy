@@ -3,9 +3,13 @@ package pansong291.xposed.quickenergy;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pansong291.xposed.quickenergy.hook.AntOrchardRpcCall;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.FileUtils;
+import pansong291.xposed.quickenergy.util.FriendIdMap;
 import pansong291.xposed.quickenergy.util.Log;
 import pansong291.xposed.quickenergy.util.PluginUtils;
 import pansong291.xposed.quickenergy.util.RandomUtils;
@@ -41,6 +45,11 @@ public class AntOrchard {
                                 if (jo.has("lotteryPlusInfo"))
                                     drawLotteryPlus(jo.getJSONObject("lotteryPlusInfo"));
                                 extraInfoGet();
+                                if (Config.batchHireAnimal()) {
+                                    if (!joo.optBoolean("hireCountOnceLimit", true)
+                                            && !joo.optBoolean("hireCountOneDayLimit", true))
+                                        batchHireAnimalRecommend();
+                                }
                                 if (Config.receiveOrchardTaskAward()) {
                                     doOrchardDailyTask(userId);
                                     triggerTbTask();
@@ -54,7 +63,6 @@ public class AntOrchard {
                                 } else if (Config.getOrchardSpreadManureCount() >= 10) {
                                     querySubplotsActivity(10);
                                 }
-
                             } else {
                                 Log.recordLog(jo.getString("resultDesc"), jo.toString());
                             }
@@ -144,6 +152,7 @@ public class AntOrchard {
                             Statistics.spreadManureToday(userId);
                             return;
                         }
+                        Thread.sleep(500);
                         orchardSpreadManure();
                     } else {
                         Log.recordLog(jo.getString("resultDesc"), jo.toString());
@@ -236,7 +245,8 @@ public class AntOrchard {
                     if (!"TODO".equals(jo.getString("taskStatus")))
                         continue;
                     String title = jo.getJSONObject("taskDisplayConfig").getString("title");
-                    if ("TRIGGER".equals(jo.getString("actionType")) || "ADD_HOME".equals(jo.getString("actionType"))) {
+                    if ("TRIGGER".equals(jo.getString("actionType")) || "ADD_HOME".equals(jo.getString("actionType"))
+                            || "PUSH_SUBSCRIBE".equals(jo.getString("actionType"))) {
                         String taskId = jo.getString("taskId");
                         String sceneCode = jo.getString("sceneCode");
                         jo = new JSONObject(AntOrchardRpcCall.finishTask(userId, sceneCode, taskId));
@@ -355,6 +365,39 @@ public class AntOrchard {
             }
         } catch (Throwable t) {
             Log.i(TAG, "triggerTbTask err:");
+            Log.printStackTrace(TAG, t);
+        }
+    }
+
+    private static void batchHireAnimalRecommend() {
+        try {
+            JSONObject jo = new JSONObject(AntOrchardRpcCall.batchHireAnimalRecommend(FriendIdMap.getCurrentUid()));
+            if ("100".equals(jo.getString("resultCode"))) {
+                JSONArray recommendGroupList = jo.optJSONArray("recommendGroupList");
+                if (recommendGroupList != null && recommendGroupList.length() > 0) {
+                    List<String> GroupList = new ArrayList<>();
+                    for (int i = 0; i < recommendGroupList.length(); i++) {
+                        jo = recommendGroupList.getJSONObject(i);
+                        String animalUserId = jo.getString("animalUserId");
+                        int earnManureCount = jo.getInt("earnManureCount");
+                        String groupId = jo.getString("groupId");
+                        String orchardUserId = jo.getString("orchardUserId");
+                        GroupList.add("{\"animalUserId\":\"" + animalUserId + "\",\"earnManureCount\":"
+                                + earnManureCount + ",\"groupId\":\"" + groupId + "\",\"orchardUserId\":\""
+                                + orchardUserId + "\"}");
+                    }
+                    if (!GroupList.isEmpty()) {
+                        jo = new JSONObject(AntOrchardRpcCall.batchHireAnimal(GroupList));
+                        if ("100".equals(jo.getString("resultCode"))) {
+                            Log.farm("一键捉鸡🐣[除草]");
+                        }
+                    }
+                }
+            } else {
+                Log.recordLog(jo.getString("resultDesc"), jo.toString());
+            }
+        } catch (Throwable t) {
+            Log.i(TAG, "batchHireAnimalRecommend err:");
             Log.printStackTrace(TAG, t);
         }
     }

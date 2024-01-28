@@ -19,13 +19,11 @@ import android.widget.Toast;
 import java.util.List;
 
 import pansong291.xposed.quickenergy.R;
-import pansong291.xposed.quickenergy.entity.AlipayUser;
 import pansong291.xposed.quickenergy.entity.AreaCode;
 import pansong291.xposed.quickenergy.entity.CooperateUser;
 import pansong291.xposed.quickenergy.entity.IdAndName;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.CooperationIdMap;
-import pansong291.xposed.quickenergy.util.FriendIdMap;
 
 public class ListDialog {
     static AlertDialog listDialog;
@@ -276,9 +274,6 @@ public class ListDialog {
                                         case 1:
                                             url = "alipays://platformapi/startapp?saId=10000007&qrcode=https%3A%2F%2F66666674.h5app.alipay.com%2Fwww%2Findex.htm%3Fuid%3D";
                                             break;
-
-                                        case 2:
-                                            showDeleteDialog(c);
                                     }
                                     if (url != null) {
                                         Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(url + curIdAndName.id));
@@ -315,13 +310,8 @@ public class ListDialog {
                 @Override
                 public void onClick(DialogInterface p1, int p2) {
                     if (p2 == DialogInterface.BUTTON_POSITIVE) {
-                        if (curIdAndName instanceof AlipayUser) {
-                            FriendIdMap.removeIdMap(curIdAndName.id);
-                            AlipayUser.remove(curIdAndName.id);
-                        } else if (curIdAndName instanceof CooperateUser) {
-                            CooperationIdMap.removeIdMap(curIdAndName.id);
-                            CooperateUser.remove(curIdAndName.id);
-                        }
+                        CooperationIdMap.removeIdMap(curIdAndName.id);
+                        CooperateUser.remove(curIdAndName.id);
                         selectedList.remove(curIdAndName.id);
                         ListAdapter.get(c).exitFind();
                     }

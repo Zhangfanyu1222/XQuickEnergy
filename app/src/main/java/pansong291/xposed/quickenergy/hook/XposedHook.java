@@ -22,6 +22,7 @@ import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import pansong291.xposed.quickenergy.AncientTree;
+import pansong291.xposed.quickenergy.AntBookRead;
 import pansong291.xposed.quickenergy.AntCooperate;
 import pansong291.xposed.quickenergy.AntFarm;
 import pansong291.xposed.quickenergy.AntForest;
@@ -32,7 +33,9 @@ import pansong291.xposed.quickenergy.AntOcean;
 import pansong291.xposed.quickenergy.AntOrchard;
 import pansong291.xposed.quickenergy.AntSports;
 import pansong291.xposed.quickenergy.AntStall;
+import pansong291.xposed.quickenergy.ConsumeGold;
 import pansong291.xposed.quickenergy.GreenFinance;
+import pansong291.xposed.quickenergy.OmegakoiTown;
 import pansong291.xposed.quickenergy.Reserve;
 import pansong291.xposed.quickenergy.data.RuntimeInfo;
 import pansong291.xposed.quickenergy.ui.MainActivity;
@@ -64,6 +67,7 @@ public class XposedHook implements IXposedHookLoadPackage {
                     PluginUtils.invoke(XposedHook.class, PluginUtils.PluginAction.START);
                     String targetUid = RpcUtil.getUserId(XposedHook.classLoader);
                     if (targetUid != null) {
+                        Config.shouldReload = true;
                         FriendIdMap.setCurrentUid(targetUid);
 
                         Statistics.resetToday();
@@ -76,6 +80,7 @@ public class XposedHook implements IXposedHookLoadPackage {
                             Reserve.start();
                             if (TimeUtil.getTimeStr().compareTo("0800") >= 0) {
                                 AncientTree.start();
+                                AntBookRead.start();
                             }
                             AntSports.start(XposedHook.classLoader);
                             AntMember.receivePoint();
@@ -83,6 +88,8 @@ public class XposedHook implements IXposedHookLoadPackage {
                             AntOrchard.start();
                             AntStall.start();
                             GreenFinance.start();
+                            OmegakoiTown.start();
+                            ConsumeGold.start();
                         }
                     }
                     if (Config.collectEnergy() || Config.enableFarm()) {
