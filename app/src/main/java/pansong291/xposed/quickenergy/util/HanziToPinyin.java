@@ -233,16 +233,6 @@ public class HanziToPinyin {
             if (sInstance != null) {
                 return sInstance;
             }
-            // // Check if zh_CN collation data is available
-            // final Locale[] locale = Collator.getAvailableLocales();
-            // for (Locale value : locale) {
-            // if (value.equals(Locale.CHINA)) {
-            // sInstance = new HanziToPinyin(true);
-            // return sInstance;
-            // }
-            // }
-            // Log.w(TAG, "There is no Chinese collator, HanziToPinyin is disabled");
-            // sInstance = new HanziToPinyin(false);
             sInstance = new HanziToPinyin(true);
             return sInstance;
         }

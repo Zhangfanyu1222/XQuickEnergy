@@ -76,9 +76,13 @@ public class AntFarm {
                         harvestBenevolenceScore = joFarmVO.getDouble("harvestBenevolenceScore");
                         parseSyncAnimalStatusResponse(joFarmVO.toString());
                         userId = joFarmVO.getJSONObject("masterUserInfoVO").getString("userId");
-                        JSONArray cuisineList = jo.getJSONArray("cuisineList");
-                        if (!AnimalFeedStatus.SLEEPY.name().equals(ownerAnimal.animalFeedStatus))
-                            useFarmFood(cuisineList);
+
+                        if (Config.useSpecialFood()) {
+                            JSONArray cuisineList = jo.getJSONArray("cuisineList");
+                            if (!AnimalFeedStatus.SLEEPY.name().equals(ownerAnimal.animalFeedStatus))
+                                useFarmFood(cuisineList);
+                        }
+
                         if (jo.has("lotteryPlusInfo")) {
                             drawLotteryPlus(jo.getJSONObject("lotteryPlusInfo"));
                         }
@@ -170,6 +174,7 @@ public class AntFarm {
                         recordFarmGame(GameType.starGame);
                         recordFarmGame(GameType.jumpGame);
                         recordFarmGame(GameType.flyGame);
+                        recordFarmGame(GameType.hitGame);
                     }
 
                     if (Config.kitchen()) {
@@ -228,6 +233,7 @@ public class AntFarm {
 
                     }
 
+                    // 小鸡拜访
                     visitAnimal();
 
                     // 送麦子
@@ -631,8 +637,8 @@ public class AntFarm {
                     JSONArray awardInfos = jo.getJSONArray("awardInfos");
                     StringBuilder award = new StringBuilder();
                     for (int i = 0; i < awardInfos.length(); i++) {
-                        jo = awardInfos.getJSONObject(i);
-                        award.append(jo.getString("awardName")).append("*").append(jo.getInt("awardCount"));
+                        JSONObject awardInfo = awardInfos.getJSONObject(i);
+                        award.append(awardInfo.getString("awardName")).append("*").append(awardInfo.getInt("awardCount"));
                     }
                     if (jo.has("receiveFoodCount")) {
                         award.append(";肥料*").append(jo.getString("receiveFoodCount"));
@@ -735,8 +741,10 @@ public class AntFarm {
                             jo = new JSONObject(s);
                             memo = jo.getString("memo");
                             if ("SUCCESS".equals(memo)) {
-                                foodStock = jo.getInt("foodStock");
-                                Log.farm("领取奖励🎖️[" + taskTitle + "]#" + jo.getInt("haveAddFoodStock") + "g");
+                                if (jo.has("foodStock")) {
+                                    foodStock = jo.getInt("foodStock");
+                                    Log.farm("领取奖励🎖️[" + taskTitle + "]#" + jo.getInt("haveAddFoodStock") + "g");
+                                }
                                 if (unreceiveTaskAward > 0)
                                     unreceiveTaskAward--;
                             } else {
@@ -1480,9 +1488,9 @@ public class AntFarm {
     }
 
     public enum GameType {
-        starGame, jumpGame, flyGame;
+        starGame, jumpGame, flyGame, hitGame;
 
-        public static final CharSequence[] gameNames = {"星星球", "登山赛", "飞行赛"};
+        public static final CharSequence[] gameNames = {"星星球", "登山赛", "飞行赛", "欢乐揍小鸡"};
 
         public CharSequence gameName() {
             return gameNames[ordinal()];

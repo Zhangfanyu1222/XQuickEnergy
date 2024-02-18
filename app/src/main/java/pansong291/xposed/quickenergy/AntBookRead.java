@@ -3,6 +3,7 @@ package pansong291.xposed.quickenergy;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import pansong291.xposed.quickenergy.data.RuntimeInfo;
 import pansong291.xposed.quickenergy.hook.AntBookReadRpcCall;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.Log;
@@ -15,6 +16,12 @@ public class AntBookRead {
     public static void start() {
         if (!Config.antBookRead())
             return;
+
+        long executeTime = RuntimeInfo.getInstance().getLong("consumeGold", 0);
+        if (System.currentTimeMillis() - executeTime < 21600000) {
+            return;
+        }
+        RuntimeInfo.getInstance().put("consumeGold", System.currentTimeMillis());
 
         new Thread() {
             @Override

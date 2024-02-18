@@ -444,8 +444,6 @@ public class AntStall {
     }
 
     private static boolean finishTask(String taskType) {
-        // String s = AntStallRpcCall.finishTask(FriendIdMap.currentUid + "_" +
-        // taskType, taskType);
         String s = AntStallRpcCall.finishTask(taskType + "_" + System.currentTimeMillis(), taskType);
         try {
             JSONObject jo = new JSONObject(s);

@@ -27,6 +27,7 @@ public class FriendIdMap {
         if (currentUid == null || !currentUid.equals(uid)) {
             currentUid = uid;
             FriendManager.fillUser(XposedHook.classLoader);
+            PluginUtils.invoke(FriendIdMap.class, PluginUtils.PluginAction.INIT);
         }
     }
 
@@ -92,20 +93,6 @@ public class FriendIdMap {
         }
         return id;
     }
-
-//    public static List<String> getIncompleteUnknownIds() {
-//        List<String> idList = new ArrayList<>();
-//        for (Map.Entry<String, String> entry : getIdMap().entrySet()) {
-//            if ("我".equals(entry.getValue())) {
-//                continue;
-//            }
-//            if (entry.getValue().split("\\|").length < 2) {
-//                idList.add(entry.getKey());
-//                // Log.i(TAG, "未知id: " + entry.getKey());
-//            }
-//        }
-//        return idList;
-//    }
 
     public static List<String> getFriendIds() {
         List<String> idList = new ArrayList<>();

@@ -79,6 +79,8 @@ public class Config {
     public static final String jn_receiveFarmToolReward = "receiveFarmToolReward";
     public static final String jn_recordFarmGame = "recordFarmGame";
     public static final String jn_kitchen = "kitchen";
+
+    public static final String jn_useSpecialFood = "useSpecialFood";
     public static final String jn_useNewEggTool = "useNewEggTool";
     public static final String jn_harvestProduce = "harvestProduce";
     public static final String jn_donation = "donation";
@@ -217,6 +219,7 @@ public class Config {
     private boolean receiveFarmToolReward;
     private boolean recordFarmGame;
     private boolean kitchen;
+    private boolean useSpecialFood;
     private boolean useNewEggTool;
     private boolean harvestProduce;
     private boolean donation;
@@ -838,6 +841,15 @@ public class Config {
         return getConfig().kitchen;
     }
 
+    public static void setUseSpecialFood(boolean b) {
+        getConfig().useSpecialFood = b;
+        hasChanged = true;
+    }
+
+    public static boolean useSpecialFood() {
+        return getConfig().useSpecialFood;
+    }
+
     public static void setUseNewEggTool(boolean b) {
         getConfig().useNewEggTool = b;
         hasChanged = true;
@@ -1427,6 +1439,7 @@ public class Config {
         c.receiveFarmToolReward = true;
         c.recordFarmGame = true;
         c.kitchen = true;
+        c.useSpecialFood = false;
         c.useNewEggTool = true;
         c.harvestProduce = true;
         c.donation = true;
@@ -1457,7 +1470,7 @@ public class Config {
         c.antOrchard = true;
         c.receiveOrchardTaskAward = true;
         c.orchardSpreadManureCount = 0;
-        c.batchHireAnimal = true;
+        c.batchHireAnimal = false;
 
         c.enableStall = false;
         c.stallAutoClose = false;
@@ -1780,6 +1793,8 @@ public class Config {
 
             config.kitchen = jo.optBoolean(jn_kitchen, true);
             //Log.i(TAG, jn_kitchen + ":" + config.kitchen);
+
+            config.useSpecialFood = jo.optBoolean(jn_useSpecialFood, false);
 
             config.useNewEggTool = jo.optBoolean(jn_useNewEggTool, true);
             //Log.i(TAG, jn_useNewEggTool + ":" + config.useNewEggTool);
@@ -2198,6 +2213,8 @@ public class Config {
 
             jo.put(jn_kitchen, config.kitchen);
 
+            jo.put(jn_useSpecialFood, config.useSpecialFood);
+
             jo.put(jn_useNewEggTool, config.useNewEggTool);
 
             jo.put(jn_harvestProduce, config.harvestProduce);
@@ -2422,12 +2439,6 @@ public class Config {
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-//            } else {
-//                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-//            }
             alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), null), pi);
         } catch (Throwable th) {
             Log.printStackTrace("alarm7", th);

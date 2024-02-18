@@ -37,51 +37,24 @@ public class FileUtils {
     private static File friendWatchFile;
     private static File wuaFile;
     private static File certCountDirectory;
-    private static File certCountFile;
-
-    private static void copyFile(File srcDir, File dstDir, String filename) {
-        File file = new File(srcDir, filename);
-        if (!file.exists()) {
-            return;
-        }
-        String content = readFromFile(file);
-        file = new File(dstDir, filename);
-        write2File(content, file);
-    }
 
     @SuppressWarnings("deprecation")
     public static File getMainDirectoryFile() {
         if (mainDirectory == null) {
-            File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File storageDir;
+            File useMedia = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "useMedia");
+            if (useMedia.exists()) {
+                storageDir = new File(Environment.getExternalStorageDirectory(), "Android" +
+                        File.separator + "media" + File.separator + ClassMember.PACKAGE_NAME);
+            } else {
+                storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            }
             if (!storageDir.exists()) {
                 storageDir.mkdirs();
             }
-            File useMedia = new File(storageDir, "useMedia");
-            if (useMedia.exists()) {
-                String storageDirStr = Environment.getExternalStorageDirectory() + File.separator + "Android" +
-                        File.separator + "media" + File.separator + ClassMember.PACKAGE_NAME;
-                storageDir = new File(storageDirStr);
-            }
-
             mainDirectory = new File(storageDir, "xqe");
             if (!mainDirectory.exists()) {
                 mainDirectory.mkdirs();
-//                File oldDirectory = new File(Environment.getExternalStorageDirectory(), "xqe");
-//                if (oldDirectory.exists()) {
-//                    File deprecatedFile = new File(oldDirectory, "deprecated");
-//                    if (!deprecatedFile.exists()) {
-//                        copyFile(oldDirectory, mainDirectory, "config.json");
-//                        copyFile(oldDirectory, mainDirectory, "friendId.list");
-//                        copyFile(oldDirectory, mainDirectory, "cooperationId.list");
-//                        copyFile(oldDirectory, mainDirectory, "reserveId.list");
-//                        copyFile(oldDirectory, mainDirectory, "statistics.json");
-//                        copyFile(oldDirectory, mainDirectory, "cityCode.json");
-//                        try {
-//                            deprecatedFile.createNewFile();
-//                        } catch (Throwable ignored) {
-//                        }
-//                    }
-//                }
             }
         }
         return mainDirectory;
@@ -301,10 +274,6 @@ public class FileUtils {
                 simpleLogFile.delete();
         }
         return simpleLogFile;
-    }
-
-    public static File getRuntimeLogFileBak() {
-        return new File(getMainDirectoryFile(), "runtime.log." + System.currentTimeMillis());
     }
 
     public static File getRuntimeLogFile() {

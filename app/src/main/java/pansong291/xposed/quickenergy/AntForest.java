@@ -262,6 +262,7 @@ public class AntForest {
                                     if ("100000000".equals(resData2.getString("code"))) {
                                         collectedEnergy += awardCount;
                                         Log.forest("过期能量💊[" + awardCount + "g]");
+                                        AntForestToast.show("拯救[" + awardCount + "g]能量[过期能量]");
                                         onForestEnd();
                                     }
                                 }
@@ -804,9 +805,6 @@ public class AntForest {
             Log.printStackTrace("到达分钟限制，等待失败！", th);
             return 0;
         }
-        // if (checkCollectLimited()) {
-        // return 0;
-        // }
         try {
             String s = "{\"resultCode\": \"FAILED\"}";
             if (Config.collectInterval() > 0) {
@@ -1146,8 +1144,8 @@ public class AntForest {
                 Thread.sleep(5000L);
                 if ("SUCCESS".equals(
                         new JSONObject(AntForestRpcCall.energyRainSettlement(sum, token)).getString("resultCode"))) {
+                    Log.forest("能量雨🌧️[" + sum + "g]");
                     AntForestToast.show("获得了[" + sum + "g]能量[能量雨]");
-                    Log.forest("收能量雨🌧️[" + sum + "g]");
                 }
             }
         } catch (Throwable th) {
@@ -1195,15 +1193,6 @@ public class AntForest {
                     if (!granted) {
                         Log.recordLog("没有可以送的用户");
                     }
-                    // if (userId != null) {
-                    // JSONObject joEnergyRainChance = new
-                    // JSONObject(AntForestRpcCall.grantEnergyRainChance(userId));
-                    // if ("SUCCESS".equals(joEnergyRainChance.getString("resultCode"))) {
-                    // Log.forest("送能量雨🌧️[[" + FriendIdMap.getNameById(userId) + "]#" +
-                    // FriendIdMap.getNameById(FriendIdMap.getCurrentUid()));
-                    // startEnergyRain();
-                    // }
-                    // }
                 }
             }
             joEnergyRainHome = new JSONObject(AntForestRpcCall.queryEnergyRainHome());
