@@ -539,6 +539,16 @@
                         android:text="@string/exchange_energy_double_click_count"
                         android:textAllCaps="false" />
 
+                    <Switch
+                        android:id="@+id/sw_giveProp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:onClick="onClick"
+                        android:paddingStart="@dimen/setting_item_padding"
+                        android:paddingEnd="@dimen/setting_item_padding"
+                        android:text="@string/give_prop" />
+
                     <Button
                         android:id="@+id/btn_WhoYouWantToGiveTo"
                         style="?android:attr/buttonBarButtonStyle"

@@ -127,4 +127,16 @@ public class FriendIdMap {
         return idMap;
     }
 
+    public static void waitingCurrentUid() throws InterruptedException {
+        int count = 1;
+        while (getCurrentUid() == null || getCurrentUid().isEmpty()) {
+            if (count > 3) {
+                throw new InterruptedException("获取当前用户超时");
+            } else {
+                count++;
+                Thread.sleep(1000);
+            }
+        }
+    }
+
 }

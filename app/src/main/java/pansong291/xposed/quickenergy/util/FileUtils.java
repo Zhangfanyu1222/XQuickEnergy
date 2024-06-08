@@ -37,6 +37,7 @@ public class FileUtils {
     private static File friendWatchFile;
     private static File wuaFile;
     private static File certCountDirectory;
+    private static File certCountFile;
 
     @SuppressWarnings("deprecation")
     public static File getMainDirectoryFile() {

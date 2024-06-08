@@ -25,50 +25,60 @@ import pansong291.xposed.quickenergy.hook.XposedHook;
 public class Config {
     /* application */
     public static final String jn_immediateEffect = "immediateEffect";
+    public static final String jn_checkInterval = "checkInterval";
     public static final String jn_recordLog = "recordLog";
     public static final String jn_showToast = "showToast";
     public static final String jn_toastOffsetY = "toastOffsetY";
     public static final String jn_stayAwake = "stayAwake";
-    public static final String jn_timeoutRestart = "timeoutRestart";
     public static final String jn_stayAwakeType = "stayAwakeType";
     public static final String jn_stayAwakeTarget = "stayAwakeTarget";
+    public static final String jn_timeoutRestart = "timeoutRestart";
     public static final String jn_timeoutType = "timeoutType";
     public static final String jn_startAt7 = "startAt7";
+    public static final String jn_waitWhenException = "waitWhenException";
     public static final String jn_enableOnGoing = "enableOnGoing";
     public static final String jn_languageSimplifiedChinese = "languageSimplifiedChinese";
     /* forest */
     public static final String jn_collectEnergy = "collectEnergy";
-    public static final String jn_ancientTreeCityCodeList = "ancientTreeCityCodeList";
-    public static final String jn_collectWateringBubble = "collectWateringBubble";
-    public static final String jn_batchRobEnergy = "batchRobEnergy";
-    public static final String jn_collectProp = "collectProp";
-    public static final String jn_ReturnWater33 = "returnWater30";
-    public static final String jn_ReturnWater18 = "returnWater20";
-    public static final String jn_ReturnWater10 = "returnWater10";
-    public static final String jn_helpFriendCollect = "helpFriendCollect";
     public static final String jn_dontCollectList = "dontCollectList";
-    public static final String jn_dontHelpCollectList = "dontHelpCollectList";
-    public static final String jn_checkInterval = "checkInterval";
-    public static final String jn_doubleCard = "doubleCard";
-    public static final String jn_doubleCardTime = "doubleCardTime";
+    public static final String jn_batchRobEnergy = "batchRobEnergy";
     public static final String jn_advanceTime = "advanceTime";
     public static final String jn_collectInterval = "collectInterval";
     public static final String jn_collectTimeout = "collectTimeout";
+    public static final String jn_collectWateringBubble = "collectWateringBubble";
+    public static final String jn_ReturnWater33 = "returnWater30";
+    public static final String jn_ReturnWater18 = "returnWater20";
+    public static final String jn_ReturnWater10 = "returnWater10";
+    public static final String jn_doubleCard = "doubleCard";
+    public static final String jn_doubleCardTime = "doubleCardTime";
+    public static final String jn_collectProp = "collectProp";
+    public static final String jn_helpFriendCollect = "helpFriendCollect";
+    public static final String jn_dontHelpCollectList = "dontHelpCollectList";
     public static final String jn_receiveForestTaskAward = "receiveForestTaskAward";
     public static final String jn_waterFriendList = "waterFriendList";
     public static final String jn_waterFriendCount = "waterFriendCount";
     public static final String jn_cooperateWater = "cooperateWater";
     public static final String jn_cooperateWaterList = "cooperateWaterList";
-    public static final String jn_ancientTree = "ancientTree";
-    public static final String jn_ancientTreeAreaCodeList = "ancientTreeAreaCodeList";
-    public static final String jn_reserve = "reserve";
-    public static final String jn_reserveList = "reserveList";
-    public static final String jn_beach = "beach";
-    public static final String jn_beachList = "beachList";
     public static final String jn_energyRain = "energyRain";
     public static final String jn_giveEnergyRainList = "giveEnergyRainList";
-    public static final String jn_waitWhenException = "waitWhenException";
+    public static final String jn_giveProp = "giveProp";
+    public static final String jn_whoYouWantGiveTo = "whoYouWantGiveTo";
+    public static final String jn_reserve = "reserve";
+    public static final String jn_reserveList = "reserveList";
+    public static final String jn_ancientTree = "ancientTree";
+    public static final String jn_ancientTreeAreaCodeList = "ancientTreeAreaCodeList";
+    public static final String jn_ancientTreeCityCodeList = "ancientTreeCityCodeList";
     public static final String jn_ancientTreeOnlyWeek = "ancientTreeOnlyWeek";
+    public static final String jn_antdodoCollect = "antdodoCollect";
+    public static final String jn_sendFriendCard = "sendFriendCard";
+    public static final String jn_userPatrol = "userPatrol";
+    public static final String jn_animalConsumeProp = "animalConsumeProp";
+    public static final String jn_collectGiftBox = "collectGiftBox";
+    public static final String jn_antBookRead = "antBookRead";
+    public static final String jn_antOcean = "antOcean";
+    public static final String jn_beach = "beach";
+    public static final String jn_beachList = "beachList";
+    public static final String jn_totalCertCount = "totalCertCount";
     /* farm */
     public static final String jn_enableFarm = "enableFarm";
     public static final String jn_rewardFriend = "rewardFriend";
@@ -78,8 +88,8 @@ public class Config {
     public static final String jn_recallAnimalType = "recallAnimalType";
     public static final String jn_receiveFarmToolReward = "receiveFarmToolReward";
     public static final String jn_recordFarmGame = "recordFarmGame";
+    public static final String jn_farmGameTime = "farmGameTime";
     public static final String jn_kitchen = "kitchen";
-
     public static final String jn_useSpecialFood = "useSpecialFood";
     public static final String jn_useNewEggTool = "useNewEggTool";
     public static final String jn_harvestProduce = "harvestProduce";
@@ -89,12 +99,9 @@ public class Config {
     public static final String jn_feedAnimal = "feedAnimal";
     public static final String jn_useAccelerateTool = "useAccelerateTool";
     public static final String jn_feedFriendAnimalList = "feedFriendAnimalList";
-    public static final String jn_farmGameTime = "farmGameTime";
     public static final String jn_animalSleepTime = "animalSleepTime";
     public static final String jn_notifyFriend = "notifyFriend";
     public static final String jn_dontNotifyFriendList = "dontNotifyFriendList";
-    public static final String jn_whoYouWantGiveTo = "whoYouWantGiveTo";
-    public static final String jn_sendFriendCard = "sendFriendCard";
     public static final String jn_acceptGift = "acceptGift";
     public static final String jn_visitFriendList = "visitFriendList";
     public static final String jn_chickenDiary = "chickenDiary";
@@ -102,12 +109,6 @@ public class Config {
     public static final String jn_receiveOrchardTaskAward = "receiveOrchardTaskAward";
     public static final String jn_orchardSpreadManureCount = "orchardSpreadManureCount";
     public static final String jn_batchHireAnimal = "batchHireAnimal";
-    public static final String jn_antdodoCollect = "antdodoCollect";
-    public static final String jn_antOcean = "antOcean";
-    public static final String jn_userPatrol = "userPatrol";
-    public static final String jn_animalConsumeProp = "animalConsumeProp";
-    public static final String jn_collectGiftBox = "collectGiftBox";
-    public static final String jn_totalCertCount = "totalCertCount";
     public static final String jn_enableStall = "enableStall";
     public static final String jn_stallAutoOpen = "stallAutoOpen";
     public static final String jn_stallAutoClose = "stallAutoClose";
@@ -139,7 +140,6 @@ public class Config {
     public static final String jn_zcjSignIn = "zcjSignIn";
     public static final String jn_merchantKmdk = "merchantKmdk";
     public static final String jn_greenFinance = "greenFinance";
-    public static final String jn_antBookRead = "antBookRead";
     public static final String jn_consumeGold = "consumeGold";
     public static final String jn_omegakoiTown = "omegakoiTown";
     private static final String TAG = Config.class.getCanonicalName();
@@ -151,6 +151,7 @@ public class Config {
     private static PendingIntent alarm7Pi;
     /* application */
     private boolean immediateEffect;
+    private int checkInterval;
     private boolean recordLog;
     private boolean showToast;
     private int toastOffsetY;
@@ -160,27 +161,27 @@ public class Config {
     private boolean timeoutRestart;
     private XposedHook.StayAwakeType timeoutType;
     private boolean startAt7;
+    private int waitWhenException;
     private boolean enableOnGoing;
     private boolean languageSimplifiedChinese;
     /* forest */
     private boolean collectEnergy;
-    private int checkInterval;
-    private boolean collectWateringBubble;
+    private List<String> dontCollectList;
     private boolean batchRobEnergy;
-    private boolean collectProp;
+    private int advanceTime;
+    private int collectInterval;
+    private int collectTimeout;
+    private boolean collectWateringBubble;
+    private int returnWater33;
+    private int returnWater18;
+    private int returnWater10;
     private boolean limitCollect;
     private int limitCount;
     private boolean doubleCard;
     private List<String> doubleCardTime;
     private int doubleCountLimit;
-    private int advanceTime;
-    private int collectInterval;
-    private int collectTimeout;
-    private int returnWater33;
-    private int returnWater18;
-    private int returnWater10;
+    private boolean collectProp;
     private boolean helpFriendCollect;
-    private List<String> dontCollectList;
     private List<String> dontHelpCollectList;
     private boolean receiveForestTaskAward;
     private List<String> waterFriendList;
@@ -189,25 +190,28 @@ public class Config {
     private boolean cooperateWater;
     private List<String> cooperateWaterList;
     private List<Integer> cooperateWaterNumList;
-    private boolean ancientTree;
-    private List<String> ancientTreeCityCodeList;
     private boolean energyRain;
+    private List<String> giveEnergyRainList;
+    private boolean exchangeEnergyDoubleClick;
+    private int exchangeEnergyDoubleClickCount;
+    private boolean giveProp;
+    private List<String> whoYouWantGiveTo;
     private boolean reserve;
     private List<String> reserveList;
     private List<Integer> reserveCountList;
-    private boolean beach;
-    private List<String> beachList;
-    private List<Integer> beachCountList;
+    private boolean ancientTree;
+    private List<String> ancientTreeCityCodeList;
     private boolean ancientTreeOnlyWeek;
-    private List<String> giveEnergyRainList;
-    private int waitWhenException;
-    private boolean exchangeEnergyDoubleClick;
-    private int exchangeEnergyDoubleClickCount;
     private boolean antdodoCollect;
-    private boolean antOcean;
+    private List<String> sendFriendCard;
     private boolean userPatrol;
     private boolean animalConsumeProp;
     private boolean collectGiftBox;
+    private boolean antBookRead;
+    private boolean antOcean;
+    private boolean beach;
+    private List<String> beachList;
+    private List<Integer> beachCountList;
     private boolean totalCertCount;
     /* farm */
     private boolean enableFarm;
@@ -218,6 +222,7 @@ public class Config {
     private RecallAnimalType recallAnimalType;
     private boolean receiveFarmToolReward;
     private boolean recordFarmGame;
+    private List<String> farmGameTime;
     private boolean kitchen;
     private boolean useSpecialFood;
     private boolean useNewEggTool;
@@ -229,12 +234,9 @@ public class Config {
     private boolean useAccelerateTool;
     private List<String> feedFriendAnimalList;
     private List<Integer> feedFriendCountList;
-    private List<String> farmGameTime;
     private List<String> animalSleepTime;
     private boolean notifyFriend;
     private List<String> dontNotifyFriendList;
-    private List<String> whoYouWantGiveTo;
-    private List<String> sendFriendCard;
     private boolean acceptGift;
     private List<String> visitFriendList;
     private List<Integer> visitFriendCountList;
@@ -274,7 +276,6 @@ public class Config {
     private boolean zcjSignIn;
     private boolean merchantKmdk;
     private boolean greenFinance;
-    private boolean antBookRead;
     private boolean consumeGold;
     private boolean omegakoiTown;
 
@@ -286,6 +287,15 @@ public class Config {
 
     public static boolean immediateEffect() {
         return getConfig().immediateEffect;
+    }
+
+    public static void setCheckInterval(int i) {
+        getConfig().checkInterval = i;
+        hasChanged = true;
+    }
+
+    public static int checkInterval() {
+        return getConfig().checkInterval;
     }
 
     public static void setRecordLog(boolean b) {
@@ -374,6 +384,15 @@ public class Config {
         return getConfig().startAt7;
     }
 
+    public static void setWaitWhenException(int i) {
+        getConfig().waitWhenException = i;
+        hasChanged = true;
+    }
+
+    public static int waitWhenException() {
+        return getConfig().waitWhenException;
+    }
+
     public static void setEnableOnGoing(boolean b) {
         getConfig().enableOnGoing = b;
         hasChanged = true;
@@ -402,13 +421,8 @@ public class Config {
         return getConfig().collectEnergy;
     }
 
-    public static void setCollectWateringBubble(boolean b) {
-        getConfig().collectWateringBubble = b;
-        hasChanged = true;
-    }
-
-    public static boolean collectWateringBubble() {
-        return getConfig().collectWateringBubble;
+    public static List<String> getDontCollectList() {
+        return getConfig().dontCollectList;
     }
 
     public static void setBatchRobEnergy(boolean b) {
@@ -418,86 +432,6 @@ public class Config {
 
     public static boolean batchRobEnergy() {
         return getConfig().batchRobEnergy;
-    }
-
-    public static void setCollectProp(boolean b) {
-        getConfig().collectProp = b;
-        hasChanged = true;
-    }
-
-    public static boolean collectProp() {
-        return getConfig().collectProp;
-    }
-
-    public static void setCheckInterval(int i) {
-        getConfig().checkInterval = i;
-        hasChanged = true;
-    }
-
-    public static int checkInterval() {
-        return getConfig().checkInterval;
-    }
-
-    public static void setWaitWhenException(int i) {
-        getConfig().waitWhenException = i;
-        hasChanged = true;
-    }
-
-    public static int waitWhenException() {
-        return getConfig().waitWhenException;
-    }
-
-    public static boolean isLimitCollect() {
-        return getConfig().limitCollect;
-    }
-
-    public static void setLimitCollect(boolean limitCollect) {
-        getConfig().limitCollect = limitCollect;
-        hasChanged = true;
-    }
-
-    public static int getLimitCount() {
-        return getConfig().limitCount;
-    }
-
-    public static void setLimitCount(int limitCount) {
-        getConfig().limitCount = limitCount;
-        hasChanged = true;
-    }
-
-    public static boolean doubleCard() {
-        return getConfig().doubleCard;
-    }
-
-    public static void setDoubleCard(boolean doubleCard) {
-        getConfig().doubleCard = doubleCard;
-        hasChanged = true;
-    }
-
-    public static String doubleCardTime() {
-        return String.join(",", getConfig().doubleCardTime);
-    }
-
-    public static boolean isDoubleCardTime() {
-        for (String doubleTime : getConfig().doubleCardTime) {
-            if (checkInTimeSpan(doubleTime))
-                return true;
-        }
-        return false;
-    }
-
-    public static void setDoubleCardTime(String i) {
-        getConfig().doubleCardTime = Arrays.asList(i.split(","));
-        hasChanged = true;
-    }
-
-    public static int getDoubleCountLimit() {
-        return getConfig().doubleCountLimit;
-    }
-
-    public static void setDoubleCountLimit(int doubleCountLimit) {
-        getConfig().doubleCountLimit = doubleCountLimit;
-        hasChanged = true;
     }
 
     public static void setAdvanceTime(int i) {
@@ -527,6 +461,15 @@ public class Config {
         return getConfig().collectTimeout;
     }
 
+    public static void setCollectWateringBubble(boolean b) {
+        getConfig().collectWateringBubble = b;
+        hasChanged = true;
+    }
+
+    public static boolean collectWateringBubble() {
+        return getConfig().collectWateringBubble;
+    }
+
     public static void setReturnWater33(int i) {
         getConfig().returnWater33 = i;
         hasChanged = true;
@@ -554,6 +497,68 @@ public class Config {
         return getConfig().returnWater10;
     }
 
+    public static boolean isLimitCollect() {
+        return getConfig().limitCollect;
+    }
+
+    public static void setLimitCollect(boolean limitCollect) {
+        getConfig().limitCollect = limitCollect;
+        hasChanged = true;
+    }
+
+    public static int getLimitCount() {
+        return getConfig().limitCount;
+    }
+
+    public static void setLimitCount(int limitCount) {
+        getConfig().limitCount = limitCount;
+        hasChanged = true;
+    }
+
+    public static void setDoubleCard(boolean doubleCard) {
+        getConfig().doubleCard = doubleCard;
+        hasChanged = true;
+    }
+
+    public static boolean doubleCard() {
+        return getConfig().doubleCard;
+    }
+
+    public static String doubleCardTime() {
+        return String.join(",", getConfig().doubleCardTime);
+    }
+
+    public static boolean isDoubleCardTime() {
+        for (String doubleTime : getConfig().doubleCardTime) {
+            if (checkInTimeSpan(doubleTime))
+                return true;
+        }
+        return false;
+    }
+
+    public static void setDoubleCardTime(String i) {
+        getConfig().doubleCardTime = Arrays.asList(i.split(","));
+        hasChanged = true;
+    }
+
+    public static int getDoubleCountLimit() {
+        return getConfig().doubleCountLimit;
+    }
+
+    public static void setDoubleCountLimit(int doubleCountLimit) {
+        getConfig().doubleCountLimit = doubleCountLimit;
+        hasChanged = true;
+    }
+
+    public static void setCollectProp(boolean b) {
+        getConfig().collectProp = b;
+        hasChanged = true;
+    }
+
+    public static boolean collectProp() {
+        return getConfig().collectProp;
+    }
+
     public static void setHelpFriendCollect(boolean b) {
         getConfig().helpFriendCollect = b;
         hasChanged = true;
@@ -561,10 +566,6 @@ public class Config {
 
     public static boolean helpFriendCollect() {
         return getConfig().helpFriendCollect;
-    }
-
-    public static List<String> getDontCollectList() {
-        return getConfig().dontCollectList;
     }
 
     public static List<String> getDontHelpCollectList() {
@@ -614,17 +615,48 @@ public class Config {
         return getConfig().cooperateWaterNumList;
     }
 
-    public static void setAncientTree(boolean b) {
-        getConfig().ancientTree = b;
+    public static void setEnergyRain(boolean b) {
+        getConfig().energyRain = b;
         hasChanged = true;
     }
 
-    public static boolean ancientTree() {
-        return getConfig().ancientTree;
+    public static List<String> getGiveEnergyRainList() {
+        return getConfig().giveEnergyRainList;
     }
 
-    public static List<String> getAncientTreeCityCodeList() {
-        return getConfig().ancientTreeCityCodeList;
+    public static boolean energyRain() {
+        return getConfig().energyRain;
+    }
+
+    public static void setExchangeEnergyDoubleClick(boolean b) {
+        getConfig().exchangeEnergyDoubleClick = b;
+        hasChanged = true;
+    }
+
+    public static boolean ExchangeEnergyDoubleClick() {
+        return getConfig().exchangeEnergyDoubleClick;
+    }
+
+    public static int getExchangeEnergyDoubleClickCount() {
+        return getConfig().exchangeEnergyDoubleClickCount;
+    }
+
+    public static void setExchangeEnergyDoubleClickCount(int i) {
+        getConfig().exchangeEnergyDoubleClickCount = i;
+        hasChanged = true;
+    }
+
+    public static void setGiveProp(boolean b) {
+        getConfig().giveProp = b;
+        hasChanged = true;
+    }
+
+    public static boolean giveProp() {
+        return getConfig().giveProp;
+    }
+
+    public static List<String> whoYouWantGiveTo() {
+        return getConfig().whoYouWantGiveTo;
     }
 
     public static void setReserve(boolean b) {
@@ -644,52 +676,17 @@ public class Config {
         return getConfig().reserveCountList;
     }
 
-    public static void setBeach(boolean b) {
-        getConfig().beach = b;
+    public static void setAncientTree(boolean b) {
+        getConfig().ancientTree = b;
         hasChanged = true;
     }
 
-    public static boolean beach() {
-        return getConfig().beach;
+    public static boolean ancientTree() {
+        return getConfig().ancientTree;
     }
 
-    public static List<String> getBeachList() {
-        return getConfig().beachList;
-    }
-
-    public static List<Integer> getBeachCountList() {
-        return getConfig().beachCountList;
-    }
-
-    public static void setEnergyRain(boolean b) {
-        getConfig().energyRain = b;
-        hasChanged = true;
-    }
-
-    public static List<String> getGiveEnergyRainList() {
-        return getConfig().giveEnergyRainList;
-    }
-
-    public static boolean energyRain() {
-        return getConfig().energyRain;
-    }
-
-    public static boolean ExchangeEnergyDoubleClick() {
-        return getConfig().exchangeEnergyDoubleClick;
-    }
-
-    public static void setExchangeEnergyDoubleClick(boolean b) {
-        getConfig().exchangeEnergyDoubleClick = b;
-        hasChanged = true;
-    }
-
-    public static int getExchangeEnergyDoubleClickCount() {
-        return getConfig().exchangeEnergyDoubleClickCount;
-    }
-
-    public static void setExchangeEnergyDoubleClickCount(int i) {
-        getConfig().exchangeEnergyDoubleClickCount = i;
-        hasChanged = true;
+    public static List<String> getAncientTreeCityCodeList() {
+        return getConfig().ancientTreeCityCodeList;
     }
 
     public static void setAncientTreeOnlyWeek(boolean b) {
@@ -719,13 +716,8 @@ public class Config {
         return getConfig().antdodoCollect;
     }
 
-    public static void setAntOcean(boolean b) {
-        getConfig().antOcean = b;
-        hasChanged = true;
-    }
-
-    public static boolean antOcean() {
-        return getConfig().antOcean;
+    public static List<String> sendFriendCard() {
+        return getConfig().sendFriendCard;
     }
 
     public static void setUserPatrol(boolean b) {
@@ -753,6 +745,41 @@ public class Config {
 
     public static boolean collectGiftBox() {
         return getConfig().collectGiftBox;
+    }
+
+    public static void setAntBookRead(boolean b) {
+        getConfig().antBookRead = b;
+        hasChanged = true;
+    }
+
+    public static boolean antBookRead() {
+        return getConfig().antBookRead;
+    }
+
+    public static void setAntOcean(boolean b) {
+        getConfig().antOcean = b;
+        hasChanged = true;
+    }
+
+    public static boolean antOcean() {
+        return getConfig().antOcean;
+    }
+
+    public static void setBeach(boolean b) {
+        getConfig().beach = b;
+        hasChanged = true;
+    }
+
+    public static boolean beach() {
+        return getConfig().beach;
+    }
+
+    public static List<String> getBeachList() {
+        return getConfig().beachList;
+    }
+
+    public static List<Integer> getBeachCountList() {
+        return getConfig().beachCountList;
     }
 
     public static void setTotalCertCount(boolean b) {
@@ -830,6 +857,23 @@ public class Config {
 
     public static boolean recordFarmGame() {
         return getConfig().recordFarmGame;
+    }
+
+    public static String farmGameTime() {
+        return String.join(",", getConfig().farmGameTime);
+    }
+
+    public static boolean isFarmGameTime() {
+        for (String doubleTime : getConfig().farmGameTime) {
+            if (checkInTimeSpan(doubleTime))
+                return true;
+        }
+        return false;
+    }
+
+    public static void setFarmGameTime(String i) {
+        getConfig().farmGameTime = Arrays.asList(i.split(","));
+        hasChanged = true;
     }
 
     public static void setKitchen(boolean b) {
@@ -921,23 +965,6 @@ public class Config {
         return getConfig().feedFriendCountList;
     }
 
-    public static String farmGameTime() {
-        return String.join(",", getConfig().farmGameTime);
-    }
-
-    public static boolean isFarmGameTime() {
-        for (String doubleTime : getConfig().farmGameTime) {
-            if (checkInTimeSpan(doubleTime))
-                return true;
-        }
-        return false;
-    }
-
-    public static void setFarmGameTime(String i) {
-        getConfig().farmGameTime = Arrays.asList(i.split(","));
-        hasChanged = true;
-    }
-
     public static String animalSleepTime() {
         return String.join(",", getConfig().animalSleepTime);
     }
@@ -978,14 +1005,6 @@ public class Config {
 
     public static List<String> getDontNotifyFriendList() {
         return getConfig().dontNotifyFriendList;
-    }
-
-    public static List<String> whoYouWantGiveTo() {
-        return getConfig().whoYouWantGiveTo;
-    }
-
-    public static List<String> sendFriendCard() {
-        return getConfig().sendFriendCard;
     }
 
     public static void setAcceptGift(boolean b) {
@@ -1315,15 +1334,6 @@ public class Config {
         return getConfig().greenFinance;
     }
 
-    public static void setAntBookRead(boolean b) {
-        getConfig().antBookRead = b;
-        hasChanged = true;
-    }
-
-    public static boolean antBookRead() {
-        return getConfig().antBookRead;
-    }
-
     public static void setConsumeGold(boolean b) {
         getConfig().consumeGold = b;
         hasChanged = true;
@@ -1357,41 +1367,41 @@ public class Config {
 
     public static Config defInit() {
         Config c = new Config();
-
+        /* application */
         c.immediateEffect = true;
+        c.checkInterval = 600_000;
         c.recordLog = true;
         c.showToast = true;
-        c.toastOffsetY = 0;
+        c.toastOffsetY = 388;
         c.stayAwake = true;
         c.stayAwakeType = XposedHook.StayAwakeType.BROADCAST;
         c.stayAwakeTarget = XposedHook.StayAwakeTarget.SERVICE;
         c.timeoutRestart = true;
         c.timeoutType = XposedHook.StayAwakeType.ALARM;
-        c.startAt7 = false;
-        c.enableOnGoing = false;
-        c.languageSimplifiedChinese = false;
-
-        c.collectEnergy = false;
-        c.collectWateringBubble = true;
-        c.batchRobEnergy = false;
-        c.collectProp = true;
-        c.checkInterval = 720_000;
+        c.startAt7 = true;
         c.waitWhenException = 60 * 60 * 1000;
+        c.enableOnGoing = true;
+        c.languageSimplifiedChinese = false;
+        /* forest */
+        c.collectEnergy = false;
+        if (c.dontCollectList == null)
+            c.dontCollectList = new ArrayList<>();
+        c.batchRobEnergy = false;
+        c.advanceTime = 0;
+        c.collectInterval = 100;
+        c.collectTimeout = 2_000;
+        c.collectWateringBubble = false;
+        c.returnWater33 = 0;
+        c.returnWater18 = 0;
+        c.returnWater10 = 0;
         c.limitCollect = true;
         c.limitCount = 50;
         c.doubleCard = false;
         c.doubleCardTime = new ArrayList<>();
         c.doubleCardTime.add("0700-0730");
         c.doubleCountLimit = 6;
-        c.advanceTime = 0;
-        c.collectInterval = 100;
-        c.collectTimeout = 2_000;
-        c.returnWater33 = 0;
-        c.returnWater18 = 0;
-        c.returnWater10 = 0;
+        c.collectProp = true;
         c.helpFriendCollect = true;
-        if (c.dontCollectList == null)
-            c.dontCollectList = new ArrayList<>();
         if (c.dontHelpCollectList == null)
             c.dontHelpCollectList = new ArrayList<>();
         c.receiveForestTaskAward = true;
@@ -1405,30 +1415,34 @@ public class Config {
             c.cooperateWaterList = new ArrayList<>();
         if (c.cooperateWaterNumList == null)
             c.cooperateWaterNumList = new ArrayList<>();
-        c.ancientTree = true;
-        c.reserve = true;
-        if (c.reserveList == null)
-            c.reserveList = new ArrayList<>();
-        if (c.reserveCountList == null)
-            c.reserveCountList = new ArrayList<>();
-        c.beach = true;
-        if (c.beachList == null)
-            c.beachList = new ArrayList<>();
-        if (c.beachCountList == null)
-            c.beachCountList = new ArrayList<>();
         c.energyRain = true;
         if (c.giveEnergyRainList == null)
             c.giveEnergyRainList = new ArrayList<>();
         c.exchangeEnergyDoubleClick = false;
         c.exchangeEnergyDoubleClickCount = 6;
+        c.giveProp = false;
+        c.whoYouWantGiveTo = new ArrayList<>();
+        c.reserve = false;
+        if (c.reserveList == null)
+            c.reserveList = new ArrayList<>();
+        if (c.reserveCountList == null)
+            c.reserveCountList = new ArrayList<>();
+        c.ancientTree = false;
         c.ancientTreeOnlyWeek = true;
         c.antdodoCollect = true;
-        c.antOcean = true;
+        c.sendFriendCard = new ArrayList<>();
         c.userPatrol = true;
         c.animalConsumeProp = true;
         c.collectGiftBox = true;
+        c.antBookRead = false;
+        c.antOcean = true;
+        c.beach = true;
+        if (c.beachList == null)
+            c.beachList = new ArrayList<>();
+        if (c.beachCountList == null)
+            c.beachCountList = new ArrayList<>();
         c.totalCertCount = false;
-
+        /* farm */
         c.enableFarm = true;
         c.rewardFriend = true;
         c.sendBackAnimal = true;
@@ -1438,6 +1452,8 @@ public class Config {
         c.recallAnimalType = RecallAnimalType.ALWAYS;
         c.receiveFarmToolReward = true;
         c.recordFarmGame = true;
+        c.farmGameTime = new ArrayList<>();
+        c.farmGameTime.add("2200-2400");
         c.kitchen = true;
         c.useSpecialFood = false;
         c.useNewEggTool = true;
@@ -1451,16 +1467,12 @@ public class Config {
             c.feedFriendAnimalList = new ArrayList<>();
         if (c.feedFriendCountList == null)
             c.feedFriendCountList = new ArrayList<>();
-        c.farmGameTime = new ArrayList<>();
-        c.farmGameTime.add("2200-2400");
         c.animalSleepTime = new ArrayList<>();
         c.animalSleepTime.add("2300-2400");
         c.animalSleepTime.add("0000-0559");
         c.notifyFriend = false;
         if (c.dontNotifyFriendList == null)
             c.dontNotifyFriendList = new ArrayList<>();
-        c.whoYouWantGiveTo = new ArrayList<>();
-        c.sendFriendCard = new ArrayList<>();
         c.acceptGift = true;
         if (c.visitFriendList == null)
             c.visitFriendList = new ArrayList<>();
@@ -1470,13 +1482,12 @@ public class Config {
         c.antOrchard = true;
         c.receiveOrchardTaskAward = true;
         c.orchardSpreadManureCount = 0;
-        c.batchHireAnimal = false;
-
+        c.batchHireAnimal = true;
         c.enableStall = false;
-        c.stallAutoClose = false;
-        c.stallAutoOpen = false;
+        c.stallAutoClose = true;
+        c.stallAutoOpen = true;
         c.stallAutoTask = true;
-        c.stallReceiveAward = false;
+        c.stallReceiveAward = true;
         c.stallOpenType = true;
         c.stallOpenList = new ArrayList<>();
         c.stallWhiteList = new ArrayList<>();
@@ -1487,7 +1498,7 @@ public class Config {
         c.stallInviteRegister = false;
         c.stallThrowManure = false;
         c.stallInviteShopList = new ArrayList<>();
-
+        /* other */
         c.receivePoint = true;
         c.openTreasureBox = true;
         c.receiveCoinAsset = true;
@@ -1501,7 +1512,6 @@ public class Config {
         c.zcjSignIn = false;
         c.merchantKmdk = false;
         c.greenFinance = false;
-        c.antBookRead = false;
         c.consumeGold = false;
         c.omegakoiTown = false;
         return c;
@@ -1520,8 +1530,12 @@ public class Config {
             JSONArray ja, jaa;
             config = new Config();
 
+            /* application */
             config.immediateEffect = jo.optBoolean(jn_immediateEffect, true);
             //Log.i(TAG, jn_immediateEffect + ":" + config.immediateEffect);
+
+            config.checkInterval = jo.optInt(jn_checkInterval, 720_000);
+            //Log.i(TAG, jn_checkInterval + ":" + config.checkInterval);
 
             config.recordLog = jo.optBoolean(jn_recordLog, true);
             //Log.i(TAG, jn_recordLog + ":" + config.recordLog);
@@ -1529,7 +1543,7 @@ public class Config {
             config.showToast = jo.optBoolean(jn_showToast, true);
             //Log.i(TAG, jn_showToast + ":" + config.showToast);
 
-            config.toastOffsetY = jo.optInt(jn_toastOffsetY, 0);
+            config.toastOffsetY = jo.optInt(jn_toastOffsetY, 388);
             //Log.i(TAG, jn_toastOffsetY + ":" + config.toastOffsetY);
 
             config.stayAwake = jo.optBoolean(jn_stayAwake, true);
@@ -1550,10 +1564,13 @@ public class Config {
                     .valueOf(jo.optString(jn_timeoutType, XposedHook.StayAwakeType.BROADCAST.name()));
             //Log.i(TAG, jn_timeoutType + ":" + config.timeoutType);
 
-            config.startAt7 = jo.optBoolean(jn_startAt7, false);
+            config.startAt7 = jo.optBoolean(jn_startAt7, true);
             //Log.i(TAG, jn_startAt7 + ":" + config.startAt7);
 
-            config.enableOnGoing = jo.optBoolean(jn_enableOnGoing, false);
+            config.waitWhenException = jo.optInt(jn_waitWhenException, 60 * 60 * 1000);
+            //Log.i(TAG, jn_waitWhenException + ":" + config.waitWhenException);
+
+            config.enableOnGoing = jo.optBoolean(jn_enableOnGoing, true);
             //Log.i(TAG, jn_enableOnGoing + ":" + config.enableOnGoing);
 
             config.languageSimplifiedChinese = jo.optBoolean(jn_languageSimplifiedChinese, false);
@@ -1563,19 +1580,38 @@ public class Config {
             config.collectEnergy = jo.optBoolean(jn_collectEnergy, false);
             //Log.i(TAG, jn_collectEnergy + ":" + config.collectEnergy);
 
-            config.collectWateringBubble = jo.optBoolean(jn_collectWateringBubble, true);
-            //Log.i(TAG, jn_collectWateringBubble + ":" + config.collectWateringBubble);
+            config.dontCollectList = new ArrayList<>();
+            if (jo.has(jn_dontCollectList)) {
+                ja = jo.getJSONArray(jn_dontCollectList);
+                for (int i = 0; i < ja.length(); i++) {
+                    config.dontCollectList.add(ja.getString(i));
+                }
+            }
+            //Log.i(TAG, jn_dontCollectList + ":" + String.join(",", config.dontCollectList));
 
             config.batchRobEnergy = jo.optBoolean(jn_batchRobEnergy, false);
+            //Log.i(TAG, jn_batchRobEnergy + ":" + config.batchRobEnergy);
 
-            config.collectProp = jo.optBoolean(jn_collectProp, true);
-            //Log.i(TAG, jn_collectProp + ":" + config.collectProp);
+            config.advanceTime = jo.optInt(jn_advanceTime, 0);
+            //Log.i(TAG, jn_advanceTime + ":" + config.advanceTime);
 
-            config.checkInterval = jo.optInt(jn_checkInterval, 720_000);
-            //Log.i(TAG, jn_checkInterval + ":" + config.checkInterval);
+            config.collectInterval = jo.optInt(jn_collectInterval, 100);
+            //Log.i(TAG, jn_collectInterval + ":" + config.collectInterval);
 
-            config.waitWhenException = jo.optInt(jn_waitWhenException, 60 * 60 * 1000);
-            //Log.i(TAG, jn_waitWhenException + ":" + config.waitWhenException);
+            config.collectTimeout = jo.optInt(jn_collectTimeout, 2_000);
+            //Log.i(TAG, jn_collectTimeout + ":" + config.collectTimeout);
+
+            config.collectWateringBubble = jo.optBoolean(jn_collectWateringBubble, false);
+            //Log.i(TAG, jn_collectWateringBubble + ":" + config.collectWateringBubble);
+
+            config.returnWater33 = jo.optInt(jn_ReturnWater33);
+            //Log.i(TAG, jn_ReturnWater33 + ":" + config.returnWater33);
+
+            config.returnWater18 = jo.optInt(jn_ReturnWater18);
+            //Log.i(TAG, jn_ReturnWater18 + ":" + config.returnWater18);
+
+            config.returnWater10 = jo.optInt(jn_ReturnWater10);
+            //Log.i(TAG, jn_ReturnWater10 + ":" + config.returnWater10);
 
             config.limitCollect = jo.optBoolean("limitCollect", true);
             Log.i(TAG, "limitCollect" + ":" + config.limitCollect);
@@ -1591,35 +1627,11 @@ public class Config {
             config.doubleCountLimit = jo.optInt("doubleCountLimit", 6);
             Log.i(TAG, "doubleCountLimit" + ":" + config.doubleCountLimit);
 
-            config.advanceTime = jo.optInt(jn_advanceTime, 0);
-            //Log.i(TAG, jn_advanceTime + ":" + config.advanceTime);
-
-            config.collectInterval = jo.optInt(jn_collectInterval, 100);
-            //Log.i(TAG, jn_collectInterval + ":" + config.collectInterval);
-
-            config.collectTimeout = jo.optInt(jn_collectTimeout, 2_000);
-            //Log.i(TAG, jn_collectTimeout + ":" + config.collectTimeout);
-
-            config.returnWater33 = jo.optInt(jn_ReturnWater33);
-            //Log.i(TAG, jn_ReturnWater33 + ":" + config.returnWater33);
-
-            config.returnWater18 = jo.optInt(jn_ReturnWater18);
-            //Log.i(TAG, jn_ReturnWater18 + ":" + config.returnWater18);
-
-            config.returnWater10 = jo.optInt(jn_ReturnWater10);
-            //Log.i(TAG, jn_ReturnWater10 + ":" + config.returnWater10);
+            config.collectProp = jo.optBoolean(jn_collectProp, true);
+            //Log.i(TAG, jn_collectProp + ":" + config.collectProp);
 
             config.helpFriendCollect = jo.optBoolean(jn_helpFriendCollect, true);
             //Log.i(TAG, jn_helpFriendCollect + ":" + config.helpFriendCollect);
-
-            config.dontCollectList = new ArrayList<>();
-            if (jo.has(jn_dontCollectList)) {
-                ja = jo.getJSONArray(jn_dontCollectList);
-                for (int i = 0; i < ja.length(); i++) {
-                    config.dontCollectList.add(ja.getString(i));
-                }
-            }
-            //Log.i(TAG, jn_dontCollectList + ":" + String.join(",", config.dontCollectList));
 
             config.dontHelpCollectList = new ArrayList<>();
             if (jo.has(jn_dontHelpCollectList)) {
@@ -1634,6 +1646,7 @@ public class Config {
             //Log.i(TAG, jn_receiveForestTaskAward + ":" + config.receiveForestTaskAward);
 
             config.waterFriendList = new ArrayList<>();
+
             config.waterCountList = new ArrayList<>();
             if (jo.has(jn_waterFriendList)) {
                 ja = jo.getJSONArray(jn_waterFriendList);
@@ -1668,18 +1681,6 @@ public class Config {
             }
             //Log.i(TAG, jn_cooperateWaterList + ":" + String.join(",", config.cooperateWaterList));
 
-            config.ancientTree = jo.optBoolean(jn_ancientTree, true);
-            //Log.i(TAG, jn_ancientTree + ":" + config.ancientTree);
-
-            config.ancientTreeCityCodeList = new ArrayList<>();
-            if (jo.has(jn_ancientTreeAreaCodeList)) {
-                ja = jo.getJSONArray(jn_ancientTreeAreaCodeList);
-                for (int i = 0; i < ja.length(); i++) {
-                    config.ancientTreeCityCodeList.add(ja.getString(i));
-                }
-            }
-            //Log.i(TAG, jn_ancientTreeAreaCodeList + ":" + String.join(",", config.ancientTreeCityCodeList));
-
             config.energyRain = jo.optBoolean(jn_energyRain, true);
             //Log.i(TAG, jn_energyRain + ":" + config.energyRain);
 
@@ -1693,7 +1694,25 @@ public class Config {
             }
             //Log.i(TAG, jn_giveEnergyRainList + ":" + String.join(",", config.giveEnergyRainList));
 
-            config.reserve = jo.optBoolean(jn_reserve, true);
+            config.exchangeEnergyDoubleClick = jo.optBoolean("exchangeEnergyDoubleClick", false);
+            Log.i(TAG, "exchangeEnergyDoubleClick" + ":" + config.exchangeEnergyDoubleClick);
+
+            config.exchangeEnergyDoubleClickCount = jo.optInt("exchangeEnergyDoubleClickCount", 6);
+            Log.i(TAG, "exchangeEnergyDoubleClickCount" + ":" + config.exchangeEnergyDoubleClickCount);
+
+            config.giveProp = jo.optBoolean(jn_giveProp, false);
+            //Log.i(TAG, jn_giveProp + ":" + config.giveProp);
+
+            config.whoYouWantGiveTo = new ArrayList<>();
+            if (jo.has(jn_whoYouWantGiveTo)) {
+                ja = jo.getJSONArray(jn_whoYouWantGiveTo);
+                for (int i = 0; i < ja.length(); i++) {
+                    config.whoYouWantGiveTo.add(ja.getString(i));
+                }
+            }
+            //Log.i(TAG, jn_whoYouWantGiveTo + ":" + String.join(",", config.whoYouWantGiveTo));
+
+            config.reserve = jo.optBoolean(jn_reserve, false);
             //Log.i(TAG, jn_reserve + ":" + config.reserve);
 
             config.reserveList = new ArrayList<>();
@@ -1712,6 +1731,46 @@ public class Config {
                 }
             }
             //Log.i(TAG, jn_reserveList + ":" + String.join(",", config.reserveList));
+
+            config.ancientTree = jo.optBoolean(jn_ancientTree, false);
+            //Log.i(TAG, jn_ancientTree + ":" + config.ancientTree);
+
+            config.ancientTreeCityCodeList = new ArrayList<>();
+            if (jo.has(jn_ancientTreeAreaCodeList)) {
+                ja = jo.getJSONArray(jn_ancientTreeAreaCodeList);
+                for (int i = 0; i < ja.length(); i++) {
+                    config.ancientTreeCityCodeList.add(ja.getString(i));
+                }
+            }
+            //Log.i(TAG, jn_ancientTreeAreaCodeList + ":" + String.join(",", config.ancientTreeCityCodeList));
+
+            config.ancientTreeOnlyWeek = jo.optBoolean(jn_ancientTreeOnlyWeek, true);
+            //Log.i(TAG, jn_ancientTreeOnlyWeek + ":" + config.ancientTreeOnlyWeek);
+
+            config.antdodoCollect = jo.optBoolean(jn_antdodoCollect, true);
+            //Log.i(TAG, jn_antdodoCollect + ":" + config.antdodoCollect);
+
+            config.sendFriendCard = new ArrayList<>();
+            if (jo.has(jn_sendFriendCard)) {
+                ja = jo.getJSONArray(jn_sendFriendCard);
+                for (int i = 0; i < ja.length(); i++) {
+                    config.sendFriendCard.add(ja.getString(i));
+                }
+            }
+
+            config.userPatrol = jo.optBoolean(jn_userPatrol, true);
+            //Log.i(TAG, jn_userPatrol + ":" + config.userPatrol);
+
+            config.animalConsumeProp = jo.optBoolean(jn_animalConsumeProp, true);
+            //Log.i(TAG, jn_animalConsumeProp + ":" + config.animalConsumeProp);
+
+            config.collectGiftBox = jo.optBoolean(jn_collectGiftBox, true);
+
+            config.antBookRead = jo.optBoolean(jn_antBookRead, false);
+            //Log.i(TAG, jn_collectGiftBox + ":" + config.collectGiftBox);
+
+            config.antOcean = jo.optBoolean(jn_antOcean, true);
+            //Log.i(TAG, jn_antOcean + ":" + config.antOcean);
 
             config.beach = jo.optBoolean(jn_beach, true);
             //Log.i(TAG, jn_beach + ":" + config.beach);
@@ -1732,30 +1791,6 @@ public class Config {
                 }
             }
             //Log.i(TAG, jn_beachList + ":" + String.join(",", config.beachList));
-
-            config.exchangeEnergyDoubleClick = jo.optBoolean("exchangeEnergyDoubleClick", false);
-            Log.i(TAG, "exchangeEnergyDoubleClick" + ":" + config.exchangeEnergyDoubleClick);
-
-            config.exchangeEnergyDoubleClickCount = jo.optInt("exchangeEnergyDoubleClickCount", 6);
-            Log.i(TAG, "exchangeEnergyDoubleClickCount" + ":" + config.exchangeEnergyDoubleClickCount);
-
-            config.ancientTreeOnlyWeek = jo.optBoolean(jn_ancientTreeOnlyWeek, true);
-            //Log.i(TAG, jn_ancientTreeOnlyWeek + ":" + config.ancientTreeOnlyWeek);
-
-            config.antdodoCollect = jo.optBoolean(jn_antdodoCollect, true);
-            //Log.i(TAG, jn_antdodoCollect + ":" + config.antdodoCollect);
-
-            config.antOcean = jo.optBoolean(jn_antOcean, true);
-            //Log.i(TAG, jn_antOcean + ":" + config.antOcean);
-
-            config.userPatrol = jo.optBoolean(jn_userPatrol, true);
-            //Log.i(TAG, jn_userPatrol + ":" + config.userPatrol);
-
-            config.animalConsumeProp = jo.optBoolean(jn_animalConsumeProp, true);
-            //Log.i(TAG, jn_animalConsumeProp + ":" + config.animalConsumeProp);
-
-            config.collectGiftBox = jo.optBoolean(jn_collectGiftBox, true);
-            //Log.i(TAG, jn_collectGiftBox + ":" + config.collectGiftBox);
 
             config.totalCertCount = jo.optBoolean(jn_totalCertCount, false);
 
@@ -1790,6 +1825,9 @@ public class Config {
 
             config.recordFarmGame = jo.optBoolean(jn_recordFarmGame, true);
             //Log.i(TAG, jn_recordFarmGame + ":" + config.recordFarmGame);
+
+            config.farmGameTime = Arrays.asList(jo.optString(jn_farmGameTime, "2200-2400").split(","));
+            //Log.i(TAG, jn_farmGameTime + ":" + config.farmGameTime);
 
             config.kitchen = jo.optBoolean(jn_kitchen, true);
             //Log.i(TAG, jn_kitchen + ":" + config.kitchen);
@@ -1834,9 +1872,6 @@ public class Config {
             }
             //Log.i(TAG, jn_feedFriendAnimalList + ":" + String.join(",", config.feedFriendAnimalList));
 
-            config.farmGameTime = Arrays.asList(jo.optString(jn_farmGameTime, "2200-2400").split(","));
-            //Log.i(TAG, jn_farmGameTime + ":" + config.farmGameTime);
-
             config.animalSleepTime = Arrays.asList(jo.optString(jn_animalSleepTime, "2200-2400,0000-0559").split(","));
             //Log.i(TAG, jn_animalSleepTime + ":" + config.animalSleepTime);
 
@@ -1851,23 +1886,6 @@ public class Config {
                 }
             }
             //Log.i(TAG, jn_dontNotifyFriendList + ":" + String.join(",", config.dontNotifyFriendList));
-
-            config.whoYouWantGiveTo = new ArrayList<>();
-            if (jo.has(jn_whoYouWantGiveTo)) {
-                ja = jo.getJSONArray(jn_whoYouWantGiveTo);
-                for (int i = 0; i < ja.length(); i++) {
-                    config.whoYouWantGiveTo.add(ja.getString(i));
-                }
-            }
-            //Log.i(TAG, jn_whoYouWantGiveTo + ":" + String.join(",", config.whoYouWantGiveTo));
-
-            config.sendFriendCard = new ArrayList<>();
-            if (jo.has(jn_sendFriendCard)) {
-                ja = jo.getJSONArray(jn_sendFriendCard);
-                for (int i = 0; i < ja.length(); i++) {
-                    config.sendFriendCard.add(ja.getString(i));
-                }
-            }
 
             config.acceptGift = jo.optBoolean(jn_acceptGift, true);
             //Log.i(TAG, jn_acceptGift + ":" + config.acceptGift);
@@ -1906,10 +1924,10 @@ public class Config {
             config.enableStall = jo.optBoolean(jn_enableStall, false);
             //Log.i(TAG, jn_enableStall + ":" + config.enableStall);
 
-            config.stallAutoClose = jo.optBoolean(jn_stallAutoClose, false);
+            config.stallAutoClose = jo.optBoolean(jn_stallAutoClose, true);
             //Log.i(TAG, jn_stallAutoClose + ":" + config.stallAutoClose);
 
-            config.stallAutoOpen = jo.optBoolean(jn_stallAutoOpen, false);
+            config.stallAutoOpen = jo.optBoolean(jn_stallAutoOpen, true);
             //Log.i(TAG, jn_stallAutoOpen + ":" + config.stallAutoOpen);
 
             config.stallAutoTask = jo.optBoolean(jn_stallAutoTask, true);
@@ -2005,8 +2023,6 @@ public class Config {
 
             config.greenFinance = jo.optBoolean(jn_greenFinance, false);
 
-            config.antBookRead = jo.optBoolean(jn_antBookRead, false);
-
             config.consumeGold = jo.optBoolean(jn_consumeGold, false);
 
             config.omegakoiTown = jo.optBoolean(jn_omegakoiTown, false);
@@ -2036,7 +2052,10 @@ public class Config {
             if (config == null)
                 config = Config.defInit();
 
+            /* application */
             jo.put(jn_immediateEffect, config.immediateEffect);
+
+            jo.put(jn_checkInterval, config.checkInterval);
 
             jo.put(jn_recordLog, config.recordLog);
 
@@ -2056,6 +2075,8 @@ public class Config {
 
             jo.put(jn_startAt7, config.startAt7);
 
+            jo.put(jn_waitWhenException, config.waitWhenException);
+
             jo.put(jn_enableOnGoing, config.enableOnGoing);
 
             jo.put(jn_languageSimplifiedChinese, config.languageSimplifiedChinese);
@@ -2063,15 +2084,27 @@ public class Config {
             /* forest */
             jo.put(jn_collectEnergy, config.collectEnergy);
 
-            jo.put(jn_collectWateringBubble, config.collectWateringBubble);
+            ja = new JSONArray();
+            for (String s : config.dontCollectList) {
+                ja.put(s);
+            }
+            jo.put(jn_dontCollectList, ja);
 
             jo.put(jn_batchRobEnergy, config.batchRobEnergy);
 
-            jo.put(jn_collectProp, config.collectProp);
+            jo.put(jn_advanceTime, config.advanceTime);
 
-            jo.put(jn_checkInterval, config.checkInterval);
+            jo.put(jn_collectInterval, config.collectInterval);
 
-            jo.put(jn_waitWhenException, config.waitWhenException);
+            jo.put(jn_collectTimeout, config.collectTimeout);
+
+            jo.put(jn_collectWateringBubble, config.collectWateringBubble);
+
+            jo.put(jn_ReturnWater33, config.returnWater33);
+
+            jo.put(jn_ReturnWater18, config.returnWater18);
+
+            jo.put(jn_ReturnWater10, config.returnWater10);
 
             jo.put("limitCollect", config.limitCollect);
 
@@ -2083,25 +2116,9 @@ public class Config {
 
             jo.put("doubleCountLimit", config.doubleCountLimit);
 
-            jo.put(jn_advanceTime, config.advanceTime);
-
-            jo.put(jn_collectInterval, config.collectInterval);
-
-            jo.put(jn_collectTimeout, config.collectTimeout);
-
-            jo.put(jn_ReturnWater33, config.returnWater33);
-
-            jo.put(jn_ReturnWater18, config.returnWater18);
-
-            jo.put(jn_ReturnWater10, config.returnWater10);
+            jo.put(jn_collectProp, config.collectProp);
 
             jo.put(jn_helpFriendCollect, config.helpFriendCollect);
-
-            ja = new JSONArray();
-            for (String s : config.dontCollectList) {
-                ja.put(s);
-            }
-            jo.put(jn_dontCollectList, ja);
 
             ja = new JSONArray();
             for (String s : config.dontHelpCollectList) {
@@ -2133,36 +2150,6 @@ public class Config {
             }
             jo.put(jn_cooperateWaterList, ja);
 
-            jo.put(jn_ancientTree, config.ancientTree);
-
-            ja = new JSONArray();
-            for (String s : config.ancientTreeCityCodeList) {
-                ja.put(s);
-            }
-            jo.put(jn_ancientTreeAreaCodeList, ja);
-
-            jo.put(jn_reserve, config.reserve);
-
-            ja = new JSONArray();
-            for (int i = 0; i < config.reserveList.size(); i++) {
-                jaa = new JSONArray();
-                jaa.put(config.reserveList.get(i));
-                jaa.put(config.reserveCountList.get(i));
-                ja.put(jaa);
-            }
-            jo.put(jn_reserveList, ja);
-
-            jo.put(jn_beach, config.beach);
-
-            ja = new JSONArray();
-            for (int i = 0; i < config.beachList.size(); i++) {
-                jaa = new JSONArray();
-                jaa.put(config.beachList.get(i));
-                jaa.put(config.beachCountList.get(i));
-                ja.put(jaa);
-            }
-            jo.put(jn_beachList, ja);
-
             jo.put(jn_energyRain, config.energyRain);
             ja = new JSONArray();
             for (int i = 0; i < config.giveEnergyRainList.size(); i++) {
@@ -2176,17 +2163,63 @@ public class Config {
 
             jo.put("exchangeEnergyDoubleClickCount", config.exchangeEnergyDoubleClickCount);
 
+            jo.put(jn_giveProp, config.giveProp);
+
+            ja = new JSONArray();
+            for (String s : config.whoYouWantGiveTo) {
+                ja.put(s);
+            }
+            jo.put(jn_whoYouWantGiveTo, ja);
+
+            jo.put(jn_reserve, config.reserve);
+
+            ja = new JSONArray();
+            for (int i = 0; i < config.reserveList.size(); i++) {
+                jaa = new JSONArray();
+                jaa.put(config.reserveList.get(i));
+                jaa.put(config.reserveCountList.get(i));
+                ja.put(jaa);
+            }
+            jo.put(jn_reserveList, ja);
+
+            jo.put(jn_ancientTree, config.ancientTree);
+
+            ja = new JSONArray();
+            for (String s : config.ancientTreeCityCodeList) {
+                ja.put(s);
+            }
+            jo.put(jn_ancientTreeAreaCodeList, ja);
+
             jo.put(jn_ancientTreeOnlyWeek, config.ancientTreeOnlyWeek);
 
             jo.put(jn_antdodoCollect, config.antdodoCollect);
 
-            jo.put(jn_antOcean, config.antOcean);
+            ja = new JSONArray();
+            for (String s : config.sendFriendCard) {
+                ja.put(s);
+            }
+            jo.put(jn_sendFriendCard, ja);
 
             jo.put(jn_userPatrol, config.userPatrol);
 
             jo.put(jn_animalConsumeProp, config.animalConsumeProp);
 
             jo.put(jn_collectGiftBox, config.collectGiftBox);
+
+            jo.put(jn_antBookRead, config.antBookRead);
+
+            jo.put(jn_antOcean, config.antOcean);
+
+            jo.put(jn_beach, config.beach);
+
+            ja = new JSONArray();
+            for (int i = 0; i < config.beachList.size(); i++) {
+                jaa = new JSONArray();
+                jaa.put(config.beachList.get(i));
+                jaa.put(config.beachCountList.get(i));
+                ja.put(jaa);
+            }
+            jo.put(jn_beachList, ja);
 
             jo.put(jn_totalCertCount, config.totalCertCount);
 
@@ -2210,6 +2243,8 @@ public class Config {
             jo.put(jn_receiveFarmToolReward, config.receiveFarmToolReward);
 
             jo.put(jn_recordFarmGame, config.recordFarmGame);
+
+            jo.put(jn_farmGameTime, String.join(",", config.farmGameTime));
 
             jo.put(jn_kitchen, config.kitchen);
 
@@ -2238,8 +2273,6 @@ public class Config {
             }
             jo.put(jn_feedFriendAnimalList, ja);
 
-            jo.put(jn_farmGameTime, String.join(",", config.farmGameTime));
-
             jo.put(jn_animalSleepTime, String.join(",", config.animalSleepTime));
 
             jo.put(jn_notifyFriend, config.notifyFriend);
@@ -2249,18 +2282,6 @@ public class Config {
                 ja.put(s);
             }
             jo.put(jn_dontNotifyFriendList, ja);
-
-            ja = new JSONArray();
-            for (String s : config.whoYouWantGiveTo) {
-                ja.put(s);
-            }
-            jo.put(jn_whoYouWantGiveTo, ja);
-
-            ja = new JSONArray();
-            for (String s : config.sendFriendCard) {
-                ja.put(s);
-            }
-            jo.put(jn_sendFriendCard, ja);
 
             jo.put(jn_acceptGift, config.acceptGift);
 
@@ -2359,8 +2380,6 @@ public class Config {
             jo.put(jn_merchantKmdk, config.merchantKmdk);
 
             jo.put(jn_greenFinance, config.greenFinance);
-
-            jo.put(jn_antBookRead, config.antBookRead);
 
             jo.put(jn_consumeGold, config.consumeGold);
 

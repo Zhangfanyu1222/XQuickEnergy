@@ -42,7 +42,6 @@ import pansong291.xposed.quickenergy.ui.MainActivity;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.FriendIdMap;
 import pansong291.xposed.quickenergy.util.Log;
-import pansong291.xposed.quickenergy.util.PermissionUtil;
 import pansong291.xposed.quickenergy.util.PluginUtils;
 import pansong291.xposed.quickenergy.util.Statistics;
 import pansong291.xposed.quickenergy.util.TimeUtil;
@@ -57,6 +56,22 @@ public class XposedHook implements IXposedHookLoadPackage {
     private static Runnable runnable;
 
     private static boolean isHooked = false;
+
+    private static boolean isRestart = false;
+
+    public static boolean getIsRestart() {
+        return isRestart;
+    }
+
+    private static void restartHandler() {
+        if (handler != null && runnable != null) {
+            handler.removeCallbacks(runnable);
+            AntForest.stop();
+            AntForestNotification.stop(service, false);
+            AntForestNotification.start(service);
+            handler.post(runnable);
+        }
+    }
 
     private static void initHandler() {
         Log.recordLog("尝试初始化");
@@ -110,15 +125,19 @@ public class XposedHook implements IXposedHookLoadPackage {
                     Config.setAlarm7(AntForestToast.context);
                 }
             }
+            restartHandler();
             AntForestToast.show("芝麻粒加载成功\n切换账号要记得关闭保护古树哦~🎐");
-            handler.removeCallbacks(runnable);
-            AntForest.stop();
-            AntForestNotification.stop(service, false);
-            AntForestNotification.start(service);
-            handler.post(runnable);
         } catch (Throwable th) {
             Log.i(TAG, "initHandler err:");
             Log.printStackTrace(TAG, th);
+        }
+    }
+
+    public static void restartHook(Context context, StayAwakeType stayAwakeType, long delayTime, boolean force) {
+        if (stayAwakeType == StayAwakeType.ALARM) {
+            alarmHook(context, delayTime, force);
+        } else {
+            alarmBroadcast(context, delayTime, force);
         }
     }
 
@@ -129,6 +148,9 @@ public class XposedHook implements IXposedHookLoadPackage {
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setClassName(ClassMember.PACKAGE_NAME, ClassMember.CURRENT_USING_ACTIVITY);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (force) {
+                    isRestart = true;
+                }
                 context.startActivity(intent);
             } else {
                 intent = new Intent();
@@ -169,6 +191,9 @@ public class XposedHook implements IXposedHookLoadPackage {
                 Intent it = new Intent();
                 it.setClassName(ClassMember.PACKAGE_NAME, ClassMember.CURRENT_USING_ACTIVITY);
                 pi = PendingIntent.getActivity(context, 1, it, getPendingIntentFlag());
+                if (force) {
+                    isRestart = true;
+                }
             } else {
                 Intent it = new Intent();
                 it.setClassName(ClassMember.PACKAGE_NAME, ClassMember.CURRENT_USING_SERVICE);
@@ -214,14 +239,23 @@ public class XposedHook implements IXposedHookLoadPackage {
                         protected void afterHookedMethod(MethodHookParam param) {
                             Log.i(TAG, "Activity onResume");
                             RpcUtil.isInterrupted = false;
-                            PermissionUtil.requestPermissions((Activity) param.thisObject);
+                            //PermissionUtil.requestPermissions((Activity) param.thisObject);
                             AntForestNotification.setContentText("运行中...");
                             String targetUid = RpcUtil.getUserId(loader);
-                            if (targetUid == null || targetUid.equals(FriendIdMap.getCurrentUid())) {
+                            if (targetUid == null) {
                                 return;
                             }
-                            FriendIdMap.setCurrentUid(targetUid);
-                            if (handler != null) {
+                            if (!targetUid.equals(FriendIdMap.getCurrentUid())) {
+                                FriendIdMap.setCurrentUid(targetUid);
+                            } else if (!isRestart) {
+                                return;
+                            }
+                            if (isRestart) {
+                                Log.i(TAG, "Activity isRestart");
+                                isRestart = false;
+                                restartHandler();
+                                ((Activity) param.thisObject).finish();
+                            } else if (handler != null) {
                                 initHandler();
                             }
                         }
@@ -254,11 +288,7 @@ public class XposedHook implements IXposedHookLoadPackage {
                                 wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, service.getClass().getName());
                                 wakeLock.acquire();
 
-                                if (Config.stayAwakeType() == StayAwakeType.BROADCAST) {
-                                    alarmBroadcast(AntForestToast.context, 30 * 60 * 1000, false);
-                                } else if (Config.stayAwakeType() == StayAwakeType.ALARM) {
-                                    alarmHook(AntForestToast.context, 30 * 60 * 1000, false);
-                                }
+                                restartHook(AntForestToast.context, Config.stayAwakeType(), 30 * 60 * 1000, false);
                             }
                             initHandler();
                         }
@@ -365,7 +395,6 @@ public class XposedHook implements IXposedHookLoadPackage {
                 restartHook(AntForestToast.context, force);
             } else if ("com.eg.android.AlipayGphone.xqe.test".equals(action)) {
                 Log.recordLog("收到测试消息");
-//                alarmHook(AntForestToast.context, 3000, true);
             } else if ("com.eg.android.AlipayGphone.xqe.cancelAlarm7".equals(action)) {
                 Config.cancelAlarm7(AntForestToast.context, false);
             }

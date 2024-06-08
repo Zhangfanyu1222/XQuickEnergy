@@ -45,7 +45,7 @@ public class SettingsActivity extends Activity {
             sw_enableStall, sw_stallAutoClose, sw_stallAutoOpen, sw_stallAutoTask, sw_stallReceiveAward,
             sw_stallOpenType, sw_stallDonate, sw_chickenDiary, sw_collectGiftBox, sw_stallInviteRegister,
             sw_stallThrowManure, sw_greenFinance, sw_totalCertCount, sw_batchRobEnergy, sw_antBookRead, sw_consumeGold,
-            sw_omegakoiTown, sw_language_simplified_chinese, sw_special_food, sw_batchHireAnimal;
+            sw_omegakoiTown, sw_language_simplified_chinese, sw_batchHireAnimal, sw_special_food, sw_giveProp;
     private TabHost tabHost;
     private GestureDetector gestureDetector;
     private Animation slideLeftIn;
@@ -163,6 +163,7 @@ public class SettingsActivity extends Activity {
     }
 
     private void initSwitch() {
+        /* application */
         sw_immediateEffect = findViewById(R.id.sw_immediateEffect);
         sw_recordLog = findViewById(R.id.sw_recordLog);
         sw_showToast = findViewById(R.id.sw_showToast);
@@ -171,18 +172,31 @@ public class SettingsActivity extends Activity {
         sw_startAt7 = findViewById(R.id.sw_startAt7);
         sw_enableOnGoing = findViewById(R.id.sw_enableOnGoing);
         sw_language_simplified_chinese = findViewById(R.id.sw_languageSimplifiedChinese);
-
+        /* forest */
         sw_collectEnergy = findViewById(R.id.sw_collectEnergy);
-        sw_collectWateringBubble = findViewById(R.id.sw_collectWateringBubble);
         sw_batchRobEnergy = findViewById(R.id.sw_batchRobEnergy);
+        sw_collectWateringBubble = findViewById(R.id.sw_collectWateringBubble);
+        sw_limitCollect = findViewById(R.id.sw_limitCollect);
+        sw_doubleCard = findViewById(R.id.sw_doubleCard);
         sw_collectProp = findViewById(R.id.sw_collectProp);
         sw_helpFriendCollect = findViewById(R.id.sw_helpFriendCollect);
         sw_receiveForestTaskAward = findViewById(R.id.sw_receiveForestTaskAward);
         sw_cooperateWater = findViewById(R.id.sw_cooperateWater);
-        sw_ancientTree = findViewById(R.id.sw_ancientTree);
         sw_energyRain = findViewById(R.id.sw_energyRain);
+        sw_ExchangeEnergyDoubleClick = findViewById(R.id.sw_ExchangeEnergyDoubleClick);
+        sw_giveProp = findViewById(R.id.sw_giveProp);
         sw_reserve = findViewById(R.id.sw_reserve);
+        sw_ancientTree = findViewById(R.id.sw_ancientTree);
+        sw_ancientTreeOnlyWeek = findViewById(R.id.sw_ancientTreeOnlyWeek);
+        sw_antdodoCollect = findViewById(R.id.sw_antdodoCollect);
+        sw_userPatrol = findViewById(R.id.sw_userPatrol);
+        sw_animalConsumeProp = findViewById(R.id.sw_animalConsumeProp);
+        sw_collectGiftBox = findViewById(R.id.sw_collectGiftBox);
+        sw_antBookRead = findViewById(R.id.sw_antBookRead);
+        sw_antOcean = findViewById(R.id.sw_antOcean);
         sw_beach = findViewById(R.id.sw_beach);
+        sw_totalCertCount = findViewById(R.id.sw_totalCertCount);
+        /* farm */
         sw_enableFarm = findViewById(R.id.sw_enableFarm);
         sw_rewardFriend = findViewById(R.id.sw_rewardFriend);
         sw_sendBackAnimal = findViewById(R.id.sw_sendBackAnimal);
@@ -203,28 +217,6 @@ public class SettingsActivity extends Activity {
         sw_antOrchard = findViewById(R.id.sw_antOrchard);
         sw_receiveOrchardTaskAward = findViewById(R.id.sw_receiveOrchardTaskAward);
         sw_batchHireAnimal = findViewById(R.id.sw_batchHireAnimal);
-        sw_receivePoint = findViewById(R.id.sw_receivePoint);
-        sw_openTreasureBox = findViewById(R.id.sw_openTreasureBox);
-        sw_receiveCoinAsset = findViewById(R.id.sw_receiveCoinAsset);
-        sw_donateCharityCoin = findViewById(R.id.sw_donateCharityCoin);
-        sw_kbSignIn = findViewById(R.id.sw_kbSignIn);
-        sw_limitCollect = findViewById(R.id.sw_limitCollect);
-        sw_doubleCard = findViewById(R.id.sw_doubleCard);
-        sw_ExchangeEnergyDoubleClick = findViewById(R.id.sw_ExchangeEnergyDoubleClick);
-        sw_ecoLifeTick = findViewById(R.id.sw_ecoLifeTick);
-        sw_tiyubiz = findViewById(R.id.sw_tiyubiz);
-        sw_insBlueBeanExchange = findViewById(R.id.sw_insBlueBeanExchange);
-        sw_collectSesame = findViewById(R.id.sw_collectSesame);
-        sw_zcjSignIn = findViewById(R.id.sw_zcjSignIn);
-        sw_merchantKmdk = findViewById(R.id.sw_merchantKmdk);
-        sw_ancientTreeOnlyWeek = findViewById(R.id.sw_ancientTreeOnlyWeek);
-        sw_antdodoCollect = findViewById(R.id.sw_antdodoCollect);
-        sw_antOcean = findViewById(R.id.sw_antOcean);
-        sw_userPatrol = findViewById(R.id.sw_userPatrol);
-        sw_animalConsumeProp = findViewById(R.id.sw_animalConsumeProp);
-        sw_collectGiftBox = findViewById(R.id.sw_collectGiftBox);
-        sw_totalCertCount = findViewById(R.id.sw_totalCertCount);
-
         sw_enableStall = findViewById(R.id.sw_enableStall);
         sw_stallAutoClose = findViewById(R.id.sw_stallAutoClose);
         sw_stallAutoOpen = findViewById(R.id.sw_stallAutoOpen);
@@ -234,8 +226,19 @@ public class SettingsActivity extends Activity {
         sw_stallDonate = findViewById(R.id.sw_stallDonate);
         sw_stallInviteRegister = findViewById(R.id.sw_stallInviteRegister);
         sw_stallThrowManure = findViewById(R.id.sw_stallThrowManure);
+        /* other */
+        sw_receivePoint = findViewById(R.id.sw_receivePoint);
+        sw_openTreasureBox = findViewById(R.id.sw_openTreasureBox);
+        sw_receiveCoinAsset = findViewById(R.id.sw_receiveCoinAsset);
+        sw_donateCharityCoin = findViewById(R.id.sw_donateCharityCoin);
+        sw_kbSignIn = findViewById(R.id.sw_kbSignIn);
+        sw_ecoLifeTick = findViewById(R.id.sw_ecoLifeTick);
+        sw_tiyubiz = findViewById(R.id.sw_tiyubiz);
+        sw_insBlueBeanExchange = findViewById(R.id.sw_insBlueBeanExchange);
+        sw_collectSesame = findViewById(R.id.sw_collectSesame);
+        sw_zcjSignIn = findViewById(R.id.sw_zcjSignIn);
+        sw_merchantKmdk = findViewById(R.id.sw_merchantKmdk);
         sw_greenFinance = findViewById(R.id.sw_greenFinance);
-        sw_antBookRead = findViewById(R.id.sw_antBookRead);
         sw_consumeGold = findViewById(R.id.sw_consumeGold);
         sw_omegakoiTown = findViewById(R.id.sw_omegakoiTown);
     }
@@ -243,6 +246,7 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        /* application */
         sw_immediateEffect.setChecked(Config.immediateEffect());
         sw_recordLog.setChecked(Config.recordLog());
         sw_showToast.setChecked(Config.showToast());
@@ -251,18 +255,31 @@ public class SettingsActivity extends Activity {
         sw_startAt7.setChecked(Config.startAt7());
         sw_enableOnGoing.setChecked(Config.enableOnGoing());
         sw_language_simplified_chinese.setChecked(Config.languageSimplifiedChinese());
-
+        /* forest */
         sw_collectEnergy.setChecked(Config.collectEnergy());
-        sw_collectWateringBubble.setChecked(Config.collectWateringBubble());
         sw_batchRobEnergy.setChecked(Config.batchRobEnergy());
+        sw_collectWateringBubble.setChecked(Config.collectWateringBubble());
+        sw_limitCollect.setChecked(Config.isLimitCollect());
+        sw_doubleCard.setChecked(Config.doubleCard());
         sw_collectProp.setChecked(Config.collectProp());
         sw_helpFriendCollect.setChecked(Config.helpFriendCollect());
         sw_receiveForestTaskAward.setChecked(Config.receiveForestTaskAward());
         sw_cooperateWater.setChecked(Config.cooperateWater());
-        sw_ancientTree.setChecked(Config.ancientTree());
         sw_energyRain.setChecked(Config.energyRain());
+        sw_ExchangeEnergyDoubleClick.setChecked(Config.ExchangeEnergyDoubleClick());
+        sw_giveProp.setChecked(Config.giveProp());
         sw_reserve.setChecked(Config.reserve());
+        sw_ancientTree.setChecked(Config.ancientTree());
+        sw_ancientTreeOnlyWeek.setChecked(Config.ancientTreeOnlyWeek());
+        sw_antdodoCollect.setChecked(Config.antdodoCollect());
+        sw_userPatrol.setChecked(Config.userPatrol());
+        sw_animalConsumeProp.setChecked(Config.animalConsumeProp());
+        sw_collectGiftBox.setChecked(Config.collectGiftBox());
+        sw_antBookRead.setChecked(Config.antBookRead());
+        sw_antOcean.setChecked(Config.antOcean());
         sw_beach.setChecked(Config.beach());
+        sw_totalCertCount.setChecked(Config.totalCertCount());
+        /* farm */
         sw_enableFarm.setChecked(Config.enableFarm());
         sw_rewardFriend.setChecked(Config.rewardFriend());
         sw_sendBackAnimal.setChecked(Config.sendBackAnimal());
@@ -283,28 +300,6 @@ public class SettingsActivity extends Activity {
         sw_antOrchard.setChecked(Config.antOrchard());
         sw_receiveOrchardTaskAward.setChecked(Config.receiveOrchardTaskAward());
         sw_batchHireAnimal.setChecked(Config.batchHireAnimal());
-        sw_receivePoint.setChecked(Config.receivePoint());
-        sw_openTreasureBox.setChecked(Config.openTreasureBox());
-        sw_receiveCoinAsset.setChecked(Config.receiveCoinAsset());
-        sw_donateCharityCoin.setChecked(Config.donateCharityCoin());
-        sw_kbSignIn.setChecked(Config.kbSginIn());
-        sw_limitCollect.setChecked(Config.isLimitCollect());
-        sw_doubleCard.setChecked(Config.doubleCard());
-        sw_ExchangeEnergyDoubleClick.setChecked(Config.ExchangeEnergyDoubleClick());
-        sw_ecoLifeTick.setChecked(Config.ecoLifeTick());
-        sw_tiyubiz.setChecked(Config.tiyubiz());
-        sw_insBlueBeanExchange.setChecked(Config.insBlueBeanExchange());
-        sw_collectSesame.setChecked(Config.collectSesame());
-        sw_zcjSignIn.setChecked(Config.zcjSignIn());
-        sw_merchantKmdk.setChecked(Config.merchantKmdk());
-        sw_ancientTreeOnlyWeek.setChecked(Config.ancientTreeOnlyWeek());
-        sw_antdodoCollect.setChecked(Config.antdodoCollect());
-        sw_antOcean.setChecked(Config.antOcean());
-        sw_userPatrol.setChecked(Config.userPatrol());
-        sw_animalConsumeProp.setChecked(Config.animalConsumeProp());
-        sw_collectGiftBox.setChecked(Config.collectGiftBox());
-        sw_totalCertCount.setChecked(Config.totalCertCount());
-
         sw_enableStall.setChecked(Config.enableStall());
         sw_stallAutoClose.setChecked(Config.stallAutoClose());
         sw_stallAutoOpen.setChecked(Config.stallAutoOpen());
@@ -314,8 +309,19 @@ public class SettingsActivity extends Activity {
         sw_stallDonate.setChecked(Config.stallDonate());
         sw_stallInviteRegister.setChecked(Config.stallInviteRegister());
         sw_stallThrowManure.setChecked(Config.stallThrowManure());
+        /* other */
+        sw_receivePoint.setChecked(Config.receivePoint());
+        sw_openTreasureBox.setChecked(Config.openTreasureBox());
+        sw_receiveCoinAsset.setChecked(Config.receiveCoinAsset());
+        sw_donateCharityCoin.setChecked(Config.donateCharityCoin());
+        sw_kbSignIn.setChecked(Config.kbSginIn());
+        sw_ecoLifeTick.setChecked(Config.ecoLifeTick());
+        sw_tiyubiz.setChecked(Config.tiyubiz());
+        sw_insBlueBeanExchange.setChecked(Config.insBlueBeanExchange());
+        sw_collectSesame.setChecked(Config.collectSesame());
+        sw_zcjSignIn.setChecked(Config.zcjSignIn());
+        sw_merchantKmdk.setChecked(Config.merchantKmdk());
         sw_greenFinance.setChecked(Config.greenFinance());
-        sw_antBookRead.setChecked(Config.antBookRead());
         sw_consumeGold.setChecked(Config.consumeGold());
         sw_omegakoiTown.setChecked(Config.omegakoiTown());
     }
@@ -363,16 +369,12 @@ public class SettingsActivity extends Activity {
                     Config.setCollectEnergy(sw.isChecked());
                     break;
 
-                case R.id.sw_collectWateringBubble:
-                    Config.setCollectWateringBubble(sw.isChecked());
-                    break;
-
                 case R.id.sw_batchRobEnergy:
                     Config.setBatchRobEnergy(sw.isChecked());
                     break;
 
-                case R.id.sw_collectProp:
-                    Config.setCollectProp(sw.isChecked());
+                case R.id.sw_collectWateringBubble:
+                    Config.setCollectWateringBubble(sw.isChecked());
                     break;
 
                 case R.id.sw_limitCollect:
@@ -381,6 +383,10 @@ public class SettingsActivity extends Activity {
 
                 case R.id.sw_doubleCard:
                     Config.setDoubleCard(sw.isChecked());
+                    break;
+
+                case R.id.sw_collectProp:
+                    Config.setCollectProp(sw.isChecked());
                     break;
 
                 case R.id.sw_helpFriendCollect:
@@ -395,10 +401,6 @@ public class SettingsActivity extends Activity {
                     Config.setCooperateWater(sw.isChecked());
                     break;
 
-                case R.id.sw_ancientTree:
-                    Config.setAncientTree(sw.isChecked());
-                    break;
-
                 case R.id.sw_energyRain:
                     Config.setEnergyRain(sw.isChecked());
                     break;
@@ -407,12 +409,52 @@ public class SettingsActivity extends Activity {
                     Config.setExchangeEnergyDoubleClick(sw.isChecked());
                     break;
 
+                case R.id.sw_giveProp:
+                    Config.setGiveProp(sw.isChecked());
+                    break;
+
                 case R.id.sw_reserve:
                     Config.setReserve(sw.isChecked());
                     break;
 
+                case R.id.sw_ancientTree:
+                    Config.setAncientTree(sw.isChecked());
+                    break;
+
+                case R.id.sw_ancientTreeOnlyWeek:
+                    Config.setAncientTreeOnlyWeek(sw.isChecked());
+                    break;
+
+                case R.id.sw_antdodoCollect:
+                    Config.setAntdodoCollect(sw.isChecked());
+                    break;
+
+                case R.id.sw_userPatrol:
+                    Config.setUserPatrol(sw.isChecked());
+                    break;
+
+                case R.id.sw_animalConsumeProp:
+                    Config.setAnimalConsumeProp(sw.isChecked());
+                    break;
+
+                case R.id.sw_collectGiftBox:
+                    Config.setCollectGiftBox(sw.isChecked());
+                    break;
+
+                case R.id.sw_antBookRead:
+                    Config.setAntBookRead(sw.isChecked());
+                    break;
+
+                case R.id.sw_antOcean:
+                    Config.setAntOcean(sw.isChecked());
+                    break;
+
                 case R.id.sw_beach:
                     Config.setBeach(sw.isChecked());
+                    break;
+
+                case R.id.sw_totalCertCount:
+                    Config.setTotalCertCount(sw.isChecked());
                     break;
 
                 case R.id.sw_enableFarm:
@@ -495,6 +537,42 @@ public class SettingsActivity extends Activity {
                     Config.setBatchHireAnimal(sw.isChecked());
                     break;
 
+                case R.id.sw_enableStall:
+                    Config.setEnableStall(sw.isChecked());
+                    break;
+
+                case R.id.sw_stallAutoClose:
+                    Config.setStallAutoClose(sw.isChecked());
+                    break;
+
+                case R.id.sw_stallAutoOpen:
+                    Config.setStallAutoOpen(sw.isChecked());
+                    break;
+
+                case R.id.sw_stallAutoTask:
+                    Config.setStallAutoTask(sw.isChecked());
+                    break;
+
+                case R.id.sw_stallReceiveAward:
+                    Config.setStallReceiveAward(sw.isChecked());
+                    break;
+
+                case R.id.sw_stallOpenType:
+                    Config.setStallOpenType(sw.isChecked());
+                    break;
+
+                case R.id.sw_stallDonate:
+                    Config.setStallDonate(sw.isChecked());
+                    break;
+
+                case R.id.sw_stallInviteRegister:
+                    Config.setStallInviteRegister(sw.isChecked());
+                    break;
+
+                case R.id.sw_stallThrowManure:
+                    Config.setStallThrowManure(sw.isChecked());
+                    break;
+
                 case R.id.sw_receivePoint:
                     Config.setReceivePoint(sw.isChecked());
                     break;
@@ -539,76 +617,8 @@ public class SettingsActivity extends Activity {
                     Config.setMerchantKmdk(sw.isChecked());
                     break;
 
-                case R.id.sw_ancientTreeOnlyWeek:
-                    Config.setAncientTreeOnlyWeek(sw.isChecked());
-                    break;
-
-                case R.id.sw_antdodoCollect:
-                    Config.setAntdodoCollect(sw.isChecked());
-                    break;
-
-                case R.id.sw_antOcean:
-                    Config.setAntOcean(sw.isChecked());
-                    break;
-
-                case R.id.sw_userPatrol:
-                    Config.setUserPatrol(sw.isChecked());
-                    break;
-
-                case R.id.sw_animalConsumeProp:
-                    Config.setAnimalConsumeProp(sw.isChecked());
-                    break;
-
-                case R.id.sw_collectGiftBox:
-                    Config.setCollectGiftBox(sw.isChecked());
-                    break;
-
-                case R.id.sw_totalCertCount:
-                    Config.setTotalCertCount(sw.isChecked());
-                    break;
-
-                case R.id.sw_enableStall:
-                    Config.setEnableStall(sw.isChecked());
-                    break;
-
-                case R.id.sw_stallAutoClose:
-                    Config.setStallAutoClose(sw.isChecked());
-                    break;
-
-                case R.id.sw_stallAutoOpen:
-                    Config.setStallAutoOpen(sw.isChecked());
-                    break;
-
-                case R.id.sw_stallAutoTask:
-                    Config.setStallAutoTask(sw.isChecked());
-                    break;
-
-                case R.id.sw_stallReceiveAward:
-                    Config.setStallReceiveAward(sw.isChecked());
-                    break;
-
-                case R.id.sw_stallOpenType:
-                    Config.setStallOpenType(sw.isChecked());
-                    break;
-
-                case R.id.sw_stallDonate:
-                    Config.setStallDonate(sw.isChecked());
-                    break;
-
-                case R.id.sw_stallInviteRegister:
-                    Config.setStallInviteRegister(sw.isChecked());
-                    break;
-
-                case R.id.sw_stallThrowManure:
-                    Config.setStallThrowManure(sw.isChecked());
-                    break;
-
                 case R.id.sw_greenFinance:
                     Config.setGreenFinance(sw.isChecked());
-                    break;
-
-                case R.id.sw_antBookRead:
-                    Config.setAntBookRead(sw.isChecked());
                     break;
 
                 case R.id.sw_consumeGold:
@@ -622,9 +632,14 @@ public class SettingsActivity extends Activity {
         } else if (v instanceof Button) {
             Button btn = (Button) v;
             switch (v.getId()) {
+                case R.id.btn_checkInterval:
+                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.CHECK_INTERVAL);
+                    break;
+
                 case R.id.btn_toastOffsetY:
                     EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.TOAST_OFFSET_Y);
                     break;
+
                 case R.id.btn_stayAwakeType:
                     ChoiceDialog.showStayAwakeType(this, btn.getText());
                     break;
@@ -641,8 +656,8 @@ public class SettingsActivity extends Activity {
                     EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.WAIT_WHEN_EXCEPTION);
                     break;
 
-                case R.id.btn_checkInterval:
-                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.CHECK_INTERVAL);
+                case R.id.btn_dontCollectList:
+                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getDontCollectList(), null);
                     break;
 
                 case R.id.btn_advanceTime:
@@ -657,19 +672,6 @@ public class SettingsActivity extends Activity {
                     EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.COLLECT_TIMEOUT);
                     break;
 
-                case R.id.btn_limitCount:
-                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.LIMIT_COUNT);
-                    break;
-
-                case R.id.btn_doubleCardTime:
-                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.DOUBLE_CARD_TIME,
-                            this.getString(R.string.use_double_card_time_desc));
-                    break;
-
-                case R.id.btn_doubleCountLimit:
-                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.DOUBLE_COUNT_LIMIT);
-                    break;
-
                 case R.id.btn_returnWater30:
                     EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.RETURN_WATER_30);
                     break;
@@ -682,8 +684,17 @@ public class SettingsActivity extends Activity {
                     EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.RETURN_WATER_10);
                     break;
 
-                case R.id.btn_dontCollectList:
-                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getDontCollectList(), null);
+                case R.id.btn_limitCount:
+                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.LIMIT_COUNT);
+                    break;
+
+                case R.id.btn_doubleCardTime:
+                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.DOUBLE_CARD_TIME,
+                            this.getString(R.string.use_double_card_time_desc));
+                    break;
+
+                case R.id.btn_doubleCountLimit:
+                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.DOUBLE_COUNT_LIMIT);
                     break;
 
                 case R.id.btn_dontHelpCollectList:
@@ -704,17 +715,32 @@ public class SettingsActivity extends Activity {
                             Config.getcooperateWaterNumList());
                     break;
 
-                case R.id.btn_ancientTreeAreaCodeList:
-                    ListDialog.show(this, btn.getText(), AreaCode.getList(), Config.getAncientTreeCityCodeList(), null);
-                    break;
-
                 case R.id.btn_giveEnergyRainList:
                     ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getGiveEnergyRainList(), null);
+                    break;
+
+                case R.id.btn_ExchangeEnergyDoubleClickCount:
+                    EditDialog.showEditDialog(this, btn.getText(),
+                            EditDialog.EditMode.EXCHANGE_ENERGY_DOUBLE_CLICK_COUNT);
+                    break;
+
+                case R.id.btn_WhoYouWantToGiveTo:
+                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.whoYouWantGiveTo(), null,
+                            ListDialog.ListType.RADIO);
                     break;
 
                 case R.id.btn_reserveList:
                     ListDialog.show(this, btn.getText(), AlipayReserve.getList(), Config.getReserveList(),
                             Config.getReserveCountList());
+                    break;
+
+                case R.id.btn_ancientTreeAreaCodeList:
+                    ListDialog.show(this, btn.getText(), AreaCode.getList(), Config.getAncientTreeCityCodeList(), null);
+                    break;
+
+                case R.id.btn_sendFriendCard:
+                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.sendFriendCard(), null,
+                            ListDialog.ListType.RADIO);
                     break;
 
                 case R.id.btn_beachList:
@@ -743,6 +769,10 @@ public class SettingsActivity extends Activity {
                             Config.getFeedFriendCountList());
                     break;
 
+                case R.id.btn_animalSleepTime:
+                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.ANIMAL_SLEEP_TIME);
+                    break;
+
                 case R.id.btn_dontNotifyFriendList:
                     ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getDontNotifyFriendList(), null);
                     break;
@@ -750,37 +780,6 @@ public class SettingsActivity extends Activity {
                 case R.id.btn_visitFriendList:
                     ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.getVisitFriendList(),
                             Config.getVisitFriendCountList());
-                    break;
-
-                case R.id.btn_animalSleepTime:
-                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.ANIMAL_SLEEP_TIME);
-                    break;
-
-                case R.id.btn_minExchangeCount:
-                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.MIN_EXCHANGE_COUNT);
-                    break;
-
-                case R.id.btn_latestExchangeTime:
-                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.LATEST_EXCHANGE_TIME);
-                    break;
-
-                case R.id.btn_syncStepCount:
-                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.SYNC_STEP_COUNT);
-                    break;
-
-                case R.id.btn_ExchangeEnergyDoubleClickCount:
-                    EditDialog.showEditDialog(this, btn.getText(),
-                            EditDialog.EditMode.EXCHANGE_ENERGY_DOUBLE_CLICK_COUNT);
-                    break;
-
-                case R.id.btn_WhoYouWantToGiveTo:
-                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.whoYouWantGiveTo(), null,
-                            ListDialog.ListType.RADIO);
-                    break;
-
-                case R.id.btn_sendFriendCard:
-                    ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.sendFriendCard(), null,
-                            ListDialog.ListType.RADIO);
                     break;
 
                 case R.id.btn_orchardSpreadManureCount:
@@ -810,6 +809,18 @@ public class SettingsActivity extends Activity {
 
                 case R.id.btn_stallInviteShopList:
                     ListDialog.show(this, btn.getText(), AlipayUser.getList(), Config.stallInviteShopList(), null);
+                    break;
+
+                case R.id.btn_minExchangeCount:
+                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.MIN_EXCHANGE_COUNT);
+                    break;
+
+                case R.id.btn_latestExchangeTime:
+                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.LATEST_EXCHANGE_TIME);
+                    break;
+
+                case R.id.btn_syncStepCount:
+                    EditDialog.showEditDialog(this, btn.getText(), EditDialog.EditMode.SYNC_STEP_COUNT);
                     break;
             }
         }

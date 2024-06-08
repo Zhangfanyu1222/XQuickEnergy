@@ -145,5 +145,6 @@
     <string name="consume_gold">Consume Gold</string>
     <string name="batch_hire_animal">Batch hire animal</string>
     <string name="use_special_food">Use Special Food</string>
+    <string name="give_prop">Give Prop</string>
 
 </resources>

@@ -7,8 +7,6 @@ import pansong291.xposed.quickenergy.data.RuntimeInfo;
 import pansong291.xposed.quickenergy.hook.AntBookReadRpcCall;
 import pansong291.xposed.quickenergy.util.Config;
 import pansong291.xposed.quickenergy.util.Log;
-import pansong291.xposed.quickenergy.util.RandomUtils;
-import pansong291.xposed.quickenergy.util.StringUtil;
 
 public class AntBookRead {
     private static final String TAG = AntBookRead.class.getCanonicalName();
@@ -27,7 +25,6 @@ public class AntBookRead {
             @Override
             public void run() {
                 try {
-                    queryTaskCenterPage();
                     queryTask();
                     queryTreasureBox();
                 } catch (Throwable t) {
@@ -36,58 +33,6 @@ public class AntBookRead {
                 }
             }
         }.start();
-    }
-
-    private static void queryTaskCenterPage() {
-        try {
-            String s = AntBookReadRpcCall.queryTaskCenterPage();
-            JSONObject jo = new JSONObject(s);
-            if (jo.getBoolean("success")) {
-                JSONObject data = jo.getJSONObject("data");
-                String todayPlayDurationText = data.getJSONObject("benefitAggBlock").getString("todayPlayDurationText");
-                int PlayDuration = Integer.parseInt(StringUtil.getSubString(todayPlayDurationText, "今日听读时长", "分钟"));
-                if (PlayDuration < 450) {
-                    jo = new JSONObject(AntBookReadRpcCall.queryHomePage());
-                    if (jo.getBoolean("success")) {
-                        JSONArray bookList = jo.getJSONObject("data").getJSONArray("dynamicCardList").getJSONObject(0)
-                                .getJSONObject("data").getJSONArray("bookList");
-                        int bookListLength = bookList.length();
-                        int postion = RandomUtils.nextInt(0, bookListLength - 1);
-                        JSONObject book = bookList.getJSONObject(postion);
-                        String bookId = book.getString("bookId");
-                        jo = new JSONObject(AntBookReadRpcCall.queryReaderContent(bookId));
-                        if (jo.getBoolean("success")) {
-                            String nextChapterId = jo.getJSONObject("data").getString("nextChapterId");
-                            String name = jo.getJSONObject("data").getJSONObject("readerHomePageVO").getString("name");
-                            for (int i = 0; i < 17; i++) {
-                                int energy = 0;
-                                jo = new JSONObject(AntBookReadRpcCall.syncUserReadInfo(bookId, nextChapterId));
-                                if (jo.getBoolean("success")) {
-                                    jo = new JSONObject(AntBookReadRpcCall.queryReaderForestEnergyInfo(bookId));
-                                    if (jo.getBoolean("success")) {
-                                        String tips = jo.getJSONObject("data").getString("tips");
-                                        if (tips.contains("已得")) {
-                                            energy = Integer.parseInt(StringUtil.getSubString(tips, "已得", "g"));
-                                        }
-                                        Log.forest("阅读书籍📚[" + name + "]#累计能量" + energy + "g");
-                                    }
-                                }
-                                if (energy >= 150) {
-                                    break;
-                                } else {
-                                    Thread.sleep(1500L);
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                Log.recordLog(jo.getString("resultDesc"), s);
-            }
-        } catch (Throwable t) {
-            Log.i(TAG, "queryTaskCenterPage err:");
-            Log.printStackTrace(TAG, t);
-        }
     }
 
     private static void queryTask() {
