@@ -1,3 +1,5 @@
+# 仓库已迁移，新版本在 [Sesame-TK](https://github.com/TKaxv-7S/Sesame-TK)
+
 # XQuickEnergy
 
 [![License](https://img.shields.io/github/license/TKaxv-7S/XQuickEnergy.svg)](LICENSE)
