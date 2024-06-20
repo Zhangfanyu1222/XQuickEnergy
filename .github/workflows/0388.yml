@@ -1,0 +1,102 @@
+name: Sync upstream and publish
+
+on:
+  schedule:
+    - cron: '*/20 10-16/3 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.6
+        with:
+          fetch-depth: 0
+      - name: Backup files
+        run: |
+          tar -czvf backup.tar.gz delete.jpg README.md .github/
+      - name: Prepare git configuration
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Check for updates
+        run: |
+          git remote add upstream https://github.com/constanline/XQuickEnergy.git
+          git fetch upstream
+          UPSTREAM_COMMIT=$(git rev-parse upstream/master)
+          UPSTREAM_COMMIT_MESSAGES=$(git log --since="1 day ago" --pretty=format:"%s" upstream/master | tr '\n' '；\n')
+          AUTHOR1_COMMIT=$(git log --author="Magical Yang <constanline@hotmail.com>" --pretty=format:"%H" | head -n 1)
+          AUTHOR2_COMMIT=$(git log --author="Constanline <constanline@163.com>" --pretty=format:"%H" | head -n 1)
+          if [[ "$UPSTREAM_COMMIT" != "$AUTHOR1_COMMIT" ]] && [[ "$UPSTREAM_COMMIT" != "$AUTHOR2_COMMIT" ]]; then
+            echo "UPDATES_FOUND=true" >> $GITHUB_ENV
+            echo "UPSTREAM_COMMIT_MESSAGES=\"$UPSTREAM_COMMIT_MESSAGES\"" >> $GITHUB_ENV
+          else
+            echo "UPDATES_FOUND=false" >> $GITHUB_ENV
+          fi
+      - name: Hard reset to upstream changes
+        if: env.UPDATES_FOUND == 'true'
+        run: |
+          git checkout master
+          git reset --hard upstream/master
+      - name: Restore files from backup
+        if: env.UPDATES_FOUND == 'true'
+        run: |
+          tar -xzvf backup.tar.gz
+          git rm -r .github/ISSUE_TEMPLATE
+          git add delete.jpg README.md .github/
+          git commit -m "Restored backed up files"
+      - name: Force push to origin
+        if: env.UPDATES_FOUND == 'true'
+        run: |
+          git push origin master --force
+          sleep 33
+      - name: Fetch and checkout latest from origin
+        run: |
+          git fetch origin
+          git checkout master
+      - name: Get versionName and versionCode from build.gradle
+        run: |
+          VERSION_NAME=$(grep -oP 'versionName "\K(.*?)(?=")' app/build.gradle)
+          VERSION_CODE=$(grep -oP 'versionCode \K(\d+)' app/build.gradle)
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "TAG_NAME=$VERSION_NAME" >> $GITHUB_ENV
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        if: env.UPDATES_FOUND == 'true'
+        run: ./gradlew assembleRelease --build-cache --parallel --no-daemon --warning-mode all
+      - name: Sign app APK
+        if: env.UPDATES_FOUND == 'true'
+        uses: ilharp/sign-android-release@v1.0.4
+        id: sign_app
+        with:
+          releaseDir: app/build/outputs/apk/release/
+          signingKey: ${{ secrets.ANDROID_SIGNING_KEY }}
+          keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          buildToolsVersion: 33.0.0
+      - name: Upload Apk to Release Action
+        if: env.UPDATES_FOUND == 'true'
+        uses: svenstaro/upload-release-action@2.9.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ steps.sign_app.outputs.signedFile }}
+          asset_name: xqe-sesame_longlong-signed-${{ env.VERSION_NAME }}_${{ env.VERSION_CODE }}.apk
+          tag: ${{ env.TAG_NAME }}
+          release_name: ${{ env.TAG_NAME }}
+          overwrite: true
+          body: |
+            ${{ env.VERSION_CODE }}: ${{ env.UPSTREAM_COMMIT_MESSAGES }}
+            Full Changelog: [constanline/XQuickEnergy](https://github.com/constanline/XQuickEnergy/commits/master)
