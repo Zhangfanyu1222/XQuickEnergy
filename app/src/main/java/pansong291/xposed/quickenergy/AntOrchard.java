@@ -14,7 +14,6 @@ import pansong291.xposed.quickenergy.util.Log;
 import pansong291.xposed.quickenergy.util.PluginUtils;
 import pansong291.xposed.quickenergy.util.RandomUtils;
 import pansong291.xposed.quickenergy.util.Statistics;
-import pansong291.xposed.quickenergy.util.StringUtil;
 
 public class AntOrchard {
     private static final String TAG = AntOrchard.class.getCanonicalName();
@@ -97,11 +96,10 @@ public class AntOrchard {
         return "null";
     }
 
-    private static boolean canSpreadManureContinue(String stageBefore, String stageAfter) {
-        Double bef = Double.parseDouble(StringUtil.getSubString(stageBefore, "施肥", "%"));
-        Double aft = Double.parseDouble(StringUtil.getSubString(stageAfter, "施肥", "%"));
-        if (bef - aft != 0.01)
+    private static boolean canSpreadManureContinue(int stageBefore, int stageAfter) {
+        if (stageAfter - stageBefore > 1) {
             return true;
+        }
         Log.recordLog("施肥只加0.01%进度今日停止施肥！");
         return false;
     }
@@ -134,7 +132,7 @@ public class AntOrchard {
                     return;
                 }
                 JSONObject seedStage = plantInfo.getJSONObject("seedStage");
-                String stageBefore = seedStage.getString("stageText");
+                int totalValueBefore = seedStage.getInt("totalValue");
                 treeLevel = Integer.toString(seedStage.getInt("stageLevel"));
                 JSONObject accountInfo = jo.getJSONObject("gameInfo").getJSONObject("accountInfo");
                 int happyPoint = Integer.parseInt(accountInfo.getString("happyPoint"));
@@ -146,9 +144,10 @@ public class AntOrchard {
                     if ("100".equals(jo.getString("resultCode"))) {
                         taobaoData = jo.getString("taobaoData");
                         jo = new JSONObject(taobaoData);
-                        String stageAfter = jo.getJSONObject("currentStage").getString("stageText");
-                        Log.farm("农场施肥💩[" + stageAfter + "]");
-                        if (!canSpreadManureContinue(stageBefore, stageAfter)) {
+                        String stageText = jo.getJSONObject("currentStage").getString("stageText");
+                        int totalValueAfter = jo.getJSONObject("currentStage").getInt("totalValue");
+                        Log.farm("农场施肥💩[" + stageText + "]");
+                        if (!canSpreadManureContinue(totalValueBefore, totalValueAfter)) {
                             Statistics.spreadManureToday(userId);
                             return;
                         }

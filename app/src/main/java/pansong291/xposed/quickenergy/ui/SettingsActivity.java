@@ -45,7 +45,8 @@ public class SettingsActivity extends Activity {
             sw_enableStall, sw_stallAutoClose, sw_stallAutoOpen, sw_stallAutoTask, sw_stallReceiveAward,
             sw_stallOpenType, sw_stallDonate, sw_chickenDiary, sw_collectGiftBox, sw_stallInviteRegister,
             sw_stallThrowManure, sw_greenFinance, sw_totalCertCount, sw_batchRobEnergy, sw_antBookRead, sw_consumeGold,
-            sw_omegakoiTown, sw_language_simplified_chinese, sw_batchHireAnimal, sw_special_food, sw_giveProp;
+            sw_omegakoiTown, sw_language_simplified_chinese, sw_special_food, sw_ExchangeEnergyShield,
+            sw_batchHireAnimal, sw_giveProp;
     private TabHost tabHost;
     private GestureDetector gestureDetector;
     private Animation slideLeftIn;
@@ -184,6 +185,7 @@ public class SettingsActivity extends Activity {
         sw_cooperateWater = findViewById(R.id.sw_cooperateWater);
         sw_energyRain = findViewById(R.id.sw_energyRain);
         sw_ExchangeEnergyDoubleClick = findViewById(R.id.sw_ExchangeEnergyDoubleClick);
+        sw_ExchangeEnergyShield = findViewById(R.id.sw_ExchangeEnergyShield);
         sw_giveProp = findViewById(R.id.sw_giveProp);
         sw_reserve = findViewById(R.id.sw_reserve);
         sw_ancientTree = findViewById(R.id.sw_ancientTree);
@@ -266,7 +268,8 @@ public class SettingsActivity extends Activity {
         sw_receiveForestTaskAward.setChecked(Config.receiveForestTaskAward());
         sw_cooperateWater.setChecked(Config.cooperateWater());
         sw_energyRain.setChecked(Config.energyRain());
-        sw_ExchangeEnergyDoubleClick.setChecked(Config.ExchangeEnergyDoubleClick());
+        sw_ExchangeEnergyDoubleClick.setChecked(Config.exchangeEnergyDoubleClick());
+        sw_ExchangeEnergyShield.setChecked(Config.exchangeEnergyShield());
         sw_giveProp.setChecked(Config.giveProp());
         sw_reserve.setChecked(Config.reserve());
         sw_ancientTree.setChecked(Config.ancientTree());
@@ -407,6 +410,10 @@ public class SettingsActivity extends Activity {
 
                 case R.id.sw_ExchangeEnergyDoubleClick:
                     Config.setExchangeEnergyDoubleClick(sw.isChecked());
+                    break;
+
+                case R.id.sw_ExchangeEnergyShield:
+                    Config.setExchangeEnergyShield(sw.isChecked());
                     break;
 
                 case R.id.sw_giveProp:

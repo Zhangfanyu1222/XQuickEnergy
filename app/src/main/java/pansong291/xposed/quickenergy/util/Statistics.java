@@ -37,6 +37,8 @@ public class Statistics {
     private ArrayList<String> protectBubbleList;
     private int exchangeDoubleCard = 0;
     private int exchangeTimes = 0;
+    private int exchangeShieldCard = 0;
+    private int exchangeShieldTimes = 0;
     private int doubleTimes = 0;
     // farm
     private ArrayList<String> answerQuestionList;
@@ -570,6 +572,13 @@ public class Statistics {
         } else return stat.exchangeTimes < Config.getExchangeEnergyDoubleClickCount();
     }
 
+    public static boolean canExchangeShieldCardToday() {
+        Statistics stat = getStatistics();
+        if (stat.exchangeShieldCard < stat.day.time) {
+            return true;
+        } else return stat.exchangeShieldTimes < Config.getExchangeEnergyShieldCount();
+    }
+
     public static void exchangeDoubleCardToday(boolean isSuccess) {
         Statistics stat = getStatistics();
         if (stat.exchangeDoubleCard != stat.day.time) {
@@ -583,9 +592,27 @@ public class Statistics {
         save();
     }
 
+    public static void exchangeShieldToday(boolean isSuccess) {
+        Statistics stat = getStatistics();
+        if (stat.exchangeShieldCard != stat.day.time) {
+            stat.exchangeShieldCard = stat.day.time;
+        }
+        if (isSuccess) {
+            stat.exchangeShieldTimes += 1;
+        } else {
+            stat.exchangeShieldTimes = Config.getExchangeEnergyShieldCount();
+        }
+        save();
+    }
+
     public static int getExchangeTimes() {
         Statistics stat = getStatistics();
         return stat.exchangeTimes;
+    }
+
+    public static int getExchangeShieldTimes() {
+        Statistics stat = getStatistics();
+        return stat.exchangeShieldTimes;
     }
 
     public static boolean canDoubleToday() {

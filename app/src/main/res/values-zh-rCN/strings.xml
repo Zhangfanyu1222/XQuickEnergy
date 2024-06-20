@@ -42,7 +42,7 @@
     <string name="use_accelerate_tool">使用加速卡</string>
     <string name="feed_friend_animal_list">喂好友小鸡列表</string>
     <string name="notify_friend">通知好友赶鸡</string>
-    <string name="don_t_notify_friend_list">不通知赶鸡名单</string>
+    <string name="don_t_notify_friend_list">不通知赶鸡/不捉鸡除草名单</string>
     <string name="other_configuration">其他</string>
     <string name="receive_point">领取积分</string>
     <string name="open_treasure_box">开启运动宝箱</string>
@@ -140,8 +140,9 @@
     <string name="ant_book_read">读书听书</string>
     <string name="omegakoi_town">支小镇</string>
     <string name="consume_gold">支付宝消费金</string>
-    <string name="batch_hire_animal">一键捉鸡</string>
     <string name="use_special_food">使用特殊食品</string>
+    <string name="exchange_energy_shield">活力值兑换能量罩</string>
+    <string name="batch_hire_animal">一键捉鸡除草</string>
     <string name="give_prop">赠送道具(有概率禁森林慎用)</string>
 
 </resources>

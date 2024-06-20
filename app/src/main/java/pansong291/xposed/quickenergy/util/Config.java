@@ -194,6 +194,8 @@ public class Config {
     private List<String> giveEnergyRainList;
     private boolean exchangeEnergyDoubleClick;
     private int exchangeEnergyDoubleClickCount;
+    private boolean exchangeEnergyShield;
+    private int exchangeEnergyShieldCount;
     private boolean giveProp;
     private List<String> whoYouWantGiveTo;
     private boolean reserve;
@@ -633,7 +635,7 @@ public class Config {
         hasChanged = true;
     }
 
-    public static boolean ExchangeEnergyDoubleClick() {
+    public static boolean exchangeEnergyDoubleClick() {
         return getConfig().exchangeEnergyDoubleClick;
     }
 
@@ -643,6 +645,24 @@ public class Config {
 
     public static void setExchangeEnergyDoubleClickCount(int i) {
         getConfig().exchangeEnergyDoubleClickCount = i;
+        hasChanged = true;
+    }
+
+    public static boolean exchangeEnergyShield() {
+        return getConfig().exchangeEnergyShield;
+    }
+
+    public static void setExchangeEnergyShield(boolean b) {
+        getConfig().exchangeEnergyShield = b;
+        hasChanged = true;
+    }
+
+    public static int getExchangeEnergyShieldCount() {
+        return getConfig().exchangeEnergyShieldCount;
+    }
+
+    public static void setExchangeEnergyShieldCount(int i) {
+        getConfig().exchangeEnergyShieldCount = i;
         hasChanged = true;
     }
 
@@ -1420,6 +1440,8 @@ public class Config {
             c.giveEnergyRainList = new ArrayList<>();
         c.exchangeEnergyDoubleClick = false;
         c.exchangeEnergyDoubleClickCount = 6;
+        c.exchangeEnergyShield = false;
+        c.exchangeEnergyShieldCount = 6;
         c.giveProp = false;
         c.whoYouWantGiveTo = new ArrayList<>();
         c.reserve = false;
@@ -1482,8 +1504,8 @@ public class Config {
         c.antOrchard = true;
         c.receiveOrchardTaskAward = true;
         c.orchardSpreadManureCount = 0;
-        c.batchHireAnimal = true;
-        c.enableStall = false;
+        c.batchHireAnimal = false;
+        c.enableStall = true;
         c.stallAutoClose = true;
         c.stallAutoOpen = true;
         c.stallAutoTask = true;
@@ -1695,10 +1717,16 @@ public class Config {
             //Log.i(TAG, jn_giveEnergyRainList + ":" + String.join(",", config.giveEnergyRainList));
 
             config.exchangeEnergyDoubleClick = jo.optBoolean("exchangeEnergyDoubleClick", false);
-            Log.i(TAG, "exchangeEnergyDoubleClick" + ":" + config.exchangeEnergyDoubleClick);
+            //Log.i(TAG, "exchangeEnergyDoubleClick" + ":" + config.exchangeEnergyDoubleClick);
 
             config.exchangeEnergyDoubleClickCount = jo.optInt("exchangeEnergyDoubleClickCount", 6);
-            Log.i(TAG, "exchangeEnergyDoubleClickCount" + ":" + config.exchangeEnergyDoubleClickCount);
+            //Log.i(TAG, "exchangeEnergyDoubleClickCount" + ":" + config.exchangeEnergyDoubleClickCount);
+
+            config.exchangeEnergyShield = jo.optBoolean("exchangeEnergyShield", false);
+            //Log.i(TAG, "exchangeEnergyShield" + ":" + config.exchangeEnergyShield);
+
+            config.exchangeEnergyShieldCount = jo.optInt("exchangeEnergyShieldCount", 6);
+            //Log.i(TAG, "exchangeEnergyShieldCount" + ":" + config.exchangeEnergyShieldCount);
 
             config.giveProp = jo.optBoolean(jn_giveProp, false);
             //Log.i(TAG, jn_giveProp + ":" + config.giveProp);
@@ -1793,6 +1821,7 @@ public class Config {
             //Log.i(TAG, jn_beachList + ":" + String.join(",", config.beachList));
 
             config.totalCertCount = jo.optBoolean(jn_totalCertCount, false);
+            //Log.i(TAG, jn_totalCertCount + ":" + String.join(",", config.totalCertCount));
 
             /* farm */
             config.enableFarm = jo.optBoolean(jn_enableFarm, true);
@@ -1921,7 +1950,7 @@ public class Config {
             config.batchHireAnimal = jo.optBoolean(jn_batchHireAnimal, false);
             //Log.i(TAG, jn_batchHireAnimal + ":" + config.batchHireAnimal);
 
-            config.enableStall = jo.optBoolean(jn_enableStall, false);
+            config.enableStall = jo.optBoolean(jn_enableStall, true);
             //Log.i(TAG, jn_enableStall + ":" + config.enableStall);
 
             config.stallAutoClose = jo.optBoolean(jn_stallAutoClose, true);
@@ -2162,6 +2191,10 @@ public class Config {
             jo.put("exchangeEnergyDoubleClick", config.exchangeEnergyDoubleClick);
 
             jo.put("exchangeEnergyDoubleClickCount", config.exchangeEnergyDoubleClickCount);
+
+            jo.put("exchangeEnergyShield", config.exchangeEnergyShield);
+
+            jo.put("exchangeEnergyShieldCount", config.exchangeEnergyShieldCount);
 
             jo.put(jn_giveProp, config.giveProp);
 
